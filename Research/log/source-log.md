@@ -59,6 +59,14 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 | `[미확인]` | 경쟁사조사 | 석가머니 — App Store `[URL 미기재]` | `[미확인]` | `[미확인]` | `[미확인]` | [competitor-analysis.md](../outputs/competitor-analysis.md) |
 | `[미확인]` | 경쟁사조사 | 감정 쓰레기통(Studio Handot) — `[출처 없음]` | `[미확인]` | `[미확인]` | `[미확인]` | [competitor-analysis.md](../outputs/competitor-analysis.md) |
 | `[미확인]` | 경쟁사조사 | 목탁치기 - 불계연경 — `[출처 없음]` | `[미확인]` | `[미확인]` | `[미확인]` | [competitor-analysis.md](../outputs/competitor-analysis.md) |
+| 2026-09-29 | 미래편지 | Dear Me(미래의 나에게) — Google Play | https://play.google.com/store/apps/details?id=com.jiyoung.dearme | 2026-07-15 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 나에게 주는 편지 — Google Play | https://play.google.com/store/apps/details?id=com.lettertome.diary | 2026-04-22 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 시공편지 — Google Play | https://play.google.com/store/apps/details?id=com.flutter.tsuji.hitoshi.spacetimeletter | 2026-09-07 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 리마인 — Google Play | https://play.google.com/store/apps/details?id=com.remine.app | 2026-06-11 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 느린우체통 편지쓰기 — Google Play | https://play.google.com/store/apps/details?id=org.vmm.basic.slowpostbox | 2021-05-31 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | FutureMe — 공식 웹 | https://www.futureme.org/ | `[미확인]` | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 느린우체통 전국 운영 현황 — 디지털투데이 | https://www.digitaltoday.co.kr/news/articleView.html?idxno=513323 | 2024-04-11 | 2차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 미래 편지와 미래 자기 연속성 — Rutchick et al. (2018) | https://anderson-review.ucla.edu/wp-content/uploads/2021/03/2018_Rutchick-Slepian-Reyes-Pleskus-Hershfield_JEPA.pdf | 2018 | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
 
 ## 접근 실패 기록
 
@@ -69,3 +77,4 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 | 2026-09-28 | 석가머니 - 운 모으는 부처 (App Store) | `[미확인]` | 원본 조사(정민규·홍석민)에 URL 미기재 |
 | 2026-09-28 | 감정 쓰레기통 (Studio Handot) | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
 | 2026-09-28 | 목탁치기. - 불계연경 | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
+| 2026-09-29 | Google Play 앱 상세 (WebFetch) | play.google.com | 페이지가 잘려 추출 실패 → curl로 원문 HTML을 받아 설명문 확인 |
