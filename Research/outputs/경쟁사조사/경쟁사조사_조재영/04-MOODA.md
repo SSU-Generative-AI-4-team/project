@@ -58,4 +58,4 @@ ai_provenance:
 - 핵심 기능: 기분 이모지 기록, 사진 첨부(무료 4장, 프리미엄 확장), 저장 시 응원 메시지, 스티커(꾸미기), 타인 기록 공감·댓글(커뮤니티)
 - 수익모델: 기본 무료. 프리미엄 결제로 사진 첨부 수·부가기능 확장
 - 플랫폼: iOS, Android
-- 출처: [MOODA 앱 제작 일기 — 브런치](https://brunch.co.kr/@bojoge27/47), [App Store](https://apps.apple.com/kr/app/mooda/id6449689589), [MindGym 소개](https://mindgymkorea.com/%EA%B0%90%EC%A0%95-%EA%B8%B0%EB%A1%9D-%EB%8F%84%EC%9A%B0%EB%AF%B8-%EB%AC%B4%EB%8B%A4-mooda/)
+- 출처: [MOODA 앱 제작 일기 — 브런치](https://brunch.co.kr/@bojoge27/47), [App Store](https://apps.apple.com/kr/app/mooda/id6449689589), [MindGym 소개](https://mindgymkorea.com/%EA%B0%90%EC%A0%95-%EA%B8%B0%EB%A1%9D-%EB%8F%84%EC%9A%B0%EB%AF%B8-%EB%AC%B4%EB%8B%A4-mooda/) (접근: 2026-09-15)
