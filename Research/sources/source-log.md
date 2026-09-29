@@ -58,6 +58,16 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 | 2026-09-15 | MOODA | App Store | https://apps.apple.com/kr/app/mooda/id6449689589 | [미확인] | 1차 | 경쟁사조사_조재영/04-MOODA.md |
 | 2026-09-15 | MOODA | MOODA 앱 제작 일기 — 브런치 | https://brunch.co.kr/@bojoge27/47 | [미확인] | 참고 | 경쟁사조사_조재영/04-MOODA.md |
 | 2026-09-15 | MOODA | MindGym 소개 | https://mindgymkorea.com/%EA%B0%90%EC%A0%95-%EA%B8%B0%EB%A1%9D-%EB%8F%84%EC%9A%B0%EB%AF%B8-%EB%AC%B4%EB%8B%A4-mooda/ | [미확인] | 참고 | 경쟁사조사_조재영/04-MOODA.md |
+| 2026-09-21 | 경쟁사조사 | 종이 폐기 연구 — Kanaya & Kawai (2024) 전문 | https://pmc.ncbi.nlm.nih.gov/articles/PMC11003969/ | 2024 | 1차 | [competitor-analysis.md](../outputs/competitor-analysis.md) |
+| 2026-09-21 | 경쟁사조사 | 마보 — 서비스 소개 | https://www.mabopractice.com/about/service | `[미확인]` | `[미확인]` | [competitor-analysis.md](../outputs/competitor-analysis.md) |
+| 2026-09-29 | 미래편지 | FutureMe — 공식 웹 | https://www.futureme.org/ | `[미확인]` | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 느린우체통 편지쓰기 — Google Play | https://play.google.com/store/apps/details?id=org.vmm.basic.slowpostbox | 2021-05-31 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | Dear Me(미래의 나에게) — Google Play | https://play.google.com/store/apps/details?id=com.jiyoung.dearme | 2026-07-15 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 나에게 주는 편지 — Google Play | https://play.google.com/store/apps/details?id=com.lettertome.diary | 2026-04-22 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 리마인 — Google Play | https://play.google.com/store/apps/details?id=com.remine.app | 2026-06-11 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 시공편지 — Google Play | https://play.google.com/store/apps/details?id=com.flutter.tsuji.hitoshi.spacetimeletter | 2026-09-07 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 느린우체통 전국 운영 현황 — 디지털투데이 | https://www.digitaltoday.co.kr/news/articleView.html?idxno=513323 | 2024-04-11 | 2차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 미래편지 | 미래 편지와 미래 자기 연속성 — Rutchick et al. (2018) | https://anderson-review.ucla.edu/wp-content/uploads/2021/03/2018_Rutchick-Slepian-Reyes-Pleskus-Hershfield_JEPA.pdf | 2018 | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
 
 ### 입력 메모 (2026-09-29, 조재영)
 
@@ -65,6 +75,7 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 - 접근일: 조재영 파일은 조사일(2026-09-15)이 원본에 적혀 있다. 나머지는 원본에 접근일이 없어서 `[미확인]`으로 두고, 파일이 저장소에 올라온 날(2026-09-22)을 상한으로 적었다.
 - 발행일은 원본에 없어서 전부 `[미확인]`이다.
 - 등급: 앱스토어·공식 사이트·공식 도움말·원 논문은 1차, 언론 기사는 2차, 블로그·포럼·리뷰 사이트·앱 분석 사이트는 참고로 분류했다. PubMed 초록만 본 S18은 원문 확인 여부가 `[미확인]`이다.
+- 2026-09-29 김서영: `Research/log/source-log.md`에만 있던 10행(Kanaya 전문, 마보 서비스 소개, 미래편지 조사 8행)과 접근 실패 4행을 이 파일로 합치고 `log/`는 지웠다.
 
 ### 출처가 없는 항목 `[조사 필요]`
 
@@ -85,4 +96,7 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 
 | 시도일 | 제목/설명 | URL | 사유 |
 |---|---|---|---|
-| | | | |
+| 2026-09-28 | 석가머니 - 운 모으는 부처 (App Store) | `[미확인]` | 원본 조사(정민규·홍석민)에 URL 미기재 |
+| 2026-09-28 | 감정 쓰레기통 (Studio Handot) | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
+| 2026-09-28 | 목탁치기. - 불계연경 | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
+| 2026-09-29 | Google Play 앱 상세 (WebFetch) | play.google.com | 페이지가 잘려 추출 실패 → curl로 원문 HTML을 받아 설명문 확인 |
