@@ -11,7 +11,7 @@
 | [`frontend/`](frontend/README.md) | 프론트엔드 구현 코드 |
 | [`decisions/`](decisions/README.md) | 모든 설계 결정의 근거 기록 |
 
-`Design/CLAUDE.md`는 Claude Code가 이 폴더에서 작업할 때 자동으로 따르는 하네스 규칙 문서입니다(300자 이내 유지).
+`Design/AGENTS.md`는 이 폴더에서 작업할 때 따르는 하네스 규칙 문서입니다(300자 이내 유지). `Design/CLAUDE.md`는 `@AGENTS.md` 한 줄이라 Claude Code도 같은 규칙을 읽습니다.
 
 ## 작업 흐름
 
