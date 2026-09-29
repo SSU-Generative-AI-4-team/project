@@ -4,7 +4,7 @@
 |---|---|
 | 결정일 | 2026-09-28 |
 | 근거 | [경쟁사 통합 분석](./competitor-analysis.md) · [기획 반영 항목](./prd-review-from-competitor-analysis.md) |
-| 대상 | [PRD 감정 쓰레기통 v0.1](../sources/경쟁사조사/emotional_trash_bin_PRD.md) |
+| 대상 | [PRD 감정 쓰레기통 v0.1](../../PRD.md) |
 | 상태 | 결정 5건 확정. PRD 본문 반영은 미실행 |
 
 ---

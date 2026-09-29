@@ -15,9 +15,12 @@ Research/
 │   └── agents/        # 자료 수집 서브에이전트
 ├── templates/         # 산출물 표준 포맷
 ├── notes/             # 진행 중인 조사 노트
-├── sources/           # 출처 로그 (source-log.md)
+├── sources/           # 출처 로그 (source-log.md) 전용
 └── outputs/           # 팀에 공유하는 확정 산출물
+    └── 경쟁사조사/     # 팀원별 원본 경쟁사 조사 (기획 문서가 [이름]으로 인용)
 ```
+
+기준 문서 `PRD.md`와 종합·제안 문서(`기획/`)는 Research가 아니라 저장소 루트에 있다. 루트 [`AGENTS.md`](../AGENTS.md)의 폴더 지도를 따른다.
 
 ## 조사 시작하기
 
