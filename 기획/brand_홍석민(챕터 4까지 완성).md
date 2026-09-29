@@ -4,9 +4,9 @@
 | --- | --- |
 | 작성일 | 2026-09-29 |
 | 작성자 | 홍석민 (Claude Code로 작성) |
-| 기준 문서 | `Research/sources/PRD.md` v0.1 |
-| 참고 | `Research/sources/기획/2안 정리본_정민규.md`, `Research/outputs/planning-synthesis.md` |
-| 원본 조사 | `Research/sources/경쟁사조사/` |
+| 기준 문서 | `PRD.md` v0.1 |
+| 참고 | `기획/2안 정리본_정민규.md`, `기획/기획종합_김서영.md` |
+| 원본 조사 | `Research/outputs/경쟁사조사/` |
 
 ## 한 줄 소개
 
