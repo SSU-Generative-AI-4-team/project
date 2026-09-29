@@ -8,7 +8,8 @@ TEAM4 프로젝트의 리서치 폴더. 시장·경쟁사 조사, 사용자 리�
 
 ```
 Research/
-├── CLAUDE.md          # 공통 작업 규칙 (Claude가 자동으로 읽음)
+├── AGENTS.md          # 공통 작업 규칙 (Codex가 읽음)
+├── CLAUDE.md          # @AGENTS.md 한 줄 (Claude Code가 읽으며 AGENTS.md를 가져옴)
 ├── .claude/
 │   ├── skills/        # 리서치 종류별 실행 절차
 │   └── agents/        # 자료 수집 서브에이전트
@@ -48,7 +49,7 @@ Claude Code에서 조사 내용을 말하면 해당 스킬이 자동으로 호�
 
 ## 산출물 규칙 요약
 
-전체 규칙은 [`CLAUDE.md`](./CLAUDE.md)에 있다. 핵심만:
+전체 규칙은 [`AGENTS.md`](./AGENTS.md)에 있다. 핵심만:
 
 - 모든 사실 주장에 **출처 URL + 접근 날짜**
 - 중요한 수치는 **독립된 출처 2곳** 이상. 1곳이면 `[단일 출처]` 표시
@@ -71,13 +72,14 @@ Claude Code에서 조사 내용을 말하면 해당 스킬이 자동으로 호�
 공유 전 확인:
 - [ ] 미확인 항목이 표시돼 있는가
 - [ ] 출처가 `sources/source-log.md`에 기록돼 있는가
+- [ ] 원본에 URL이 없는 항목은 `sources/source-log.md`의 "출처가 없는 항목" 표에 올렸는가
 - [ ] 개인정보가 익명화됐는가
 
 ## 하네스 수정
 
 조사를 하다 보면 규칙이나 절차에 고칠 점이 생긴다. 그때마다 고친다.
 
-- 모든 조사에 적용할 규칙 → `CLAUDE.md`
+- 모든 조사에 적용할 규칙 → `AGENTS.md`
 - 특정 조사 종류의 절차 → `.claude/skills/{종류}/SKILL.md`
 - 산출물 형태 → `templates/`
 
