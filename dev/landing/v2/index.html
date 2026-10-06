@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감정소각소 — 사전 예약</title>
+<meta name="description" content="메모장에 쓰면 남잖아요. 여기선 쓰고 태우면 끝이에요. 원문은 남기지 않아요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#16130f; --fg:#efe7dc; --dim:#9c9185; --ember:#e0864a; --line:#2e2822; --paper:#f3ead9; --ink:#3b3026; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--fg); font:17px/1.7 -apple-system, "Pretendard", "Apple SD Gothic Neo", sans-serif; overflow-x:hidden; }
+  main { max-width:560px; margin:0 auto; padding:72px 20px 96px; }
+  h1 { font-size:clamp(28px,6vw,38px); line-height:1.35; font-weight:600; letter-spacing:-.02em; }
+  .lead { color:var(--dim); margin-top:16px; }
+  section { margin-top:64px; }
+  h2 { font-size:14px; color:var(--ember); font-weight:500; margin-bottom:12px; }
+  input { width:100%; background:transparent; color:var(--fg); border:1px solid var(--line); border-radius:10px; padding:14px 16px; font:inherit; }
+  input:focus { outline:none; border-color:var(--ember); }
+  button { margin-top:12px; width:100%; padding:14px; border:0; border-radius:10px; background:var(--ember); color:#1a120b; font:inherit; font-weight:600; cursor:pointer; transition:box-shadow .3s, opacity .3s; }
+  button:disabled { opacity:.5; cursor:default; }
+  button:not(:disabled):hover { box-shadow:0 0 24px -4px var(--ember); }
+  .note { color:var(--dim); font-size:14px; margin-top:10px; min-height:1.7em; }
+  .note.show { animation:noteIn .8s; } @keyframes noteIn { from { opacity:0; transform:translateY(6px); } }
+  ul { padding-left:1.1em; color:var(--dim); } li + li { margin-top:6px; } li b { color:var(--fg); font-weight:500; }
+  footer { margin-top:80px; color:var(--dim); font-size:13px; } footer a { color:var(--dim); }
+  input.ok { animation:ok 1.2s ease-out; }
+  @keyframes ok { 0% { box-shadow:0 0 0 0 #e0864aaa; } 100% { box-shadow:0 0 0 14px #e0864a00; } }
+
+  /* 등장 */
+  .rise { opacity:0; transform:translateY(14px); animation:rise 1s cubic-bezier(.2,.7,.2,1) forwards; }
+  h1.rise { animation-delay:.1s } .lead.rise { animation-delay:.35s }
+  section.rise { animation:none; transition:opacity 1s, transform 1s cubic-bezier(.2,.7,.2,1); }
+  section.rise.in { opacity:1; transform:none; }
+  @keyframes rise { to { opacity:1; transform:none; } }
+  h1 .glow { color:var(--ember); animation:flicker 4s ease-in-out infinite; }
+  @keyframes flicker { 0%,100% { text-shadow:0 0 12px #e0864a55; } 45% { text-shadow:0 0 22px #e0864a99; } 60% { text-shadow:0 0 8px #e0864a33; } }
+  #embers { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:-1; }
+  .ember { position:absolute; bottom:-10px; border-radius:50%; background:var(--ember); box-shadow:0 0 8px var(--ember); opacity:0; animation:drift linear infinite; }
+  @keyframes drift { 0% { opacity:0; transform:translate(0,0); } 15% { opacity:.7; } 100% { opacity:0; transform:translate(var(--dx),-100vh); } }
+
+  /* 종이 */
+  .lined { background-color:var(--paper); background-image:linear-gradient(90deg, transparent 38px, #e3a59a 38px 39px, transparent 39px), repeating-linear-gradient(transparent 0 31px, #d8ccb6 31px 32px); background-attachment:local; color:var(--ink); font:24px/32px "Nanum Pen Script", cursive; padding:8px 16px 0 50px; white-space:pre-wrap; word-break:break-all; overflow:hidden; }
+  .paper { height:232px; border-radius:4px; box-shadow:0 12px 30px -12px #000c, 0 1px 0 #fff4 inset; }
+  .paper.fresh { animation:fresh .7s cubic-bezier(.2,.7,.2,1); }
+  @keyframes fresh { from { opacity:0; transform:translateY(-18px) rotate(-1.5deg); } }
+  textarea.lined { display:block; width:100%; height:100%; border:0; resize:none; border-radius:4px; }
+  textarea.lined:focus { outline:2px solid var(--ember); outline-offset:3px; }
+  textarea.lined::placeholder { color:#a39580; }
+  .sheet { position:fixed; z-index:50; perspective:1400px; pointer-events:none; }
+  .sheet > * { position:absolute; left:0; width:100%; }
+  .half { overflow:hidden; }
+  .half .lined, .flap .lined { position:absolute; left:0; width:100%; }
+  .flap { transform-style:preserve-3d; }
+  .flap > * { backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+  .bk { position:absolute; inset:0; background:linear-gradient(160deg, #efe4d0, #e2d5bd); backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:3px; }
+  .bk.crease-b { background:linear-gradient(0deg, #cfc0a4, #efe4d0 18%, #e6dac3); }
+  .bk.crease-l { background:linear-gradient(90deg, #cdbd9f, #efe4d0 16%, #e4d8c0); }
+
+  /* 벽난로 */
+  .stage { position:relative; isolation:isolate; --heat:.35; }
+  .stage::before { content:''; position:absolute; left:-30%; right:-30%; bottom:-80px; height:460px; background:radial-gradient(closest-side, #e0864a30, transparent); opacity:var(--heat); pointer-events:none; z-index:-1; }
+  .fireplace { position:relative; height:300px; margin-top:32px; }
+  .fireplace canvas { position:absolute; inset:0; width:100%; height:100%; }
+  #back { z-index:1; } #fire { z-index:3; mix-blend-mode:screen; }
+  /* 타는 편지: --p가 0→1로 가며 화면 아래쪽부터 불선이 올라가고, 지나간 자리는 재가 됐다가 부서져 사라짐.
+     종이가 110도 돌아 있어서 250deg가 화면 위쪽 방향 */
+  @property --p { syntax:'<number>'; inherits:false; initial-value:0; }
+  .burning { position:absolute; z-index:2; border-radius:2px; --f:calc(var(--p) * 140% - 20%);
+    background:
+      linear-gradient(250deg, #1c1714 0, #3a302a calc(var(--f) - 14%), #2a1c14 calc(var(--f) - 6%), #c4501a calc(var(--f) - 2.5%), #ffd28a var(--f), #9a6a3a calc(var(--f) + 3%), rgba(120,80,40,.4) calc(var(--f) + 9%), transparent calc(var(--f) + 16%)),
+      linear-gradient(160deg, #efe4d0, #d9cbb0);
+    -webkit-mask-image:linear-gradient(250deg, transparent calc(var(--f) - 42%), #000 calc(var(--f) - 20%));
+            mask-image:linear-gradient(250deg, transparent calc(var(--f) - 42%), #000 calc(var(--f) - 20%));
+    filter:url(#rough) drop-shadow(0 0 5px #ff7a2acc); }
+  #mute { position:fixed; top:14px; right:14px; width:auto; margin:0; padding:6px 12px; font-size:13px; font-weight:500; background:#2a231d; color:var(--dim); border:1px solid var(--line); z-index:60; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01s !important; animation-iteration-count:1 !important; transition-duration:.01s !important; } #embers { display:none; } }
+</style>
+</head>
+<body>
+<div id="embers" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<button id="mute" type="button" aria-pressed="false">소리 켜짐</button>
+<main>
+  <h1 class="rise">쓰고, 태우면 <span class="glow">끝.</span><br>이 글은 어디에도 저장되지 않아요.</h1>
+  <p class="lead rise">털어놓고 싶은데 기록이 남는 건 싫을 때가 있죠. 메모장에 쓰면 목록 맨 위에 남으니까요. 여기선 쓴 글을 잔잔하게 태우고, 원문은 남기지 않아요.</p>
+
+  <section class="rise">
+    <h2>한번 태워 보기</h2>
+    <div class="stage" id="stage">
+      <div class="paper" id="paper"><textarea id="demo" class="lined" placeholder="오늘 속상했던 일을 적어 보세요.&#10;이 페이지는 아무것도 보내지 않아요." aria-label="태울 글"></textarea></div>
+      <button id="burn" type="button">접어서 태우기</button>
+      <p class="note" id="demoNote" aria-live="polite"></p>
+      <div class="fireplace" id="hearth" aria-hidden="true"><canvas id="back"></canvas><canvas id="fire"></canvas></div>
+    </div>
+  </section>
+
+  <section class="rise">
+    <h2>이런 곳이에요</h2>
+    <ul>
+      <li><b>원문은 남지 않아요.</b> 태우고 나면 서버에도, 휴대폰에도 쓴 글이 없어요.</li>
+      <li><b>몇 번 왔는지 세지 않아요.</b> 한동안 오지 않아도 잃는 게 없어요.</li>
+      <li><b>잘 쓸 필요 없어요.</b> 한 글자여도 괜찮아요.</li>
+    </ul>
+  </section>
+
+  <section class="rise">
+    <h2>문을 열면 알려 드릴게요</h2>
+    <form id="reserve">
+      <input id="email" type="email" name="email" required placeholder="이메일 주소" autocomplete="email" aria-label="이메일 주소">
+      <button type="submit">사전 예약하기</button>
+      <p class="note" id="formNote" aria-live="polite">받은 이메일은 출시 안내에만 써요.</p>
+    </form>
+  </section>
+
+  <footer>감정소각소 (가칭) · 생성형AI 4팀 · <a href="/">v1 보기</a> · <a href="/v3/">v3 보기</a></footer>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const say = (el, text) => { el.textContent = text; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); };
+  const div = (cls, parent, css = '') => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; parent.append(d); return d; };
+  const anim = (el, kf, opt) => el.animate(kf, { fill: 'forwards', easing: 'cubic-bezier(.45,.05,.3,1)', ...opt }).finished;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 배경 불씨
+  for (let i = 0; i < 18; i++) {
+    const size = rand(2, 4);
+    div('ember', $('embers'), `left:${rand(0,100)}%;width:${size}px;height:${size}px;--dx:${rand(-60,60)}px;animation-duration:${rand(9,18)}s;animation-delay:${rand(-18,0)}s`);
+  }
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: .15 });
+  document.querySelectorAll('section.rise').forEach(s => io.observe(s));
+
+  // 효과음: 파일 없이 Web Audio 노이즈로 합성
+  const sound = {
+    muted: false, ac: null,
+    init() {
+      if (this.ac) return;
+      this.ac = new (window.AudioContext || window.webkitAudioContext)();
+      this.out = this.ac.createGain(); this.out.gain.value = this.muted ? 0 : .8; this.out.connect(this.ac.destination);
+      const len = this.ac.sampleRate * 2, buf = this.ac.createBuffer(1, len, this.ac.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      this.noise = buf;
+    },
+    burst({ at = 0, dur, type = 'bandpass', freq, to, q = 1, vol, attack = .005 }) {
+      if (!this.ac) return;
+      const t = this.ac.currentTime + at, s = this.ac.createBufferSource(), f = this.ac.createBiquadFilter(), g = this.ac.createGain();
+      s.buffer = this.noise; f.type = type; f.Q.value = q;
+      f.frequency.setValueAtTime(freq, t); if (to) f.frequency.exponentialRampToValueAtTime(to, t + dur);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + attack); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(f).connect(g).connect(this.out); s.start(t, rand(0, 1.5), dur + .05);
+    },
+    fold() { // 종이 바스락
+      for (let i = 0; i < 5; i++) this.burst({ at: i * .07 + rand(0, .03), dur: rand(.04, .1), freq: rand(2500, 5000), q: .7, vol: rand(.08, .18) });
+      this.burst({ at: .45, dur: .12, freq: 900, q: 2, vol: .15 });
+    },
+    whoosh() { this.burst({ dur: .7, freq: 300, to: 1800, q: 1.2, vol: .12, attack: .25 }); },
+    ignite() {
+      this.burst({ dur: 1.2, type: 'lowpass', freq: 150, to: 1400, vol: .45, attack: .08 }); // 확 붙는 소리
+      this.burst({ dur: 3.5, type: 'lowpass', freq: 600, q: .5, vol: .12, attack: .4 });     // 타는 소리
+      for (let i = 0; i < 30; i++) this.burst({ at: rand(.1, 3.4), dur: rand(.01, .035), type: 'highpass', freq: rand(1500, 4000), vol: rand(.1, .35) }); // 탁탁
+    },
+    toggle() { this.muted = !this.muted; if (this.out) this.out.gain.value = this.muted ? 0 : .8; },
+  };
+  $('mute').onclick = e => { sound.toggle(); e.target.textContent = sound.muted ? '소리 꺼짐' : '소리 켜짐'; e.target.setAttribute('aria-pressed', sound.muted); };
+
+  // 벽난로: 뒤 캔버스(벽돌·아치·화실·장작·숯) → 타는 종이 → 앞 캔버스(불꽃·빛, screen 합성)
+  const stage = $('stage'), hearth = $('hearth'), bc = $('back'), cv = $('fire'), bx = bc.getContext('2d'), cx = cv.getContext('2d');
+  let W, H, G, opening, parts = [], smoke = [], coals = [], cracks = [], boost = 0;
+  const sprite = (r, g, b) => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const x = c.getContext('2d'), gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    x.fillStyle = gr; x.fillRect(0, 0, 64, 64); return c;
+  };
+  const S = [sprite(255, 205, 120), sprite(255, 140, 50), sprite(215, 70, 25), sprite(110, 30, 15)], SMOKE = sprite(90, 80, 72);
+  const poly = (ctx, pts, fill) => { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); };
+  const lin = (ctx, x0, y0, x1, y1, stops) => { const g = ctx.createLinearGradient(x0, y0, x1, y1); stops.forEach((c, i) => g.addColorStop(i / (stops.length - 1), c)); return g; };
+
+  function log(x1, y1, x2, y2, r) {
+    const ang = Math.atan2(y2 - y1, x2 - x1), len = Math.hypot(x2 - x1, y2 - y1), c = Math.cos(ang), s = Math.sin(ang);
+    bx.save(); bx.translate(x1, y1); bx.rotate(ang);
+    bx.fillStyle = lin(bx, 0, -r, 0, r, ['#5e412c', '#4a3121', '#2a1a10', '#120a06']);
+    bx.beginPath(); bx.roundRect(0, -r, len, 2 * r, r * .6); bx.fill();
+    bx.strokeStyle = 'rgba(15,8,4,.7)'; bx.lineWidth = 1;
+    for (let i = 0; i < 10; i++) { const yy = rand(-r * .8, r * .8), x0 = rand(0, len * .7); bx.beginPath(); bx.moveTo(x0, yy); bx.lineTo(x0 + rand(12, len * .35), yy + rand(-1.5, 1.5)); bx.stroke(); }
+    bx.fillStyle = '#9a7650'; bx.beginPath(); bx.ellipse(len, 0, r * .42, r * .92, 0, 0, 7); bx.fill();
+    bx.strokeStyle = '#6e5035'; [.7, .45, .2].forEach(k => { bx.beginPath(); bx.ellipse(len, 0, r * .42 * k, r * .92 * k, 0, 0, 7); bx.stroke(); });
+    bx.restore();
+    // 장작 윗면의 갈라진 틈 (앞 캔버스에서 빛남)
+    for (let k = 0; k < 2; k++) {
+      let lx = rand(len * .15, len * .6), ly = rand(-r * .3, r * .3); const pts = [];
+      for (let j = 0; j < 4; j++) { pts.push([x1 + lx * c - ly * s, y1 + lx * s + ly * c]); lx += rand(5, 10); ly += rand(-1.5, 1.5); }
+      cracks.push({ pts, ph: rand(0, 6) });
+    }
+  }
+
+  function drawBack() {
+    const L = W * .2, R = W * .8, B = H - 22, M = W / 2, AY = 104, AH = 42, RX = (R - L) / 2, bl = W * .34, br = W * .66, bt = AY + 12, bb = H - 58;
+    G = { M, B, L, R, fireY: H - 64 };
+    const edge = new Path2D(); edge.moveTo(L, B); edge.lineTo(L, AY); edge.ellipse(M, AY, RX, AH, 0, Math.PI, 0); edge.lineTo(R, B);
+    opening = new Path2D(edge); opening.closePath();
+    bx.clearRect(0, 0, W, H); cracks = []; coals = [];
+
+    // 벽돌 벽 (엇갈려 쌓기, 벽돌마다 색 조금씩 다르게)
+    bx.fillStyle = '#23160f'; bx.fillRect(8, 14, W - 16, B - 14);
+    const bh = 15, bw = 38;
+    for (let y = 14, row = 0; y < B; y += bh, row++)
+      for (let x = 8 - (row % 2) * bw / 2; x < W - 8; x += bw) {
+        const v = rand(-10, 10), r0 = 116 + v + rand(-8, 8), g0 = 58 + v * .6, b0 = 40 + v * .5;
+        bx.fillStyle = lin(bx, 0, y, 0, y + bh, [`rgb(${r0 + 16},${g0 + 9},${b0 + 6})`, `rgb(${r0},${g0},${b0})`, `rgb(${r0 - 22},${g0 - 14},${b0 - 10})`]);
+        bx.beginPath(); bx.roundRect(Math.max(x + 1, 9), y + 1, Math.min(bw - 2, W - 9 - Math.max(x + 1, 9)), bh - 2, 2); bx.fill();
+      }
+    bx.fillStyle = lin(bx, 8, 0, W - 8, 0, ['rgba(0,0,0,.55)', 'rgba(0,0,0,0)', 'rgba(0,0,0,0)', 'rgba(0,0,0,.55)']); bx.fillRect(8, 14, W - 16, B - 14);
+    const soot = bx.createRadialGradient(M, AY - AH, 10, M, AY - AH, RX * 1.1); soot.addColorStop(0, 'rgba(10,6,4,.6)'); soot.addColorStop(1, 'rgba(10,6,4,0)');
+    bx.fillStyle = soot; bx.fillRect(0, 0, W, B);
+
+    // 아치 테두리 벽돌
+    bx.lineJoin = 'round';
+    bx.strokeStyle = '#1a100b'; bx.lineWidth = 24; bx.stroke(edge);
+    bx.strokeStyle = '#8a4e37'; bx.lineWidth = 19; bx.stroke(edge);
+    bx.strokeStyle = 'rgba(255,200,160,.12)'; bx.lineWidth = 2; bx.translate(0, -8); bx.stroke(edge); bx.translate(0, 8);
+    bx.strokeStyle = '#21140e'; bx.lineWidth = 2;
+    for (let a = Math.PI; a <= 2 * Math.PI + .01; a += Math.PI / 9) { const c = Math.cos(a), s = Math.sin(a); bx.beginPath(); bx.moveTo(M + c * (RX - 10), AY + s * (AH - 10)); bx.lineTo(M + c * (RX + 10), AY + s * (AH + 10)); bx.stroke(); }
+    for (let y = AY + 16; y < B; y += 16) for (const x of [L, R]) { bx.beginPath(); bx.moveTo(x - 10, y); bx.lineTo(x + 10, y); bx.stroke(); }
+
+    // 화실 안쪽 (원근: 뒷벽·옆벽·바닥)
+    bx.save(); bx.clip(opening);
+    bx.fillStyle = '#080504'; bx.fillRect(0, 0, W, H);
+    for (let y = bt, row = 0; y < bb; y += 9, row++)
+      for (let x = bl - (row % 2) * 11; x < br; x += 22) { const v = rand(-6, 6); bx.fillStyle = `rgb(${46 + v},${24 + v * .5},${17 + v * .4})`; bx.fillRect(Math.max(x + 1, bl), y + 1, Math.min(20, br - Math.max(x + 1, bl)), 7); }
+    poly(bx, [[L, B], [L, AY - AH], [bl, bt - 30], [bl, bb]], lin(bx, L, 0, bl, 0, ['#241510', '#0d0806']));
+    poly(bx, [[R, B], [R, AY - AH], [br, bt - 30], [br, bb]], lin(bx, R, 0, br, 0, ['#241510', '#0d0806']));
+    poly(bx, [[L, B], [R, B], [br, bb], [bl, bb]], lin(bx, 0, bb, 0, B, ['#140d0a', '#2c221c']));
+    for (let i = 0; i < 90; i++) { bx.fillStyle = `rgba(${rand(90, 140) | 0},${rand(85, 125) | 0},${rand(80, 110) | 0},${rand(.1, .35)})`; bx.fillRect(M + rand(-1, 1) * W * .26, rand(bb + 4, B), rand(1, 3), 1); }
+    bx.fillStyle = lin(bx, 0, AY - AH, 0, bb - 10, ['rgba(0,0,0,.95)', 'rgba(0,0,0,.5)', 'rgba(0,0,0,0)']); bx.fillRect(0, 0, W, bb);
+    for (let i = 0; i < 36; i++) {
+      const c = { x: M + (rand(-1, 1) + rand(-1, 1)) / 2 * W * .24, y: rand(H - 42, B - 3), r: rand(2.5, 6), ph: rand(0, 6), sp: rand(.002, .006) };
+      coals.push(c); bx.fillStyle = `rgb(${rand(30, 50) | 0},${rand(14, 22) | 0},10)`; bx.beginPath(); bx.ellipse(c.x, c.y, c.r, c.r * .7, 0, 0, 7); bx.fill();
+    }
+    log(W * .29, H - 36, W * .69, H - 50, 12);
+    log(W * .72, H - 34, W * .32, H - 52, 12);
+    log(W * .39, H - 66, W * .63, H - 63, 9);
+    bx.restore();
+
+    // 쇠 받침대
+    bx.fillStyle = '#120d0b';
+    bx.fillRect(W * .29, H - 38, W * .42, 4);
+    for (let x = W * .3; x < W * .7; x += 13) { bx.beginPath(); bx.roundRect(x, H - 52, 3.5, 28, [2, 2, 0, 0]); bx.fill(); }
+    // 바닥 돌판 + 선반
+    bx.fillStyle = lin(bx, 0, B, 0, H, ['#6b6158', '#4a423b', '#2c2621']); bx.beginPath(); bx.roundRect(0, B, W, H - B, [3, 3, 6, 6]); bx.fill();
+    bx.fillStyle = 'rgba(255,255,255,.12)'; bx.fillRect(0, B, W, 1.5);
+    bx.fillStyle = lin(bx, 0, 14, 0, 34, ['rgba(0,0,0,.6)', 'rgba(0,0,0,0)']); bx.fillRect(8, 14, W - 16, 20);
+    bx.fillStyle = lin(bx, 0, 0, 0, 16, ['#8a6448', '#5c3f2b', '#33231a']); bx.beginPath(); bx.roundRect(0, 0, W, 16, 3); bx.fill();
+    bx.fillStyle = 'rgba(255,220,180,.2)'; bx.fillRect(2, 1, W - 4, 1);
+  }
+
+  const fit = () => {
+    const d = devicePixelRatio || 1; W = hearth.clientWidth; H = hearth.clientHeight;
+    for (const [c, x] of [[bc, bx], [cv, cx]]) { c.width = W * d; c.height = H * d; x.setTransform(d, 0, 0, d, 0, 0); }
+    drawBack();
+  };
+  fit(); addEventListener('resize', fit);
+
+  (function tick(now) {
+    now = now || 0;
+    const { M, fireY } = G, f = 1 + .08 * Math.sin(now * .011) + .06 * Math.sin(now * .023 + 1) + rand(-.03, .03);
+    for (let i = 0, n = 4 + boost * 10; i < n; i++)
+      parts.push({ x: M + (rand(-1, 1) + rand(-1, 1)) / 2 * W * (.14 + boost * .06), y: fireY + rand(-4, 6), vx: rand(-.25, .25), vy: -rand(.9, 1.9) * (1 + boost * .6), life: 0, max: rand(45, 75), s: rand(20, 36) * (1 + boost * .5) });
+    if (Math.random() < .05 + boost * .6) parts.push({ spark: 1, x: M + rand(-50, 50), y: fireY - 10, vx: rand(-.8, .8), vy: -rand(1.5, 4), life: 0, max: rand(50, 100) });
+    if (Math.random() < .25 + boost * .5) smoke.push({ x: M + rand(-25, 25), y: fireY - 70 - boost * 20, life: 0, max: rand(90, 140) });
+
+    cx.clearRect(0, 0, W, H);
+    // 벽돌·바닥에 비치는 불빛
+    cx.globalCompositeOperation = 'lighter'; cx.globalAlpha = 1;
+    const glow = cx.createRadialGradient(M, fireY, 10, M, fireY, W * .8);
+    glow.addColorStop(0, `rgba(255,130,50,${(.28 + boost * .25) * f})`); glow.addColorStop(.5, `rgba(200,80,30,${(.08 + boost * .1) * f})`); glow.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.fillStyle = glow; cx.fillRect(0, 0, W, H);
+
+    cx.save(); cx.clip(opening);
+    smoke = smoke.filter(p => { const t = ++p.life / p.max; if (t >= 1) return false; p.y -= .6; p.x += Math.sin(p.life * .03) * .3; const sz = 30 + t * 60; cx.globalAlpha = .1 * Math.sin(t * Math.PI); cx.drawImage(SMOKE, p.x - sz / 2, p.y - sz / 2, sz, sz); return true; });
+    for (const c of coals) { cx.globalAlpha = (.35 + .3 * Math.sin(now * c.sp + c.ph)) * (1 + boost * .6); const z = c.r * 4; cx.drawImage(S[c.r > 4.5 ? 2 : 1], c.x - z / 2, c.y - z / 2, z, z); }
+    cx.lineCap = 'round';
+    for (const k of cracks) {
+      const a = (.5 + .4 * Math.sin(now * .004 + k.ph)) * f;
+      for (const [lw, col, al] of [[3, '255,100,30', .2], [1.2, '255,170,90', .7]]) {
+        cx.globalAlpha = a * al; cx.strokeStyle = `rgb(${col})`; cx.lineWidth = lw;
+        cx.beginPath(); k.pts.forEach(([x, y], i) => i ? cx.lineTo(x, y) : cx.moveTo(x, y)); cx.stroke();
+      }
+    }
+    cx.globalAlpha = .3 * f; cx.drawImage(S[1], M - W * .16, fireY - 34, W * .32, 64);
+    parts = parts.filter(p => {
+      const t = ++p.life / p.max; if (t >= 1) return false;
+      p.x += p.vx + Math.sin((p.life + p.y) * .12) * .35; p.y += p.vy;
+      if (p.spark) { cx.globalAlpha = 1 - t; cx.fillStyle = '#ffdca8'; cx.fillRect(p.x, p.y, 1.6, 1.6); return true; }
+      const sz = p.s * (1 - t * .55);
+      cx.globalAlpha = (1 - t) * .32;
+      cx.drawImage(S[Math.min(3, t * 4 | 0)], p.x - sz * .4, p.y - sz * .9, sz * .8, sz * 1.6);
+      return true;
+    });
+    cx.restore();
+
+    boost *= .99;
+    stage.style.setProperty('--heat', ((.35 + boost * .65) * f).toFixed(3));
+    requestAnimationFrame(tick);
+  })();
+
+  // 쓰기 → 두 번 접기 → 벽난로로 던지기 → 타기
+  const paper = $('paper'), demo = $('demo'), demoNote = $('demoNote'), burnBtn = $('burn');
+  const face = (parent, h, scroll, css) => { const f = div('lined', parent, `height:${h}px;${css}`); f.textContent = demo.value; f.scrollTop = scroll; return f; };
+
+  burnBtn.onclick = async () => {
+    if (!demo.value.trim()) { say(demoNote, '한 글자만 적어도 태울 수 있어요.'); return; }
+    burnBtn.disabled = demo.readOnly = true; demoNote.textContent = '';
+    if (reduced) { demo.value = ''; burnBtn.disabled = demo.readOnly = false; say(demoNote, '다 탔어요. 원문은 남지 않았어요.'); return; }
+    sound.init(); sound.ac.resume();
+
+    const hb = hearth.getBoundingClientRect(), pb0 = paper.getBoundingClientRect();
+    if (pb0.top < 0 || hb.bottom > innerHeight) { stage.scrollIntoView({ behavior: 'smooth', block: 'center' }); await wait(500); }
+    const r = paper.getBoundingClientRect(), w = r.width, h = r.height, sc = demo.scrollTop;
+
+    // 1. 위쪽 절반을 아래로 접기
+    const sheet = div('sheet', document.body, `left:${r.left}px;top:${r.top}px;width:${w}px;height:${h}px`);
+    const bottom = div('half', sheet, `top:${h / 2}px;height:${h / 2}px`);
+    face(bottom, h, sc, `top:${-h / 2}px`);
+    const flap = div('flap', sheet, `top:0;height:${h / 2}px;transform-origin:50% 100%`);
+    face(flap, h / 2, sc, 'top:0');
+    div('bk crease-b', flap, 'transform:rotateX(180deg)');
+    paper.style.visibility = 'hidden';
+    sound.fold();
+    await anim(flap, [{ transform: 'rotateX(0)' }, { transform: 'rotateX(-180deg)' }], { duration: 700 });
+
+    // 2. 오른쪽 절반을 왼쪽으로 접기
+    sheet.remove();
+    const note = div('sheet', document.body, `left:${r.left}px;top:${r.top + h / 2}px;width:${w}px;height:${h / 2}px`);
+    div('bk crease-b', note, `top:0;width:${w / 2}px;height:${h / 2}px`);
+    const flap2 = div('flap', note, `left:${w / 2}px;top:0;width:${w / 2}px;height:${h / 2}px;transform-origin:0 50%`);
+    div('bk crease-b', flap2);
+    div('bk crease-l', flap2, 'transform:rotateY(180deg)');
+    await wait(120); sound.fold();
+    await anim(flap2, [{ transform: 'rotateY(0)' }, { transform: 'rotateY(-180deg)' }], { duration: 650 });
+
+    // 3. 벽난로로 던지기 (포물선)
+    const hr = hearth.getBoundingClientRect();
+    const fx = r.left + w / 4, fy = r.top + h * .75, tx = hr.left + G.M, ty = hr.top + G.fireY - 8;
+    const dx = tx - fx, dy = ty - fy, SCALE = .42;
+    note.style.transformOrigin = `${w / 4}px ${h / 4}px`;
+    await wait(150); sound.whoosh();
+    await anim(note, [
+      { transform: 'translate(0,0) rotate(0) scale(1)' },
+      { transform: `translate(${dx * .45}px,${dy * .3 - 90}px) rotate(-110deg) scale(.75)`, offset: .45 },
+      { transform: `translate(${dx}px,${dy}px) rotate(-250deg) scale(${SCALE})` },
+    ], { duration: 950, easing: 'cubic-bezier(.35,.1,.55,1)' });
+
+    // 4. 불꽃 뒤로 옮겨서 태우기
+    note.remove();
+    const nw = w / 2 * SCALE, nh = h / 2 * SCALE;
+    const b = div('burning', hearth, `left:${tx - hr.left - nw / 2}px;top:${ty - hr.top - nh / 2}px;width:${nw}px;height:${nh}px;transform:rotate(110deg)`);
+    boost = 1; sound.ignite();
+    await anim(b, [
+      { '--p': 0, transform: 'rotate(110deg)' },
+      { '--p': .15, transform: 'rotate(111deg) translateY(1px)', offset: .15 },
+      { '--p': 1.25, transform: 'rotate(116deg) translateY(6px) scale(.94)' },
+    ], { duration: 3200, easing: 'cubic-bezier(.4,0,.7,1)' });
+    b.remove();
+
+    // 5. 새 종이
+    demo.value = ''; demo.readOnly = burnBtn.disabled = false;
+    paper.style.visibility = ''; paper.classList.remove('fresh'); void paper.offsetWidth; paper.classList.add('fresh');
+    say(demoNote, '다 탔어요. 원문은 남지 않았어요.');
+  };
+
+  const form = $('reserve'), note = $('formNote');
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button'); btn.disabled = true;
+    try {
+      const r = await fetch('/api/reserve', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: form.email.value }) });
+      if (!r.ok) throw 0;
+      form.email.value = ''; form.email.classList.remove('ok'); void form.email.offsetWidth; form.email.classList.add('ok');
+      say(note, '예약됐어요. 문을 열면 이 주소로 한 번 알려 드릴게요.');
+    } catch { say(note, '잘 전해지지 않았어요. 적은 주소는 그대로 있으니 한 번 더 눌러 주세요.'); }
+    btn.disabled = false;
+  };
+</script>
+</body>
+</html>

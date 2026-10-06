@@ -1,0 +1,4 @@
+:root{--color-paper:#f5f2ec;--color-surface:#fcfaf6;--color-ink:#393630;--color-muted:#716b62;--color-rule:#d9d2c7;--color-accent:#e9d8ca;--color-dark:#27251f;--font-body:"Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;--font-display:var(--font-body);--ease-out:cubic-bezier(.2,.7,.2,1)}
+:root{--fire-red:#873522;--fire-orange:#ec6429;--fire-gold:#ffbf63;--fire-core:#fff2cb;--fire-ash:#635d54;--fire-char:#29211c;--fire-scorch:#99633e;--fire-smoke:#706c68}
+
+:root{--color-ember:#a65336;--color-quiet:#eee9e0}

@@ -100,3 +100,9 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 | 2026-09-28 | 감정 쓰레기통 (Studio Handot) | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
 | 2026-09-28 | 목탁치기. - 불계연경 | `[미확인]` | 원본 조사(정민규)에 출처 없음 |
 | 2026-09-29 | Google Play 앱 상세 (WebFetch) | play.google.com | 페이지가 잘려 추출 실패 → curl로 원문 HTML을 받아 설명문 확인 |
+
+## 2026-10-06 랜딩 글꼴·영상 출처
+
+- 2026-10-06 · 랜딩 자체 호스팅 글꼴: [Pretendard 공식 배포](https://github.com/orioncactus/pretendard) · [Variable WOFF2](https://raw.githubusercontent.com/orioncactus/pretendard/main/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) · [OFL 라이선스](https://raw.githubusercontent.com/orioncactus/pretendard/main/LICENSE). 원본 글꼴 및 라이선스를 함께 보관.
+- 2026-10-06 · 랜딩 실사 컷신 소스 [단일 출처]: [Close Up Shot of Burning Paper — Hardlight](https://www.pexels.com/video/close-up-shot-of-burning-paper-8829001/). [원본 MP4](https://videos.pexels.com/video-files/8829001/8829001-uhd_3840_2160_25fps.mp4). [Pexels License](https://www.pexels.com/license/)의 무료 웹 사용·편집 허용 확인. 0~21.6초를 약 5.4초로 축약하고 배경색 합성·전후 페이드·음소거 처리. AI 생성물이 아닌 기존 영상 편집본.
+- 2026-10-06 · 비교 후 미사용: [Joji Graison — Close Up Video of a Paper Burning](https://www.pexels.com/video/close-up-video-of-a-paper-burning-10229380/), [Pixabay Paper burning](https://pixabay.com/videos/paper-burning-burn-fire-page-book-198079/).
