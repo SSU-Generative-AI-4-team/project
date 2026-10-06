@@ -106,3 +106,10 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 - 2026-10-06 · 랜딩 자체 호스팅 글꼴: [Pretendard 공식 배포](https://github.com/orioncactus/pretendard) · [Variable WOFF2](https://raw.githubusercontent.com/orioncactus/pretendard/main/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) · [OFL 라이선스](https://raw.githubusercontent.com/orioncactus/pretendard/main/LICENSE). 원본 글꼴 및 라이선스를 함께 보관.
 - 2026-10-06 · 랜딩 실사 컷신 소스 [단일 출처]: [Close Up Shot of Burning Paper — Hardlight](https://www.pexels.com/video/close-up-shot-of-burning-paper-8829001/). [원본 MP4](https://videos.pexels.com/video-files/8829001/8829001-uhd_3840_2160_25fps.mp4). [Pexels License](https://www.pexels.com/license/)의 무료 웹 사용·편집 허용 확인. 0~21.6초를 약 5.4초로 축약하고 배경색 합성·전후 페이드·음소거 처리. AI 생성물이 아닌 기존 영상 편집본.
 - 2026-10-06 · 비교 후 미사용: [Joji Graison — Close Up Video of a Paper Burning](https://www.pexels.com/video/close-up-video-of-a-paper-burning-10229380/), [Pixabay Paper burning](https://pixabay.com/videos/paper-burning-burn-fire-page-book-198079/).
+
+## 2026-10-06 PRD v0.2 출처
+
+- 2026-10-06 · 석가머니 App Store 원문 확인 (기존 `[미확인]` 해소): [Seokgamoney: Buddha Luck — App Store](https://apps.apple.com/us/app/seokgamoney-buddha-luck/id6778568911). 부제 "Angry? Tap. Anxious? Spin.", 인앱 연등 $0.49 · 소원 연등 $6.99, 평점 4.9(48개), 개발사 (주)버그홀.
+- 2026-10-06 · 감정 쓰레기통 (Studio Handot) App Store 원문 확인 (기존 `[미확인]` 해소): [App Store id6743365455](https://apps.apple.com/kr/app/%EA%B0%90%EC%A0%95-%EC%93%B0%EB%A0%88%EA%B8%B0%ED%86%B5/id6743365455). 무료, 광고 목적 데이터 수집 표기. **팀 문서에서 "감쓰" 링크로 쓰던 주소가 이 앱이었음** → 감쓰 수치(유료, 인기 48위) 출처 재확인 필요.
+- 2026-10-06 · 해치 캐릭터 사용 조건: [서울시 해치 캐릭터 사용규정](https://www.seoul.go.kr/seoul/symbol_ca.do). 공공누리 4유형(출처표시 · 상업적 이용금지 · 변경금지).
+- 2026-10-06 · 한국사 소재 수요 신호 [단일 출처 계열: 언론 보도]: [뉴스1 — '한국사 이상현상 연구원' 베스트셀러 1위](https://www.news1.kr/life-culture/book/6271702), [네이트 뉴스 — 2주 연속 1위](https://m.news.nate.com/view/20260904n21145). 20대 여성 구매 비율 50.6%.
