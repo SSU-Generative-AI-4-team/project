@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>해칫 로고 목업</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS Medium'),local('YNAMNEWS'),local('영남일보체(M)'),url('../font/YNAMNEWS(M).otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS(B) Bold'),local('YNAMNEWS(B)'),local('영남일보체(B)'),url('../font/YNAMNEWS(B).otf') format('opentype');font-weight:700;font-display:swap}
+:root{--haechi-gold:#F0B237;--haechi-red:#EB4531;--haechi-blue:#2A6090;--haechi-ivory:#FDF5E9;--hanji-cream:#F2EBDD;--ink-black:#2A2826;--warm-black:#38322B;--color-bg:#F4F3F0;--color-text:var(--ink-black);--color-muted:rgba(42,40,38,.72);--color-line:rgba(42,40,38,.15);--hanji-texture:url('../../asset/hanji%20texture%20background.jpg');--font:Yeongnam,'Gowun Dodum',sans-serif;--logo:url('haechi_yellow.png')}
+*{box-sizing:border-box}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font:400 15px/1.7 var(--font);word-break:keep-all;-webkit-font-smoothing:antialiased}
+h1,h2,p{margin:0}h1,h2{font-weight:400}
+.wrap{width:min(1080px,calc(100% - 32px));margin:auto;padding:48px 0 64px}
+.head{display:flex;align-items:center;gap:16px;padding-bottom:24px;border-bottom:1px solid var(--color-line)}
+.head img{width:48px;height:auto}
+.head h1{font-size:28px;letter-spacing:-.02em}
+.head p{font-size:13px;color:var(--color-muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.panel{display:flex;flex-direction:column;gap:16px}
+.stage{border-radius:8px;border:1px solid var(--color-line);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.panel h2{font-size:17px}
+.panel p{font-size:13px;color:var(--color-muted)}
+.logo{background:var(--logo) center/contain no-repeat}
+
+/* 1. 앱 아이콘: 폰 홈 화면 */
+.s-icon{background:linear-gradient(160deg,#2A6090 0%,#1d4a72 100%)}
+.phone{width:62%;aspect-ratio:9/19.5;background:linear-gradient(170deg,#cfdcea,#f2ebdd 70%);border-radius:28px;border:6px solid var(--warm-black);padding:28px 12px 12px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.time{font-size:11px;text-align:center;color:var(--ink-black);margin-top:-16px;margin-bottom:8px}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px}
+.app{display:flex;flex-direction:column;align-items:center;gap:3px}
+.app i{display:block;width:100%;aspect-ratio:1;border-radius:22%;background:rgba(42,40,38,.14)}
+.app span{font-size:8px;line-height:1.2;color:var(--ink-black);font-style:normal}
+.app.me i{background:var(--logo) center/112% no-repeat;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.dock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:rgba(253,245,233,.6);border-radius:16px;padding:6px}
+.dock i{display:block;aspect-ratio:1;border-radius:22%;background:rgba(42,40,38,.14)}
+
+/* 2. 명함 */
+.s-card{background:var(--hanji-cream);flex-direction:column;gap:18px}
+.card{width:80%;aspect-ratio:9/5;border-radius:6px;box-shadow:0 10px 24px rgba(42,40,38,.18),0 1px 2px rgba(42,40,38,.12)}
+.card.front{background:var(--haechi-ivory) var(--hanji-texture) center/cover;display:flex;align-items:center;justify-content:center;gap:12px;transform:rotate(-4deg)}
+.card.front .logo{width:26%;aspect-ratio:603/551}
+.card.front b{font-weight:700;font-size:22px;color:var(--ink-black);letter-spacing:-.02em}
+.card.front small{display:block;font-size:9px;color:var(--color-muted);letter-spacing:.08em}
+.card.back{background:var(--haechi-blue);color:var(--haechi-ivory);padding:7% 8%;display:flex;flex-direction:column;justify-content:space-between;transform:rotate(3deg)}
+.card.back .line{font-size:12px;line-height:1.5}
+.card.back .meta{display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;opacity:.85}
+.card.back .logo{width:18%;aspect-ratio:603/551}
+
+/* 3. SNS 프로필 */
+.s-sns{background:#e6e1d6}
+.screen{width:68%;aspect-ratio:9/16;background:var(--haechi-ivory);border-radius:20px;border:5px solid var(--warm-black);padding:14px 10px;display:flex;flex-direction:column;gap:9px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2)}
+.handle{font-size:11px;font-weight:700;text-align:center}
+.prof{display:flex;align-items:center;gap:10px}
+.avatar{width:30%;aspect-ratio:1;border-radius:50%;background:var(--haechi-gold) var(--logo) center/128% no-repeat;outline:2px solid var(--haechi-ivory);box-shadow:0 0 0 3.5px var(--haechi-gold)}
+.stats{flex:1;display:flex;justify-content:space-around;text-align:center;font-size:8px;line-height:1.3}
+.stats b{display:block;font-size:11px}
+.bio{font-size:9px;line-height:1.45}
+.bio b{font-weight:700}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.btns span{font-size:8.5px;text-align:center;padding:4px 0;border-radius:5px;background:var(--hanji-cream)}
+.btns span:first-child{background:var(--haechi-blue);color:var(--haechi-ivory)}
+.feed{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:0 -10px}
+.feed i{display:block;aspect-ratio:1;background:center/cover no-repeat}
+.feed .t1{background-color:var(--haechi-blue)}.feed .t2{background-color:var(--haechi-gold)}.feed .t3{background-color:var(--hanji-cream)}
+
+.stage .line,.stage .bio{color:inherit}
+.note{margin-top:32px;padding-top:24px;border-top:1px solid var(--color-line);font-size:13px;color:var(--color-muted)}
+.note li{margin:4px 0}
+@media(max-width:860px){.grid{grid-template-columns:1fr;max-width:430px;margin-inline:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <img src="haechi_yellow.png" alt="해칫 로고">
+    <div><h1>해칫 로고 목업</h1><p>앱 아이콘 · 명함 · SNS 프로필 — 확정 로고 haechi_yellow.png를 다시 그리지 않고 그대로 얹음</p></div>
+  </header>
+
+  <section class="grid">
+    <article class="panel">
+      <div class="stage s-icon" aria-label="폰 홈 화면에 놓인 해칫 앱 아이콘">
+        <div class="phone">
+          <div>
+            <div class="time">9:41</div>
+            <div class="apps">
+              <div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div>
+              <div class="app"><i></i><span>&nbsp;</span></div><div class="app me"><i></i><span>해칫</span></div><div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div>
+              <div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div><div class="app"><i></i><span>&nbsp;</span></div>
+            </div>
+          </div>
+          <div class="dock"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <h2>① 앱 아이콘</h2>
+      <p>둥근 사각형 원본 비율 그대로. 작은 크기에서도 해치 얼굴과 막대가 읽히는지 본다.</p>
+    </article>
+
+    <article class="panel">
+      <div class="stage s-card" aria-label="해칫 명함 앞면과 뒷면">
+        <div class="card front"><div class="logo"></div><div><b>해칫</b><small>HATCH EAT</small></div></div>
+        <div class="card back">
+          <p class="line">한지에 적으면<br>해치가 먹어요</p>
+          <div class="meta"><span>숭실대 생성형 AI 4팀</span><div class="logo"></div></div>
+        </div>
+      </div>
+      <h2>② 명함</h2>
+      <p>앞면 아이보리 한지 + 로고, 뒷면 해치 블루 + 카피. 컬러 가이드의 버튼 조합(블루 위 아이보리)을 따랐다.</p>
+    </article>
+
+    <article class="panel">
+      <div class="stage s-sns" aria-label="SNS 프로필 화면의 해칫 원형 프로필 사진">
+        <div class="screen">
+          <div class="handle">hatch_eat</div>
+          <div class="prof">
+            <div class="avatar"></div>
+            <div class="stats"><div><b>—</b>게시물</div><div><b>—</b>팔로워</div><div><b>—</b>팔로잉</div></div>
+          </div>
+          <p class="bio"><b>해칫</b><br>한지에 적으면 해치가 먹어요.<br>적은 것은 아무도 읽지 않소.</p>
+          <div class="btns"><span>팔로우</span><span>메시지</span></div>
+          <div class="feed">
+            <i style="background-image:url('../key%20visual/haechi_1x1.png')"></i><i class="t1"></i><i style="background-image:url('../key%20visual/haechi_9x16.png')"></i>
+            <i class="t2"></i><i style="background-image:url('../key%20visual/haechi_16x9.png')"></i><i class="t3"></i>
+            <i class="t3"></i><i class="t2"></i><i class="t1"></i>
+          </div>
+        </div>
+      </div>
+      <h2>③ SNS 프로필</h2>
+      <p>원형으로 자르면 둥근 모서리가 잘려 나가고 얼굴만 남는다. 피드 칸은 키 비주얼과 브랜드 색으로 채운 자리표시.</p>
+    </article>
+  </section>
+
+  <ul class="note">
+    <li>계정 이름 hatch_eat, 숫자, 명함 문구는 예시다. 실제 계정이 없고 팔로워도 지어내지 않았다.</li>
+    <li>로고는 PNG(603×551) 한 장이라 아주 크게 인쇄하면 흐려질 수 있다. 인쇄용은 벡터나 고해상도 파일이 필요하다 (`Design/decisions/logo-decision.md` 남은 일 2).</li>
+  </ul>
+</main>
+</body>
+</html>
