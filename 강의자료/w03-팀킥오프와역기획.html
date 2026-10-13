@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3주차 — 팀으로 시작하기 · 역기획과 아이데이션</title>
+<style>
+:root{
+  --white:#FFFFFF; --navy:#1A2130; --gray:#6B7280; --lgray:#9AA1AB;
+  --card:#F2F3F5; --line:#E5E7EB; --blue:#2E5CB8; --bluebg:#EAF0FA;
+  --arrow:#C9CDD4; --foot:#C3C8CF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#DEE1E5;overflow:hidden}
+body{font-family:'Pretendard','Malgun Gothic','맑은 고딕',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--navy);-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1280px;height:720px;position:relative;transform-origin:center center;background:var(--white)}
+.slide{position:absolute;inset:0;background:var(--white);padding:60px 58px 0 58px;display:none}
+.slide.active{display:block}
+.kicker{font-size:17px;font-weight:700;letter-spacing:.14em;color:var(--lgray);text-transform:uppercase;margin-bottom:22px}
+.title{font-size:40px;font-weight:800;line-height:1.24;letter-spacing:-.01em}
+.title.sm{font-size:34px}
+.title em{font-style:normal;color:var(--blue)}
+.sub{font-size:19px;color:var(--gray);line-height:1.6;margin-top:14px}
+.sub em{font-style:normal;color:var(--navy);font-weight:700}
+.hr{height:1px;background:var(--line);margin:26px 0}
+.body{margin-top:30px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--card);padding:24px 24px 26px;border:0}
+.card.blue{background:var(--bluebg);border:1px solid var(--blue)}
+.card.plain{background:var(--white);border:1px solid var(--line)}
+.card h3{font-size:21px;font-weight:800;line-height:1.35;margin-bottom:10px}
+.card h3 em{font-style:normal;color:var(--blue)}
+.card p{font-size:16.5px;color:var(--gray);line-height:1.62}
+.card p strong{color:var(--navy);font-weight:700}
+.card ul{margin-top:10px}
+.num{font-family:Arial,Helvetica,sans-serif;font-size:17px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:12px;display:block}
+.bignum{font-family:Arial,Helvetica,sans-serif;font-weight:700;color:var(--blue);font-size:76px;line-height:1}
+.bignum.sm{font-size:56px}
+ul{list-style:none}
+ul li{font-size:17.5px;line-height:1.72;color:var(--gray);padding-left:16px;position:relative}
+ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;background:var(--arrow)}
+ul li strong{color:var(--navy);font-weight:700}
+ul li em{font-style:normal;color:var(--blue);font-weight:700}
+ul.big li{font-size:20px;line-height:1.85}
+.rows{margin-top:26px}
+.row{display:flex;gap:18px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .rt{font-size:19px;font-weight:800;margin-bottom:4px}
+.row .rd{font-size:16px;color:var(--gray);line-height:1.55}
+.iconbox{width:38px;height:38px;background:var(--bluebg);flex:0 0 38px;display:flex;align-items:center;justify-content:center;color:var(--blue)}
+.iconbox svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:square;stroke-linejoin:miter}
+.quote{background:var(--card);padding:38px 40px;position:relative}
+.quote .qm{font-family:Arial;font-size:64px;color:var(--blue);line-height:.8;font-weight:700}
+.quote p{font-size:28px;font-weight:800;line-height:1.5;margin-top:14px}
+.quote cite{display:block;font-style:normal;font-size:16px;color:var(--gray);margin-top:16px}
+.flow{display:flex;align-items:center;gap:0;margin-top:8px}
+.fbox{flex:1;background:var(--card);padding:18px 14px;text-align:center}
+.fbox.gate{background:var(--bluebg);border:1px solid var(--blue)}
+.fbox .ft{font-size:18px;font-weight:800}
+.fbox .fd{font-size:14px;color:var(--gray);margin-top:6px;line-height:1.45}
+.arrow{width:34px;height:1.5px;background:var(--arrow);position:relative;flex:0 0 34px}
+.arrow::after{content:"";position:absolute;right:0;top:-3.5px;border-left:8px solid var(--arrow);border-top:4px solid transparent;border-bottom:4px solid transparent}
+.tbl{width:100%;border-collapse:collapse;margin-top:22px}
+.tbl th{font-size:15px;text-align:left;color:var(--lgray);font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0 14px 12px;border-bottom:1px solid var(--line)}
+.tbl td{font-size:16.5px;color:var(--gray);line-height:1.55;padding:15px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td.k{color:var(--navy);font-weight:800;font-size:17.5px;white-space:nowrap}
+.tbl td em{font-style:normal;color:var(--blue);font-weight:700}
+.tbl.compact td{padding:7px 12px;font-size:14.5px;line-height:1.45}
+.tbl.compact td.k{font-size:15px}
+.tbl.compact th{padding-bottom:8px;font-size:13.5px}
+.chip{display:inline-block;background:var(--bluebg);color:var(--blue);font-size:14px;font-weight:700;padding:5px 11px;margin-right:7px}
+.chip.g{background:var(--card);color:var(--gray)}
+.note{font-size:14px;color:var(--lgray);margin-top:18px;line-height:1.5}
+.src{font-size:13px;color:var(--lgray);line-height:1.55;margin-top:14px}
+.src a,a.link{color:var(--lgray);text-decoration:underline;word-break:break-all}
+.card a{color:var(--blue);text-decoration:underline;word-break:break-all}
+.tl{display:flex;gap:0;margin-top:6px}
+.tl .t{flex:1;padding:0 10px;border-top:2px solid var(--line);position:relative}
+.tl .t.on{border-top-color:var(--blue)}
+.tl .t::before{content:"";position:absolute;top:-5px;left:10px;width:8px;height:8px;background:var(--arrow)}
+.tl .t.on::before{background:var(--blue)}
+.tl .y{font-family:Arial;font-size:15px;font-weight:700;color:var(--blue);margin:12px 0 6px}
+.tl .d{font-size:14px;color:var(--gray);line-height:1.5}
+.tl .d b{color:var(--navy)}
+.doit{background:var(--bluebg);border-left:3px solid var(--blue);padding:14px 18px;margin-top:18px;font-size:16.5px;color:var(--navy);line-height:1.6}
+.doit b{color:var(--blue)}
+.copybox{position:relative}
+.copybtn{position:absolute;right:12px;top:12px;font-family:inherit;font-size:13px;font-weight:700;
+  color:var(--blue);background:#fff;border:1px solid var(--blue);padding:6px 13px;cursor:pointer;z-index:5}
+.copybtn:hover{background:var(--bluebg)}
+.copybtn.done{background:var(--blue);color:#fff}
+.copytext{font-family:'Consolas','Malgun Gothic',monospace;font-size:15px;color:var(--navy);line-height:1.85;white-space:pre-wrap}
+.copytext b{color:var(--blue);font-weight:700}
+.map{position:relative;height:288px;border-left:1.5px solid var(--line);border-bottom:1.5px solid var(--line);margin:28px 112px 38px 112px}
+.map .ax{position:absolute;font-size:13.5px;font-weight:700;color:var(--lgray);letter-spacing:.04em}
+.map .ax.t{top:-24px;left:50%;transform:translateX(-50%)}
+.map .ax.b{bottom:-26px;left:50%;transform:translateX(-50%)}
+.map .ax.l{right:calc(100% + 14px);top:50%;transform:translateY(-50%);width:98px;text-align:right}
+.map .ax.r{left:calc(100% + 14px);top:50%;transform:translateY(-50%);width:98px}
+.map .pt{position:absolute;transform:translate(-50%,-50%);text-align:center}
+.map .pt i{display:block;width:11px;height:11px;background:var(--arrow);margin:0 auto 6px}
+.map .pt span{font-size:14px;color:var(--gray);white-space:nowrap}
+.map .pt.us i{background:var(--blue);width:15px;height:15px}
+.map .pt.us span{color:var(--blue);font-weight:700}
+.foot{position:absolute;left:58px;right:58px;bottom:24px;display:flex;justify-content:space-between;
+  font-family:Arial,Helvetica,sans-serif;font-size:13px;color:var(--foot)}
+.slide.cover,.slide.nofoot{padding-top:0}
+.slide.cover .foot,.slide.nofoot .foot{display:none}
+.cover{display:none;flex-direction:column;justify-content:center;padding:0 58px}
+.cover.active{display:flex}
+.cover .kicker{margin-bottom:26px}
+.cover h1{font-size:52px;font-weight:800;line-height:1.22;letter-spacing:-.015em}
+.cover h1 em{font-style:normal;color:var(--blue)}
+.cover .meta{font-size:18px;color:var(--gray);margin-top:22px;line-height:1.7}
+.sect{display:none;flex-direction:column;justify-content:center;padding:0 58px}
+.sect.active{display:flex}
+.sect .bignum{margin-bottom:18px}
+.sect h2{font-size:44px;font-weight:800;line-height:1.25}
+.sect h2 em{font-style:normal;color:var(--blue)}
+.sect .sub{max-width:800px}
+/* UI */
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);z-index:50;transition:width .18s}
+#hud{position:fixed;right:16px;bottom:12px;font-family:Arial;font-size:12px;color:#8A9099;z-index:50}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38%;overflow:auto;background:#1A2130;color:#E6E9EE;
+  padding:18px 24px;font-size:15.5px;line-height:1.66;display:none;z-index:60;white-space:pre-wrap}
+#notes.on{display:block}
+#notes b{color:#8FB3F0}
+#grid{position:fixed;inset:0;background:#F5F6F8;overflow:auto;padding:24px;display:none;z-index:70;
+  grid-template-columns:repeat(4,1fr);gap:14px}
+#grid.on{display:grid}
+#grid .g{background:#fff;border:1px solid var(--line);padding:14px;cursor:pointer;height:120px;overflow:hidden}
+#grid .g .gn{font-family:Arial;font-size:11px;color:var(--lgray)}
+#grid .g .gt{font-size:14px;font-weight:700;margin-top:6px;line-height:1.35}
+#help{position:fixed;left:16px;bottom:12px;font-size:11.5px;color:#9AA1AB;z-index:50}
+@media print{
+  html,body{overflow:visible;background:#fff}
+  #stage{position:static;display:block}
+  #deck{width:auto;height:auto;transform:none!important}
+  .slide{position:relative;display:block!important;width:1280px;height:720px;page-break-after:always;break-after:page}
+  .cover,.sect{display:flex!important}
+  #bar,#hud,#help,#notes,#grid,.copybtn{display:none!important}
+  @page{size:1280px 720px;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section class="slide cover active" data-notes="시작 전 세팅이 중요한 주입니다. 학생들이 들어올 때부터 팀별로 앉게 해야 합니다.
+칠판이나 화면에 팀 번호와 자리 배치를 미리 띄워두세요. 안 그러면 앞부분 10분이 자리 찾느라 날아갑니다.
+첫 마디: '오늘부터 팀으로 앉습니다. 지난주에 공개한 팀 편성에 이의 주신 분들은 조정 반영했고요.'
+그리고 오늘의 성격을 미리 말해줍니다. 오늘은 무거운 걸 하지 않습니다. 서로 알아가고, 규칙을 정하고, 아이디어를 펼치는 날이라고.">
+  <div class="kicker">WEEK 03 — 팀 킥오프 &amp; 기획</div>
+  <h1>팀으로 시작하기<br>— <em>역기획</em>과 아이데이션</h1>
+  <div class="meta">생성형 AI를 활용한 크리에이팅/마케팅 (대학생 창직)<br>
+  이해든 · AX is 대표</div>
+</section>
+
+<section class="slide" data-notes="오늘의 지도. 세 블록으로 진행한다고 안내.
+01 팀 킥오프 — 인사, 팀 룰, 역할. 이게 오늘의 절반입니다.
+02 발산과 수렴 — 아이디어를 펼치고 좁히는 법.
+03 역기획 — 경쟁 서비스를 뜯어서 우리 자리를 찾는 법.
+그리고 오늘 성격을 다시 말합니다. '오늘 아이템을 반드시 정해야 하는 게 아닙니다. 정해지는 팀은 정하고 가고, 아직인 팀은 6주차까지 시간이 있습니다.'
+다만 한마디 덧붙이면 좋습니다. '빨리 정하면 그만큼 굴려볼 시간이 늘어납니다.'">
+  <div class="kicker">TODAY</div>
+  <div class="title">오늘은 <em>팀을 만들고</em> 아이디어를 펼칩니다</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">01</span><h3>팀 킥오프</h3><p>인사 · 팀 룰 · 리드 역할<br>오늘의 절반이 여기입니다</p></div>
+      <div class="card"><span class="num">02</span><h3>발산과 수렴</h3><p>아이디어를 <strong>먼저 넓히고</strong>, 그다음 좁히는 법</p></div>
+      <div class="card blue"><span class="num">03</span><h3>역기획</h3><p>경쟁 서비스를 뜯어서 <em>우리 자리</em>를 찾는 법</p></div>
+    </div>
+    <div class="doit">오늘 아이템을 <b>반드시 정해야 하는 게 아닙니다.</b> 정해지는 팀은 정하고 가고, 아직인 팀은 6주차까지 시간이 있습니다.<br>다만 — <b>빨리 정할수록 굴려볼 시간이 늘어납니다.</b></div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '먼저 팀부터 만들겠습니다. 지금 옆에 앉은 분들이 15주를 같이 갈 사람들입니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">01</div>
+  <h2>팀 <em>킥오프</em></h2>
+  <div class="sub">15주를 같이 갈 사람들과의 첫 시간</div>
+</section>
+
+<section class="slide" data-notes="팀으로 하는 이유를 먼저 말해줍니다. 1주차에 봤던 1인 기업 사례와 충돌하는 것처럼 보일 수 있어서 반드시 짚어야 합니다.
+&lsquo;1주차에 혼자 만드는 사람들 얘기를 했는데 왜 팀으로 하나요?&rsquo; 이 질문이 나올 겁니다.
+답은 이렇습니다. 1인 기업도 역할을 나눕니다. 다만 사람 대신 에이전트에게 나눌 뿐이에요. 2주차에 본 에이전트 조직도 기억하시죠. 총괄, 실행, 검증. 혼자 하는 사람도 그 구조를 씁니다.
+팀플은 그 역할 나누기를 사람과 먼저 연습하는 겁니다. 사람에게 일을 나눠주지 못하는 사람은 에이전트에게도 못 나눠줘요. 무엇을 받고 무엇을 내놓는지 정의하는 훈련이 똑같으니까요.
+그리고 세 가지 실용적인 이유가 있습니다.
+관점의 수 — 혼자면 자기 머릿속 것만 나옵니다.
+검증자 확보 — 2주차에 배웠죠. 만든 사람이 자기 결과물을 채점하면 후하게 줍니다. 옆에 다른 눈이 있어야 합니다.
+완주 — 15주는 깁니다. 혼자면 6주차쯤 멈춥니다. 같이 하면 멈추기 어렵습니다.">
+  <div class="kicker">WHY TEAM</div>
+  <div class="title">1주차엔 혼자 하는 사람들을 봤는데, <em>왜 팀</em>인가</div>
+  <div class="body">
+    <div class="card blue" style="padding:22px 26px">
+      <h3>1인 기업도 역할을 나눕니다 — 사람 대신 <em>에이전트</em>에게</h3>
+      <p style="font-size:17px;color:var(--navy);line-height:1.7">2주차 에이전트 조직도 기억하시죠. 총괄 · 실행 · 검증. 혼자 하는 사람도 그 구조를 씁니다.<br>
+      팀플은 <em>그 역할 나누기를 사람과 먼저 연습하는 것</em>입니다. 사람에게 일을 나눠주지 못하는 사람은 에이전트에게도 못 나눠줍니다.</p>
+    </div>
+    <div class="grid-3" style="margin-top:20px">
+      <div class="card"><span class="num">01</span><h3>관점의 수</h3><p>혼자면 <strong>자기 머릿속에 있는 것만</strong> 나옵니다. 세 사람이면 세 개의 &lsquo;내 불편&rsquo;에서 출발합니다</p></div>
+      <div class="card"><span class="num">02</span><h3>검증자 확보</h3><p>만든 사람이 자기 결과물을 채점하면 <strong>후하게 줍니다.</strong> 옆에 다른 눈이 있어야 합니다 — 2주차에 배운 그대로</p></div>
+      <div class="card"><span class="num">03</span><h3>완주</h3><p>15주는 깁니다. 혼자면 <strong>6주차쯤 멈춥니다.</strong> 같이 하면 멈추기가 어렵습니다</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="첫 번째 사례, 에어비앤비. 이야기로 풀어주세요.
+2007년 샌프란시스코. 조 게비아와 브라이언 체스키는 디자인 스쿨을 같이 나온 룸메이트였습니다. 둘 다 디자이너였고, 월세를 못 낼 상황이었어요.
+그때 도시에서 큰 디자인 컨퍼런스가 열려서 호텔이 전부 만실이 됐습니다. 둘은 거실에 에어매트리스 세 개를 깔고 아침 식사를 제공하는 조건으로 방문객을 받았어요. 그래서 처음 이름이 &lsquo;에어베드 앤 브렉퍼스트&rsquo;였습니다.
+여기까지는 디자이너 둘의 아이디어예요. 그런데 이걸 사이트로 만들 사람이 없었습니다. 그래서 엔지니어인 네이선 블레차르지크가 합류합니다. 셋이 됐죠.
+그런데 처음엔 안 됐습니다. 뉴욕에 숙소가 몇 개 올라와 있었는데 예약이 안 들어왔어요. 두 창업자가 직접 뉴욕에 가서 호스트 집을 방문하고, 사진을 대신 찍어줬습니다. 디자이너의 눈으로요. 그러자 예약이 늘기 시작했습니다.
+학생들에게 짚을 것: 사진을 찍어주자는 판단은 디자이너였기 때문에 나왔고, 그걸 서비스에 반영하는 건 엔지니어가 있어서 가능했습니다. 셋 중 하나만 없었어도 안 됐어요.">
+  <div class="kicker">CASE 01 — Airbnb (2007)</div>
+  <div class="title">디자이너 둘이 시작했고, <em>엔지니어가</em> 붙어서 됐다</div>
+  <div class="body">
+    <div class="rows" style="margin-top:2px">
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg></div><div><div class="rt">출발 — 월세를 못 내던 디자이너 둘</div><div class="rd">샌프란시스코에 디자인 컨퍼런스가 열려 호텔이 만실. 거실에 <strong>에어매트리스 세 개</strong>를 깔고 아침을 주며 손님을 받았습니다 — 그래서 이름이 &lsquo;Air Bed &amp; Breakfast&rsquo;</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 20v-2a4 4 0 014-4h2"/><circle cx="9" cy="7" r="3"/><path d="M14 14h6M17 11v6"/></svg></div><div><div class="rt">합류 — 사이트를 만들 사람이 없었다</div><div class="rd">엔지니어 네이선 블레차르지크가 합류해 <strong>셋</strong>이 됩니다. 디자이너 둘 + 엔지니어 하나</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/></svg></div><div><div class="rt">전환 — 예약이 안 들어오자 직접 뉴욕에 갔다</div><div class="rd">호스트 집을 방문해 <strong>사진을 대신 찍어줬습니다.</strong> 디자이너의 눈으로요. 그러자 예약이 늘기 시작했습니다</div></div></div>
+    </div>
+    <div class="doit">&lsquo;사진을 찍어주자&rsquo;는 판단은 <b>디자이너라서</b> 나왔고, 그걸 서비스에 넣는 건 <b>엔지니어가 있어서</b> 가능했습니다. 셋 중 하나만 없었어도 안 됐습니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="두 번째 사례, 인스타그램. 이건 팀 사례이면서 역기획 사례입니다.
+2010년, 케빈 시스트롬은 &lsquo;버븐&rsquo;이라는 앱을 만들고 있었습니다. 위치 체크인, 약속 잡기, 사진 올리기, 포인트 쌓기 — 기능이 많은 앱이었어요.
+마이크 크리거가 엔지니어로 합류합니다. 둘이 됐죠.
+둘은 사용자들이 실제로 뭘 하는지 데이터를 봤습니다. 체크인은 거의 안 하고, 사진 올리기와 필터만 쓰고 있었어요.
+그래서 나머지를 전부 버렸습니다. 사진, 필터, 공유. 이 세 개만 남기고 8주 만에 새로 만들어 출시했습니다. 첫날에 수만 명이 가입했고, 2년 뒤 페이스북이 인수했습니다.
+학생들에게 짚을 것 두 가지.
+하나, 둘이서 8주였습니다. 여러분은 셋이서 15주예요.
+둘, 자기 서비스를 역기획한 겁니다. 사용자가 실제로 하는 행동을 뜯어보고, 빈자리가 아니라 &lsquo;진짜 쓰이는 자리&rsquo;를 찾은 거죠. 오늘 뒤에서 배울 역기획이 정확히 이 방법입니다.">
+  <div class="kicker">CASE 02 — Instagram (2010)</div>
+  <div class="title">둘이서 <em>8주</em>. 기능을 더한 게 아니라 뺐다</div>
+  <div class="body">
+    <div class="rows" style="margin-top:2px">
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div><div class="rt">출발 — 기능이 많은 앱 &lsquo;버븐&rsquo;</div><div class="rd">위치 체크인 · 약속 잡기 · 사진 · 포인트. 케빈 시스트롬이 만들고 있었고, 엔지니어 마이크 크리거가 합류해 <strong>둘</strong>이 됩니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></div><div><div class="rt">관찰 — 사용자가 실제로 뭘 하는지 봤다</div><div class="rd">체크인은 거의 안 하고 <strong>사진 올리기와 필터만</strong> 쓰고 있었습니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div><div><div class="rt">결정 — 나머지를 전부 버렸다</div><div class="rd">사진 · 필터 · 공유 세 개만 남기고 <strong>8주 만에 새로 만들어 출시.</strong> 첫날 수만 명 가입, 2년 뒤 페이스북 인수</div></div></div>
+    </div>
+    <div class="doit">둘이서 8주였습니다. 여러분은 셋이서 15주예요.<br>그리고 이건 <b>자기 서비스를 역기획한 사례</b>입니다 — 사용자가 실제로 하는 행동을 뜯어보고 &lsquo;진짜 쓰이는 자리&rsquo;를 찾았습니다. 오늘 뒤에서 배울 방법이 정확히 이것입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="세 번째 사례, 당근마켓. 국내 사례라 학생들이 가장 체감합니다.
+2015년, 김용현과 김재현. 둘 다 카카오에서 일하던 사람들이었어요. 그런데 첫 서비스는 지금의 당근마켓이 아니었습니다.
+&lsquo;판교장터&rsquo;라는 이름으로, 판교 IT 회사 직장인들끼리 중고거래하는 작은 서비스였습니다. 왜 판교였냐면 — 회사 사내 게시판에서 직원들이 중고거래하는 걸 봤거든요. 같은 회사 사람이니까 믿고 거래하는 거였죠. 그걸 회사 밖으로 꺼낸 겁니다.
+그런데 쓰다 보니 판교 직장인이 아닌 사람들이 들어오기 시작했어요. 판교 근처에 사는 주부들이요. 그래서 &lsquo;회사&rsquo;가 아니라 &lsquo;동네&rsquo;가 기준이라는 걸 알게 됐습니다. 이름을 당근마켓으로 바꾸고 동네 단위로 확장했어요.
+학생들에게 짚을 것: 처음부터 전국 서비스를 만들지 않았습니다. 판교 한 곳에서 시작했고, 사용자가 예상과 다르게 움직이는 걸 보고 방향을 바꿨어요. 오늘 배울 &lsquo;세 개의 체&rsquo; 중 세 번째, &lsquo;2주 안에 작동시킬 수 있나&rsquo;가 이 이야기입니다.">
+  <div class="kicker">CASE 03 — 당근마켓 (2015)</div>
+  <div class="title">전국이 아니라 <em>판교 한 곳</em>에서 시작했다</div>
+  <div class="body">
+    <div class="rows" style="margin-top:2px">
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></div><div><div class="rt">관찰 — 사내 게시판의 중고거래</div><div class="rd">카카오 출신 둘이 회사 게시판에서 직원들이 <strong>믿고 거래하는 것</strong>을 봤습니다. 같은 회사 사람이니까요</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div><div><div class="rt">시작 — &lsquo;판교장터&rsquo;</div><div class="rd">전국이 아니라 <strong>판교 IT 직장인만</strong> 쓰는 작은 서비스로 시작했습니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div><div><div class="rt">전환 — 예상 밖의 사용자</div><div class="rd">판교 근처에 사는 <strong>주부들</strong>이 들어오기 시작했습니다. 기준은 &lsquo;회사&rsquo;가 아니라 <strong>&lsquo;동네&rsquo;</strong>였던 겁니다 → 당근마켓</div></div></div>
+    </div>
+    <div class="doit">처음부터 전국 서비스를 만들지 않았습니다. <b>한 곳에서 시작하고, 사용자가 예상과 다르게 움직이는 걸 보고</b> 방향을 바꿨습니다.<br>오늘 배울 &lsquo;세 개의 체&rsquo; 중 세 번째 — <b>2주 안에 작동시킬 수 있나</b> — 가 이 이야기입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="학교 사례. 다른 전공이 섞일 때 창의성이 나온다는 걸 대학이 어떻게 설계했는지 보여줍니다.
+스탠퍼드 d.school. 2005년에 IDEO 창업자 데이비드 켈리가 만든 디자인 스쿨인데, 학위가 없습니다. 대신 규칙이 하나 있어요. 수업은 반드시 전공이 다른 학생들이 한 팀으로 듣습니다. 공대, 경영대, 의대, 인문대.
+가장 유명한 결과물이 &lsquo;임브레이스&rsquo;입니다. &lsquo;극한의 저비용 설계&rsquo;라는 수업에서 경영학, 공학, 의학 전공 학생들이 한 팀이 됐어요. 과제는 개발도상국 신생아 문제였습니다. 인큐베이터가 2천만 원인데 시골 병원엔 없었죠.
+공학 전공은 인큐베이터를 싸게 만들려고 했고, 의학 전공은 &lsquo;체온만 유지하면 된다&rsquo;고 했고, 경영 전공은 &lsquo;병원이 아니라 집에서 쓰게 하자&rsquo;고 했습니다. 셋이 합쳐진 답이 침낭처럼 생긴 보온기였어요. 가격은 인큐베이터의 1% 수준. 실제로 회사가 됐고 수십만 명의 아기에게 쓰였습니다.
+MIT 미디어랩은 아예 &lsquo;반학제&rsquo;를 표방합니다. 학제 간이 아니라 학제를 없앤다는 뜻이에요. 건축가, 음악가, 컴퓨터과학자가 한 연구실에 앉습니다.
+학생들에게: 여러분 팀도 전공이 다르다면 그게 약점이 아니라 이 학교들이 일부러 만든 조건입니다.">
+  <div class="kicker">CASE 04 — 대학이 일부러 설계한 조건</div>
+  <div class="title">전공이 다른 게 <em>약점이 아니라 설계</em>입니다</div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card">
+        <h3>스탠퍼드 d.school — 규칙이 하나 있다</h3>
+        <ul>
+          <li>학위가 없는 대신, 수업은 반드시 <strong>전공이 다른 학생들이 한 팀</strong>으로</li>
+          <li>&lsquo;극한의 저비용 설계&rsquo; 수업 — 경영·공학·의학 학생 한 팀에게 <strong>개발도상국 신생아 보온</strong> 과제</li>
+          <li>공학은 &ldquo;인큐베이터를 싸게&rdquo;, 의학은 &ldquo;체온만 유지하면 된다&rdquo;, 경영은 &ldquo;병원이 아니라 집에서&rdquo;</li>
+          <li>셋이 합쳐진 답 — <strong>침낭처럼 생긴 보온기 &lsquo;임브레이스&rsquo;</strong>. 인큐베이터의 1% 가격, 실제 회사가 되어 수십만 아기에게 쓰였습니다</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h3>MIT 미디어랩 — 아예 &lsquo;반학제&rsquo;</h3>
+        <ul>
+          <li>학제 <em>간</em>이 아니라 학제를 <em>없앤다</em>는 뜻</li>
+          <li>건축가 · 음악가 · 컴퓨터과학자가 <em>한 연구실</em>에 앉습니다</li>
+          <li>&ldquo;어느 과에도 속하지 않는 문제&rdquo;를 다루기 위해서</li>
+        </ul>
+        <div class="hr" style="margin:14px 0"></div>
+        <p style="font-size:16.5px;color:var(--navy)">여러분 팀의 전공이 다르다면, 그건 약점이 아니라 <em>이 학교들이 일부러 만든 조건</em>입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="오늘 팀에서 할 일 세 가지를 먼저 보여준다. 순서가 중요하다고 강조.
+많은 팀이 인사를 건너뛰고 바로 아이디어 회의로 갑니다. 그러면 누가 뭘 잘하는지 모른 채로 일을 나누게 되고, 나중에 '내가 왜 이걸 하고 있지'가 됩니다.
+순서를 지키세요. 알고 → 정하고 → 나눕니다.
+그리고 이 세 가지를 다 하면 팀 시트가 채워집니다. 오늘 나눠드릴 종이 한 장이에요.">
+  <div class="kicker">ORDER</div>
+  <div class="title">순서가 <em>중요합니다</em></div>
+  <div class="body">
+    <div class="flow">
+      <div class="fbox"><div class="ft">① 알고</div><div class="fd">서로 어떤 사람인지<br>먼저 안다</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">② 정하고</div><div class="fd">팀 룰을<br>먼저 만든다</div></div>
+      <div class="arrow"></div>
+      <div class="fbox gate"><div class="ft">③ 나눈다</div><div class="fd">리드 역할을<br>나눈다</div></div>
+    </div>
+    <div class="card plain" style="margin-top:24px;padding:20px 26px">
+      <p style="font-size:17.5px;color:var(--navy);line-height:1.7">많은 팀이 인사를 건너뛰고 <strong>바로 아이디어 회의</strong>로 갑니다.<br>
+      그러면 누가 뭘 잘하는지 모른 채로 일을 나누게 되고, 8주차쯤 <strong>&ldquo;내가 왜 이걸 하고 있지&rdquo;</strong>가 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="인사 단계. 그냥 '자기소개하세요'라고 하면 학과와 이름만 말하고 끝납니다. 질문을 줘야 합니다.
+세 가지를 물어보게 하세요.
+1) 내가 잘하는 것 — 거창할 필요 없습니다. 엑셀을 잘 다룬다, 발표를 안 떤다, 그림을 그릴 줄 안다.
+2) 해보고 싶은 것 — 이번 학기에 뭘 배워가고 싶은지. 이게 역할 분담의 진짜 기준이 됩니다.
+3) 못하거나 싫어하는 것 — 이걸 먼저 말하는 게 중요합니다. 나중에 터질 갈등을 미리 꺼내는 거예요.
+특히 3번을 강조하세요. '저는 밤에 연락 오는 게 힘들어요' 같은 말이 지금 나와야 합니다.
+시간을 재고 진행하되, 순회하면서 조용한 팀은 말을 걸어주세요.">
+  <div class="kicker">STEP 1 — 인사</div>
+  <div class="title">&ldquo;자기소개&rdquo; 말고 <em>이 세 가지</em>를 물어보세요</div>
+  <div class="body grid-3">
+    <div class="card"><span class="num">01</span><h3>내가 잘하는 것</h3><p>거창할 필요 없습니다.<br><strong>&ldquo;엑셀을 잘 다룬다&rdquo; &ldquo;발표할 때 안 떤다&rdquo; &ldquo;그림을 그릴 줄 안다&rdquo;</strong></p></div>
+    <div class="card"><span class="num">02</span><h3>해보고 싶은 것</h3><p>이번 학기에 무엇을 배워가고 싶은지.<br><strong>역할 분담의 진짜 기준</strong>이 됩니다</p></div>
+    <div class="card blue"><span class="num">03</span><h3>못하거나 싫은 것</h3><p><em>이걸 먼저 말하는 게 중요합니다.</em><br>&ldquo;밤에 연락 오는 게 힘들어요&rdquo; 같은 말이 <em>지금</em> 나와야 합니다</p></div>
+  </div>
+  <div class="note">3번은 나중에 터질 갈등을 <strong style="color:var(--navy)">미리 꺼내는 장치</strong>입니다. 어색해도 꼭 한 바퀴 돌리세요.</div>
+</section>
+
+<section class="slide" data-notes="팀 룰. 여기서 실제 사례를 들어주면 학생들이 진지해집니다.
+제가 본 팀 중에 8주차에 깨진 팀들이 있는데, 원인이 아이템이 나빠서가 아니었어요. 대부분 '연락이 안 된다', '나만 하는 것 같다', '누가 결정하는지 모르겠다' 이 세 가지였습니다.
+그래서 규칙을 먼저 정합니다. 네 가지만 정하면 됩니다.
+답장 기한 — 몇 시간 안에 답할 것인지.
+불참 공유 — 못 오면 언제까지 알릴 것인지.
+결정 방식 — 의견이 갈리면 어떻게 정할 것인지.
+기록 — 어디에 남길 것인지.
+중요한 건 '지킬 수 있는 것'으로 정하는 겁니다. '매일 밤 10시 회의' 같은 건 2주면 깨집니다.
+그리고 규칙은 갈등이 생겼을 때 사람을 탓하지 않고 규칙을 가리킬 수 있게 해줍니다. 그게 진짜 목적이에요.">
+  <div class="kicker">STEP 2 — 팀 룰</div>
+  <div class="title">8주차에 깨지는 팀의 이유는 <em>아이템이 아닙니다</em></div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card">
+        <h3>제가 본 이유 세 가지</h3>
+        <ul>
+          <li>&ldquo;연락이 안 된다&rdquo;</li>
+          <li>&ldquo;나만 하는 것 같다&rdquo;</li>
+          <li>&ldquo;누가 결정하는지 모르겠다&rdquo;</li>
+        </ul>
+        <div class="hr" style="margin:14px 0"></div>
+        <p>전부 <strong>규칙이 없어서</strong> 생긴 일입니다.</p>
+      </div>
+      <div class="card blue">
+        <h3>네 가지만 정하세요</h3>
+        <ul>
+          <li><em>답장 기한</em> — 몇 시간 안에 답할 것인가</li>
+          <li><em>불참 공유</em> — 못 오면 언제까지 알릴 것인가</li>
+          <li><em>결정 방식</em> — 의견이 갈리면 어떻게 정할 것인가</li>
+          <li><em>기록</em> — 어디에 남길 것인가</li>
+        </ul>
+      </div>
+    </div>
+    <div class="doit"><b>지킬 수 있는 것</b>으로 정하세요. &ldquo;매일 밤 10시 회의&rdquo; 같은 건 2주면 깨집니다.<br>규칙의 진짜 목적은 갈등이 생겼을 때 <b>사람을 탓하지 않고 규칙을 가리킬 수 있게</b> 하는 것입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="팀 룰을 &lsquo;알아서 정하세요&rsquo;라고 하면 대부분 &lsquo;열심히 하자&rsquo; 같은 걸 씁니다. 그건 규칙이 아니라 다짐이에요.
+규칙의 조건은 하나입니다. 지켰는지 안 지켰는지를 누가 봐도 알 수 있어야 합니다.
+&lsquo;성실하게 참여한다&rsquo;는 판정이 안 됩니다. &lsquo;24시간 안에 답한다&rsquo;는 판정이 됩니다.
+화면의 예시를 그대로 가져다 쓰라고 하세요. 복사 버튼이 있습니다. 다만 그대로 쓰지 말고 우리 팀에 맞게 숫자만 바꾸라고 하면 대부분 알아서 고칩니다.
+그리고 마지막 줄을 꼭 짚어주세요. &lsquo;규칙을 못 지킬 것 같으면 미리 말한다&rsquo; — 이 한 줄이 나머지 전부를 지탱합니다. 못 지키는 것보다 말 안 하는 게 문제니까요.">
+  <div class="kicker">팀 룰 예시</div>
+  <div class="title">&ldquo;열심히 하자&rdquo;는 규칙이 <em>아닙니다</em></div>
+  <div class="body">
+    <div class="sub" style="margin-top:0">규칙의 조건은 하나 — <em>지켰는지 안 지켰는지를 누가 봐도 알 수 있어야</em> 합니다.<br>
+    &ldquo;성실하게 참여한다&rdquo;는 판정이 안 됩니다. &ldquo;24시간 안에 답한다&rdquo;는 판정이 됩니다.</div>
+    <div class="card copybox" style="margin-top:20px;padding:22px 26px">
+      <button class="copybtn">복사</button>
+      <div class="copytext">1. 팀 채팅방 메시지에는 <b>24시간 안에</b> 답한다. 읽고 넘어가지 않는다.
+2. 모임에 못 오면 <b>하루 전까지</b> 공유한다. 당일 통보는 하지 않는다.
+3. 의견이 갈리면 <b>15분 토론 후 다수결</b>로 정하고, 정해지면 반대했던 사람도 따른다.
+4. 모든 결정과 파일은 <b>팀 노트 한 곳</b>에 남긴다. 카톡에만 있는 건 없는 것으로 친다.
+5. 매주 수업 전날, 각자 <b>한 일과 못 한 일</b>을 한 줄씩 올린다.
+6. 규칙을 못 지킬 것 같으면 <b>미리 말한다.</b></div>
+    </div>
+    <div class="doit">그대로 쓰셔도 되고, <b>숫자만 우리 팀에 맞게</b> 바꾸셔도 됩니다.<br>특히 마지막 줄 — <b>&ldquo;못 지킬 것 같으면 미리 말한다&rdquo;</b>가 나머지 전부를 지탱합니다. 못 지키는 것보다 말 안 하는 게 문제니까요.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="리드 역할. 오해를 먼저 차단합니다.
+리드는 '그 파트를 혼자 다 한다'는 뜻이 아닙니다. '그 파트의 마감을 챙기고 최종본을 취합한다'는 뜻이에요.
+전원이 전 과정을 경험합니다. 디자인 주에는 다 같이 디자인을 하고, 개발 주에는 다 같이 개발합니다. 다만 그 주의 산출물을 책임지는 사람이 있는 거죠.
+그리고 역할은 앞에서 들은 '해보고 싶은 것'을 기준으로 나누세요. 잘하는 것보다 하고 싶은 것이 낫습니다. 이미 잘하는 걸 또 하면 학기가 끝나도 남는 게 없어요.
+3인 팀 기준으로 셋, 4인 팀이면 마케팅을 따로 빼도 됩니다.">
+  <div class="kicker">STEP 3 — 리드 역할</div>
+  <div class="title">리드 = <em>혼자 다 하는 사람</em>이 아닙니다</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">LEAD 01</span><h3>기획 리드</h3><p>시장조사 · 페르소나 · BMC · IR 구조<br><span style="color:var(--lgray)">3주 · 14~15주</span></p></div>
+      <div class="card"><span class="num">LEAD 02</span><h3>디자인 리드</h3><p>브랜드 · 이미지 · UI · 상세페이지<br><span style="color:var(--lgray)">4~7주</span></p></div>
+      <div class="card"><span class="num">LEAD 03</span><h3>개발·마케팅 리드</h3><p>MVP 구현 · 배포 · 콘텐츠 · 숏폼<br><span style="color:var(--lgray)">9~13주</span></p></div>
+    </div>
+    <div class="grid-2" style="margin-top:20px">
+      <div class="card plain"><h3>리드가 하는 일</h3><p>그 파트를 <strong>혼자 다 하는 게 아니라</strong>, 그 주의 <strong>마감을 챙기고 최종본을 취합</strong>합니다. 전원이 전 과정을 경험합니다.</p></div>
+      <div class="card blue"><h3>무엇을 기준으로 나누나</h3><p><em>잘하는 것보다 &lsquo;해보고 싶은 것&rsquo;</em>을 기준으로. 이미 잘하는 걸 또 하면 학기가 끝나도 남는 게 없습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="팀 시트. 종이를 나눠주고 그 자리에서 채우게 합니다.
+핵심은 &lsquo;지금&rsquo; 쓰는 겁니다. 나중에 쓰자고 하면 아무도 안 씁니다.
+그리고 분명히 말해주세요. 이건 제출하는 서류가 아니고 제가 검사하지도 않습니다. 여러분 팀이 갖고 있는 문서예요. 8주차쯤 팀이 흔들릴 때 꺼내보는 용도입니다.
+아이템 칸은 비워둬도 됩니다.
+소통 채널은 오늘 안에 만들라고만 하세요. 어디에 만들지, 만들었는지 어떻게 표시할지는 팀이 알아서 합니다.">
+  <div class="kicker">팀 시트</div>
+  <div class="title">지금 이 자리에서 <em>채웁니다</em></div>
+  <div class="body grid-2">
+    <div class="card">
+      <h3>채울 것</h3>
+      <ul>
+        <li>팀명 · 팀원</li>
+        <li>소통 채널 — <strong>오늘 안에</strong> 만드세요</li>
+        <li>리드 역할</li>
+        <li>팀 규칙</li>
+        <li>아이템 칸은 <strong>비워둬도 됩니다</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>이건 여러분 것입니다</h3>
+      <p style="font-size:17.5px;color:var(--navy);line-height:1.7">제출하는 서류가 아니고, 제가 검사하지도 않습니다.<br><br>
+      <em>8주차쯤 팀이 흔들릴 때 꺼내보는 문서</em>예요. 그때 &ldquo;우리 이렇게 하기로 했잖아&rdquo;라고 말할 수 있는 근거입니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '이제 아이디어를 다룹니다. 그런데 순서가 있어요. 펼치는 게 먼저고 좁히는 게 나중입니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">02</div>
+  <h2>발산과 <em>수렴</em></h2>
+  <div class="sub">먼저 넓히고, 그다음 좁힙니다</div>
+</section>
+
+<section class="slide" data-notes="속도 이야기를 여기서 한 번 더 짚습니다. 2주차 영상에서 말했지만 대면으로 반복하는 게 좋습니다.
+팀마다 속도가 다릅니다. 오늘 이야기하다 보면 딱 잡히는 팀이 있어요. 그런 팀은 확정하고 바로 달리면 됩니다. 남들보다 3주를 벌고 들어가는 겁니다.
+반대로 오늘 안 잡히는 팀도 있습니다. 괜찮아요. 6주차까지 열려 있습니다.
+다만 두 가지는 피하세요. 조급해서 아무거나 정하는 것, 그리고 계속 미루는 것.
+기준을 하나 드리면 — 6주차까지 '못 정한 팀'이 아니라 '더 좋은 걸 찾는 중인 팀'이어야 합니다. 매주 후보가 바뀌고 있으면 정상이고, 매주 아무것도 안 하고 있으면 문제예요.">
+  <div class="kicker">PACE</div>
+  <div class="title">팀마다 <em>속도가 다릅니다</em></div>
+  <div class="body grid-2">
+    <div class="card blue">
+      <h3>오늘 정해지는 팀</h3>
+      <ul>
+        <li>확정하고 <em>바로 달리세요</em></li>
+        <li>남들보다 <em>3주를 벌고</em> 들어가는 겁니다</li>
+        <li>정한 뒤에도 바꿀 수 있습니다 — 다만 바꿀 이유가 생겼을 때만</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>아직인 팀</h3>
+      <ul>
+        <li>괜찮습니다. <strong>6주차까지 열려</strong> 있습니다</li>
+        <li>다만 <strong>&ldquo;못 정한 팀&rdquo;이 아니라 &ldquo;더 좋은 걸 찾는 중인 팀&rdquo;</strong>이어야 합니다</li>
+        <li>매주 후보가 바뀌면 정상, 매주 아무것도 안 하면 문제</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">피해야 할 두 가지 — <strong style="color:var(--navy)">조급해서 아무거나 정하는 것</strong>, 그리고 <strong style="color:var(--navy)">계속 미루는 것</strong>.</div>
+</section>
+
+<section class="slide" data-notes="발산 단계의 규칙. 브레인스토밍이 왜 망하는지부터 말하면 설득이 쉽습니다.
+대부분의 팀 회의가 이렇게 흘러갑니다. 누가 아이디어를 냅니다. 다른 사람이 '그거 이미 있지 않아?' 합니다. 끝. 다음 사람은 말을 안 합니다.
+그래서 발산 단계에는 규칙이 필요합니다.
+1) 비판 금지 — 좋다 나쁘다를 말하지 않습니다. 평가는 나중에 따로 합니다.
+2) 양이 먼저 — 좋은 아이디어 3개보다 아무 아이디어 30개가 낫습니다. 30개 중에 3개가 나오니까요.
+3) 남의 것에 얹기 — '그거에 이걸 더하면?' 이게 가장 좋은 아이디어를 만듭니다.
+4) 엉뚱한 것 환영 — 말도 안 되는 게 나와야 경계가 넓어집니다.
+시간을 정해두고 하세요. 무제한으로 하면 5분 만에 침묵이 옵니다.">
+  <div class="kicker">발산 — 넓히기</div>
+  <div class="title">브레인스토밍이 망하는 <em>가장 흔한 장면</em></div>
+  <div class="body">
+    <div class="card plain" style="padding:20px 26px">
+      <p style="font-size:18px;color:var(--navy);line-height:1.7">A: &ldquo;이런 거 어때?&rdquo; &nbsp;→&nbsp; B: <strong>&ldquo;그거 이미 있지 않아?&rdquo;</strong> &nbsp;→&nbsp; 침묵<br>
+      <span style="font-size:16px;color:var(--gray)">그다음부터 아무도 말을 꺼내지 않습니다.</span></p>
+    </div>
+    <div class="grid-4" style="margin-top:22px">
+      <div class="card"><span class="num">RULE 01</span><h3>비판 금지</h3><p>좋다 나쁘다를 <strong>말하지 않습니다.</strong> 평가는 나중에 따로</p></div>
+      <div class="card"><span class="num">RULE 02</span><h3>양이 먼저</h3><p>좋은 아이디어 3개보다 <strong>아무 아이디어 30개</strong>가 낫습니다</p></div>
+      <div class="card"><span class="num">RULE 03</span><h3>남의 것에 얹기</h3><p>&ldquo;그거에 이걸 더하면?&rdquo;<br><strong>가장 좋은 아이디어</strong>가 여기서 나옵니다</p></div>
+      <div class="card blue"><span class="num">RULE 04</span><h3>엉뚱한 것 환영</h3><p>말도 안 되는 게 나와야 <em>경계가 넓어집니다</em></p></div>
+    </div>
+    <div class="note">시간을 정해두고 하세요. 무제한으로 하면 <strong style="color:var(--navy)">5분 만에 침묵</strong>이 옵니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="AI를 발산에 쓰는 법. 여기서 2주차 내용이 실전으로 연결됩니다.
+많은 학생이 AI에게 '창업 아이템 추천해줘'라고 합니다. 그러면 남들도 다 받는 답이 나옵니다. 그건 발산이 아니라 평균으로 수렴하는 거예요.
+세 가지 방법을 알려주세요.
+1) 인터뷰 시키기 — 2주차에 배운 겁니다. '내가 뭘 만들면 좋을지 판단하려면 네가 뭘 알아야 해? 한 번에 하나씩 물어봐.' 이러면 내 안에 있는 걸 꺼내줍니다.
+2) 제약 뒤집기 — '이 아이템에서 가장 큰 제약이 뭐야?' 물어본 다음, '그 제약이 없다면 어떻게 달라져?'로 이어갑니다.
+3) 10배와 10분의 1 — '사용자가 10배 많다면?' '개발 기간이 10분의 1이라면?' 스케일을 극단으로 밀면 다른 아이디어가 나옵니다.
+공통점은 답을 받는 게 아니라 질문을 받는다는 겁니다.">
+  <div class="kicker">발산에 AI 쓰기</div>
+  <div class="title">&ldquo;창업 아이템 추천해줘&rdquo;는 <em>발산이 아닙니다</em></div>
+  <div class="body">
+    <div class="sub" style="margin-top:0">그건 <em>평균으로 수렴하는 것</em>입니다 — 남들도 똑같은 답을 받습니다.</div>
+    <div class="grid-3" style="margin-top:22px">
+      <div class="card blue"><span class="num">01</span><h3>인터뷰 시키기</h3><p>&ldquo;내가 뭘 만들면 좋을지 판단하려면 <em>네가 뭘 알아야 해? 한 번에 하나씩 물어봐</em>&rdquo;<br><br>내 안에 있는 걸 꺼내줍니다</p></div>
+      <div class="card"><span class="num">02</span><h3>제약 뒤집기</h3><p>&ldquo;이 아이템에서 <strong>가장 큰 제약</strong>이 뭐야?&rdquo;<br>→ &ldquo;그 제약이 <strong>없다면</strong> 어떻게 달라져?&rdquo;</p></div>
+      <div class="card"><span class="num">03</span><h3>10배와 10분의 1</h3><p>&ldquo;사용자가 <strong>10배</strong> 많다면?&rdquo;<br>&ldquo;개발 기간이 <strong>10분의 1</strong>이라면?&rdquo;<br>극단으로 밀면 다른 게 나옵니다</p></div>
+    </div>
+    <div class="doit">세 가지의 공통점 — <b>답을 받는 게 아니라 질문을 받는 것</b>입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="수렴 단계. 세 개의 체를 통과시킵니다.
+발산으로 30개가 나왔으면 이제 좁힐 차례입니다. 기준 없이 '뭐가 제일 좋아 보여?'로 고르면 목소리 큰 사람 의견이 됩니다.
+그래서 체를 세 개 씁니다. 순서대로 통과시키세요.
+1) 우리가 당사자인가 — 우리 중 누구도 안 겪어본 문제면 품질을 판단할 수가 없습니다. 1주차에서 계속 말한 거죠.
+2) 충분히 좁은가 — 한 문장으로 설명되는지. '대학생을 위한 플랫폼'은 탈락입니다.
+3) 2주 안에 작동시킬 수 있나 — 15주 안에 만들어야 합니다. 첫 버전이 2주 안에 안 나오면 너무 큽니다.
+세 개를 다 통과하는 게 하나도 없을 수도 있습니다. 그러면 발산으로 다시 돌아가면 돼요. 그게 정상입니다.">
+  <div class="kicker">수렴 — 좁히기</div>
+  <div class="title">세 개의 <em>체</em>를 통과시킵니다</div>
+  <div class="body">
+    <div class="rows" style="margin-top:6px">
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><div><div class="rt">체 1 · 우리가 당사자인가</div><div class="rd">우리 중 누구도 안 겪어본 문제면 <strong>품질을 판단할 수가 없습니다.</strong> 개선 방향도 안 보입니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg></div><div><div class="rt">체 2 · 충분히 좁은가</div><div class="rd">한 문장으로 설명되는지. <strong>&ldquo;대학생을 위한 플랫폼&rdquo;은 탈락</strong>입니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div><div><div class="rt">체 3 · 2주 안에 작동시킬 수 있나</div><div class="rd">첫 버전이 2주 안에 안 나오면 <strong>너무 큰 아이템</strong>입니다. 15주 안에 만들어야 합니다</div></div></div>
+    </div>
+    <div class="note">세 개를 다 통과하는 게 하나도 없을 수 있습니다. 그러면 <strong style="color:var(--navy)">발산으로 다시 돌아가면 됩니다.</strong> 그게 정상입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="좁히기 실제 예시. 화면에서 단계별로 읽어주면 학생들이 자기 것도 깎기 시작합니다.
+처음엔 다들 이렇게 씁니다. '대학생을 위한 AI 서비스'. 누구인지 뭘 하는지 아무것도 없죠.
+한 번 좁히면 '자취하는 대학생을 위한 식사 관리 서비스'. 아직도 넓습니다. 식사 관리가 뭔지 모르겠어요.
+두 번 좁히면 '남은 재료로 뭘 해먹을지 알려주는 서비스'. 이제 뭘 하는지는 보입니다.
+세 번 좁히면 '자취 2개월 차가 냉장고에 남은 재료 3개를 넣으면 오늘 만들 수 있는 한 그릇 레시피를 받는 서비스'. 여기까지 와야 만들 수 있습니다.
+1주차에 본 대니 포스트마 이야기 기억하시죠. 'AI 이미지 생성기'가 아니라 '링크드인 프로필 사진 생성기'. 구체성이 돈을 만든다고 했던.
+여기서 팀별로 자기 후보를 세 번 깎아보게 하세요.">
+  <div class="kicker">EXAMPLE</div>
+  <div class="title">세 번만 <em>깎아보세요</em></div>
+  <div class="body">
+    <div class="rows" style="margin-top:2px">
+      <div class="row"><div class="iconbox" style="background:var(--card);color:var(--lgray)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></div><div><div class="rt" style="color:var(--lgray)">처음</div><div class="rd">&ldquo;대학생을 위한 AI 서비스&rdquo; — 누구인지 뭘 하는지 아무것도 없습니다</div></div></div>
+      <div class="row"><div class="iconbox" style="background:var(--card);color:var(--gray)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg></div><div><div class="rt" style="color:var(--gray)">한 번 깎으면</div><div class="rd">&ldquo;자취하는 대학생을 위한 식사 관리 서비스&rdquo; — 아직 넓습니다. 식사 관리가 뭔지 모르겠습니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg></div><div><div class="rt">두 번 깎으면</div><div class="rd">&ldquo;남은 재료로 뭘 해먹을지 알려주는 서비스&rdquo; — 이제 <strong>뭘 하는지</strong>는 보입니다</div></div></div>
+      <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/></svg></div><div><div class="rt" style="color:var(--blue)">세 번 깎으면</div><div class="rd"><strong>&ldquo;자취 2개월 차가 냉장고에 남은 재료 3개를 넣으면 오늘 만들 수 있는 한 그릇 레시피를 받는 서비스&rdquo;</strong> — 여기까지 와야 만들 수 있습니다</div></div></div>
+    </div>
+    <div class="doit">1주차에 본 사례 기억하시죠 — &ldquo;AI 이미지 생성기&rdquo;가 아니라 <b>&ldquo;링크드인 프로필 사진 생성기&rdquo;</b>. 구체성이 돈을 만듭니다.</div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '이제 우리 아이디어가 시장에서 어디쯤 있는지 봅니다. 방법은 남의 것을 뜯어보는 겁니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">03</div>
+  <h2><em>역기획</em></h2>
+  <div class="sub">잘 되는 것을 뜯어서 우리 자리를 찾습니다</div>
+</section>
+
+<section class="slide" data-notes="역기획으로 잘된 사례 두 개. 개념 설명 전에 먼저 보여줘야 &lsquo;왜 이걸 하는지&rsquo;가 잡힙니다.
+첫 번째, 토스. 2015년에 나왔죠. 기존 은행 앱을 뜯어봤더니 이상한 게 보였습니다. 사람들이 가장 많이 하는 행동이 송금인데, 송금이 가장 많은 단계를 거치고 있었어요. 공인인증서, 보안카드, 여러 번의 확인. 은행 입장에선 이유가 있었지만 사용자 입장에선 &lsquo;왜 이렇게 만들었을까&rsquo;가 되는 지점이었죠.
+그래서 토스는 다른 기능을 다 버리고 송금 하나만 떼어냈습니다. 역기획의 교과서예요. 뜯었고, 의도를 의심했고, 한 칸만 골랐습니다.
+두 번째, 당근마켓. 기존 중고거래를 뜯어봤더니 전국 단위 거래였습니다. 택배를 보내야 하고, 못 믿을 사람과 거래해야 했죠. 여기서 당근은 새 축을 만들었습니다. &lsquo;거리&rsquo;라는 축이요. 우리 동네, 직거래, 매너온도. 기존 지도에 없던 축을 그은 겁니다.
+이게 조금 뒤에 볼 포지셔닝맵 이야기입니다. 빈자리를 찾은 게 아니라, 축 자체를 새로 그은 사례예요.
+그리고 개인적인 이야기 하나. 제가 지금 패스트캠퍼스 ICP라는 프로그램에서 UX 역기획 코치를 맡고 있는데, 취업 준비생들이 유튜브 보관함이나 당근마켓 바로구매 같은 실제 서비스를 뜯어서 개선안을 만드는 걸로 포트폴리오를 만듭니다. 역기획은 창업 도구이면서 동시에 취업 포트폴리오이기도 해요.">
+  <div class="kicker">CASES — 역기획으로 잘된 것들</div>
+  <div class="title">뜯어보고, 의도를 의심하고, <em>한 칸을 골랐다</em></div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card">
+        <span class="num">토스 (2015)</span>
+        <h3>은행 앱을 뜯었더니 이상한 게 보였다</h3>
+        <ul>
+          <li>사람들이 <strong>가장 많이 하는 행동은 송금</strong>인데</li>
+          <li>송금이 <strong>가장 많은 단계</strong>를 거치고 있었다 — 공인인증서·보안카드·확인 또 확인</li>
+          <li>그래서 다른 기능을 다 버리고 <strong>송금 하나만</strong> 떼어냈다</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <span class="num">당근마켓 (2015)</span>
+        <h3>중고거래를 뜯었더니 &lsquo;축&rsquo;이 하나 비어 있었다</h3>
+        <ul>
+          <li>기존 중고거래는 <em>전국 단위</em> — 택배, 못 믿을 상대</li>
+          <li>당근은 <em>&lsquo;거리&rsquo;라는 축</em>을 새로 그었다 — 우리 동네, 직거래, 매너온도</li>
+          <li>빈자리를 찾은 게 아니라 <em>지도에 없던 축을 만든</em> 사례</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">역기획은 창업 도구이면서 동시에 <strong style="color:var(--navy)">취업 포트폴리오</strong>이기도 합니다. 제가 코치를 맡은 UX 역기획 프로그램에서는 취업 준비생들이 실제 서비스를 뜯어 개선안을 만드는 것으로 포트폴리오를 만듭니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="역기획 개념. 왜 남의 것을 뜯느냐부터 설명합니다.
+백지에서 시작하면 대부분 자기 머릿속에 있는 것만 나옵니다. 이미 세상에는 비슷한 문제를 푼 사람들이 있어요.
+그런데 여기서 중요한 걸 짚어야 합니다. 역기획은 &lsquo;기능 목록을 베끼는 일&rsquo;이 아닙니다. <b>왜 이렇게 만들었을까를 역추적하는 일</b>입니다.
+같은 화면을 봐도 초보는 &lsquo;버튼이 여기 있네&rsquo;를 보고, 숙련자는 &lsquo;왜 이 버튼을 여기 뒀을까&rsquo;를 봅니다. 그 차이가 전부예요.
+네 단계로 갑니다.
+1) 뜯는다 — 화면, 문구, 가격, 가입 흐름을 표로 정리.
+2) 의도를 추측한다 — 이게 핵심 단계입니다. &lsquo;왜 이 기능이 첫 화면에 있을까&rsquo;, &lsquo;왜 가격을 숨겼을까&rsquo;. 답이 틀려도 괜찮습니다. 질문을 하는 것 자체가 훈련이에요.
+3) 포지셔닝맵에 올린다 — 여러 서비스를 한 화면에 놓고 어디에 서 있는지 봅니다.
+4) 빈자리를 검증한다 — 비어 있는 자리를 찾되, 왜 비어 있는지까지 확인합니다. 이게 다음다음 장 이야기입니다.">
+  <div class="kicker">CONCEPT</div>
+  <div class="title">역기획은 기능을 베끼는 게 아니라 <em>의도를 역추적</em>하는 것</div>
+  <div class="body">
+    <div class="flow">
+      <div class="fbox"><div class="ft">① 뜯는다</div><div class="fd">화면 · 문구 · 가격<br>가입 흐름을 표로</div></div>
+      <div class="arrow"></div>
+      <div class="fbox gate"><div class="ft">② 의도를 추측한다</div><div class="fd">&ldquo;왜 이렇게<br>만들었을까&rdquo;</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">③ 지도에 올린다</div><div class="fd">포지셔닝맵으로<br>한눈에 본다</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">④ 빈자리를 검증</div><div class="fd">비어 있다면<br><b>왜</b> 비었는지까지</div></div>
+    </div>
+    <div class="grid-2" style="margin-top:24px">
+      <div class="card"><h3>같은 화면을 봐도</h3><p>초보는 <strong>&ldquo;버튼이 여기 있네&rdquo;</strong>를 보고, 숙련자는 <strong>&ldquo;왜 이 버튼을 여기 뒀을까&rdquo;</strong>를 봅니다. 그 차이가 전부입니다.</p></div>
+      <div class="card blue"><h3>답이 틀려도 괜찮습니다</h3><p>의도 추측은 맞히는 게 목적이 아닙니다. <em>질문을 던지는 것 자체가 훈련</em>입니다. 그 질문이 우리 서비스를 만들 때 그대로 돌아옵니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="실제로 뜯을 때 채우는 표. 이 표를 그대로 쓰라고 하세요.
+경쟁 서비스 3개를 고르고 이 다섯 줄을 채웁니다.
+첫 화면 한 줄 — 들어가면 3초 안에 뭐라고 말하는지.
+핵심 기능 — 무엇을 넣으면 무엇을 받는지.
+가격 — 무료인지, 어디서 돈을 받는지.
+타겟 — 누구를 향해 말하고 있는지. 문구를 보면 압니다.
+안 하는 것 — 이게 핵심 칸입니다.
+그리고 '안 하는 것' 칸을 채울 때 한 번 더 물어보세요. '왜 안 할까?' 못 해서일 수도 있고, 돈이 안 돼서일 수도 있고, 그냥 생각을 못 했을 수도 있습니다. 세 번째 경우가 우리 기회예요.">
+  <div class="kicker">TEMPLATE</div>
+  <div class="title">경쟁 서비스 <em>3개</em>를 이 표로 뜯습니다</div>
+  <div class="body">
+    <table class="tbl">
+      <tr><th style="width:160px">항목</th><th>무엇을 적나</th><th style="width:300px">확인 방법</th></tr>
+      <tr><td class="k">첫 화면 한 줄</td><td>들어가면 3초 안에 뭐라고 말하는가</td><td>랜딩 페이지 맨 위 문구 그대로</td></tr>
+      <tr><td class="k">핵심 기능</td><td>무엇을 넣으면 무엇을 받는가</td><td>직접 가입해서 <em>한 번 써보기</em></td></tr>
+      <tr><td class="k">가격</td><td>무료인가, 어디서 돈을 받는가</td><td>가격 페이지 · 결제 시점</td></tr>
+      <tr><td class="k">타겟</td><td>누구를 향해 말하고 있는가</td><td><em>문구의 말투</em>를 보면 압니다</td></tr>
+      <tr><td class="k">안 하는 것</td><td>기대했는데 없는 기능 · 다루지 않는 사용자</td><td>직접 써보면서 <em>&ldquo;어? 이건 없네&rdquo;</em> 싶은 순간을 적기</td></tr>
+      <tr><td class="k">왜 이렇게 했을까</td><td><em>각 칸마다 한 줄씩 추측</em></td><td>맞히는 게 목적이 아닙니다. <em>질문을 던지는 게 훈련</em>입니다</td></tr>
+    </table>
+    <div class="doit">마지막 줄이 가장 중요합니다. &ldquo;왜 가격을 첫 화면에 안 뒀을까&rdquo;, &ldquo;왜 가입을 먼저 시킬까&rdquo;.<br><b>답보다 질문이 남습니다.</b> 그 질문이 우리 서비스를 만들 때 그대로 돌아옵니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="조사 프롬프트 실전. 2주차에서 배운 6요소와 하네스를 그대로 적용한 완성본입니다.
+화면의 복사 버튼을 누르면 그대로 복사됩니다. 지금 팀별로 붙여넣고 우리 아이템에 맞게 ○○만 채우게 하세요.
+같이 읽으면서 어디가 역할이고 어디가 제약인지 짚어주세요.
+특히 마지막 두 줄이 중요합니다. 출처 표기와 확인 필요 표시. 이게 없으면 AI가 그럴듯한 가격과 기능을 지어냅니다.
+그리고 반드시 덧붙이세요. AI가 뽑아준 표는 초안입니다. 경쟁사 사이트에 직접 들어가 최소 한 번은 확인해야 합니다. 특히 가격은 무조건 직접 확인하세요. 가장 자주 틀립니다.">
+  <div class="kicker">PROMPT — 복사해서 바로 쓰세요</div>
+  <div class="title">경쟁사 해부 <em>프롬프트</em></div>
+  <div class="body">
+    <div class="card copybox" style="padding:22px 26px">
+      <button class="copybtn">복사</button>
+      <div class="copytext"><b>[역할]</b> 초기 스타트업 기획자로서
+<b>[맥락]</b> 우리는 ○○한 상황의 사람이 겪는 ○○ 문제를 풀려고 한다
+<b>[입력]</b> 아래에 경쟁 서비스 3개의 소개 페이지 내용을 붙인다
+<b>[작업]</b> 각 서비스를 다음 여섯 항목으로 정리하라
+       첫 화면 한 줄 / 핵심 기능 / 가격 / 타겟 / 안 하는 것 / 왜 이렇게 했을지 추측
+<b>[출력]</b> 표 한 개. 서비스가 행, 항목이 열
+<b>[제약]</b> 자료에 없는 내용은 추측해서 채우지 말 것. 다만 &lsquo;왜 이렇게 했을지&rsquo; 항목은 추측임을 밝히고 쓸 것
+<b>[검증]</b> 각 칸 옆에 근거를 붙이고, 근거가 없으면 [확인 필요]로 표시하라</div>
+    </div>
+    <div class="doit">AI가 뽑아준 표는 <b>초안</b>입니다. 경쟁사 사이트에 직접 들어가 최소 한 번은 확인하세요.<br><b>가격은 무조건 직접 확인</b>하십시오 — 가장 자주 틀리는 항목입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="앞의 표는 &lsquo;화면에서 보이는 것&rsquo;을 뜯은 겁니다. 그런데 화면 뒤에 있는 게 있어요. 이 회사가 어떻게 돈을 벌고 어디에 돈을 쓰는가. 그걸 뜯는 도구가 비즈니스 모델 캔버스입니다.
+왜 남의 것부터 하냐면 — 우리 것은 아직 없으니까요. 남의 것을 아홉 칸에 넣어보면 &lsquo;아, 이 회사는 이래서 이 기능을 무료로 푸는구나&rsquo; 같은 게 보입니다. 아까 말한 &lsquo;왜 이렇게 했을까&rsquo;의 답이 여기서 많이 나와요.
+아홉 칸은 가운데 &lsquo;가치 제안&rsquo;을 중심으로 오른쪽이 돈이 들어오는 쪽, 왼쪽이 돈이 나가는 쪽입니다.
+오른쪽: 고객, 채널, 고객관계, 수익원. 왼쪽: 핵심활동, 핵심자원, 파트너, 비용구조.
+가장 재미있는 칸이 수익원과 파트너예요. 무료로 보이는 서비스가 사실 누구한테 돈을 받는지, 그리고 뭘 직접 안 하고 남에게 맡기는지. 이 두 칸이 보이면 그 회사가 보입니다.
+학생들에게: 이건 나중에 우리 것을 채울 때도 같은 틀입니다. 다만 우리 것은 아홉 칸을 한 번에 못 채워요. 그건 뒤에서 말씀드릴게요.">
+  <div class="kicker">역기획 도구 — 비즈니스 모델 캔버스</div>
+  <div class="title sm">화면 뒤에 있는 것 — <em>이 회사는 어떻게 돈을 벌고 어디에 쓰나</em></div>
+  <div class="body">
+    <table class="tbl compact" style="margin-top:6px">
+      <tr><th style="width:120px">구역</th><th style="width:140px">칸</th><th>경쟁사를 뜯을 때 물어볼 것</th><th style="width:300px">여기서 보이는 것</th></tr>
+      <tr><td class="k" rowspan="4" style="vertical-align:middle;color:var(--blue)">오른쪽<br><span style="font-size:13px;color:var(--lgray);font-weight:400">들어오는 돈</span></td><td class="k">고객</td><td>누구에게 팔고 있나 — 문구가 누구를 향하나</td><td>우리와 같은 사람인가, 다른 사람인가</td></tr>
+      <tr><td class="k">채널</td><td>사람들이 어디서 이 서비스를 처음 만나나</td><td>광고인가, 검색인가, 추천인가</td></tr>
+      <tr><td class="k">고객관계</td><td>한 번 온 사람을 어떻게 붙잡나</td><td>알림 · 구독 · 커뮤니티 · 아무것도 없음</td></tr>
+      <tr><td class="k">수익원</td><td>무료처럼 보여도 <em>누구에게 돈을 받나</em></td><td><em>&ldquo;이래서 이 기능을 무료로 푸는구나&rdquo;</em></td></tr>
+      <tr><td class="k" style="vertical-align:middle;color:var(--blue)">가운데</td><td class="k">가치 제안</td><td>무엇을 넣으면 무엇을 받는가 — 한 문장으로</td><td>우리 한 문장과 같은가, 다른가</td></tr>
+      <tr><td class="k" rowspan="4" style="vertical-align:middle;color:var(--blue)">왼쪽<br><span style="font-size:13px;color:var(--lgray);font-weight:400">나가는 돈</span></td><td class="k">핵심활동</td><td>이 회사가 매일 반복하는 일은 뭔가</td><td>콘텐츠 발행 · 매칭 · 검수 · 응대</td></tr>
+      <tr><td class="k">핵심자원</td><td>그걸 하려면 뭐가 있어야 하나</td><td>데이터 · 사람 · 브랜드 · 계약</td></tr>
+      <tr><td class="k">파트너</td><td>직접 안 하고 <em>남에게 맡긴 것</em>은 뭔가</td><td><em>결제 · 배송 · AI 모델 — 우리도 안 만들어도 됨</em></td></tr>
+      <tr><td class="k">비용구조</td><td>돈이 어디로 가장 많이 나가나</td><td>사람인가, 서버인가, 마케팅인가</td></tr>
+    </table>
+    <div class="note">가장 재미있는 칸은 <strong style="color:var(--navy)">수익원</strong>과 <strong style="color:var(--navy)">파트너</strong>입니다. 이 두 칸이 보이면 그 회사가 보입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="BMC 분석 프롬프트. 복사해서 바로 쓰게 합니다.
+앞 슬라이드의 아홉 칸을 그대로 AI에게 시키는 겁니다. 경쟁 서비스 하나를 골라 소개 페이지, 가격 페이지, 앱스토어 설명 같은 걸 붙여넣고 돌리면 됩니다.
+여기서도 검증 줄이 핵심이에요. 수익원이나 비용구조는 겉으로 안 보이는 경우가 많아서 AI가 지어내기 딱 좋습니다. 그래서 &lsquo;추측&rsquo;과 &lsquo;근거 있음&rsquo;을 구분해서 표시하게 했습니다.
+그리고 마지막 줄 — &lsquo;왜 이렇게 설계했을지&rsquo;. 이게 역기획의 핵심이라고 계속 말씀드렸죠. 아홉 칸을 채운 다음 그 칸들이 서로 어떻게 맞물리는지 설명하게 하면, 그 회사의 논리가 보입니다.
+팀별로 경쟁 서비스 하나씩 돌려보게 하세요.">
+  <div class="kicker">PROMPT — 복사해서 바로 쓰세요</div>
+  <div class="title">경쟁사를 <em>아홉 칸</em>으로 뜯는 프롬프트</div>
+  <div class="body">
+    <div class="card copybox" style="padding:20px 26px">
+      <button class="copybtn">복사</button>
+      <div class="copytext"><b>[역할]</b> 비즈니스 모델을 분석하는 초기 스타트업 기획자로서
+<b>[맥락]</b> 우리는 ○○한 상황의 사람이 겪는 ○○ 문제를 풀려고 하며, 아래 서비스는 우리의 경쟁 서비스다
+<b>[입력]</b> 아래에 이 서비스의 소개 페이지 · 가격 페이지 · 앱스토어 설명을 붙인다
+<b>[작업]</b> 이 서비스를 비즈니스 모델 캔버스 아홉 칸으로 분석하라
+       고객 / 채널 / 고객관계 / 수익원 / 가치 제안 / 핵심활동 / 핵심자원 / 파트너 / 비용구조
+       그리고 마지막에 "이 회사가 왜 이렇게 설계했을지"를 세 문장으로 설명하라 — 칸들이 서로 어떻게 맞물리는지
+<b>[출력]</b> 아홉 칸 표 + 설계 의도 세 문장
+<b>[제약]</b> 각 칸마다 [근거 있음] 또는 [추측]을 표시하라. 특히 수익원과 비용구조는 겉으로 안 보이므로 추측이면 추측이라고 써라
+<b>[검증]</b> 근거가 있는 칸은 어느 페이지의 어느 문장에서 나왔는지 옆에 적어라</div>
+    </div>
+    <div class="doit">팀별로 경쟁 서비스 <b>하나씩</b> 돌려보세요. 수익원과 비용구조 칸에 <b>[추측]</b>이 몇 개 붙는지 보시면, 그 회사가 겉으로 무엇을 숨기는지가 보입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="포지셔닝맵. 표로 뜯은 걸 한 화면에 올리는 단계입니다.
+표는 정보를 모아주지만 &lsquo;우리가 어디에 있는지&rsquo;는 안 보여줍니다. 그래서 지도가 필요합니다.
+축 두 개를 고르는 게 전부인데, 이게 제일 어렵습니다. 세 가지만 지키세요.
+1) 사용자가 실제로 고민하는 기준으로 고를 것. &lsquo;기술력 높음/낮음&rsquo; 같은 건 사용자가 고민하지 않습니다. &lsquo;비싸다/싸다&rsquo;, &lsquo;쉽다/전문적이다&rsquo;는 고민합니다.
+2) 두 축이 서로 독립적일 것. &lsquo;비싸다&rsquo;와 &lsquo;고급스럽다&rsquo;는 사실상 같은 축입니다. 그러면 대각선에만 점이 찍혀요.
+3) 우리에게 유리하게 축을 짜지 말 것. 이게 제일 흔한 함정입니다. 우리만 오른쪽 위에 오도록 축을 고르면 아무것도 못 배웁니다.
+축을 세 가지 조합으로 그려보라고 하세요. 조합마다 다른 빈자리가 보입니다.
+화면 예시는 자취 레시피 서비스입니다. 가로는 &lsquo;재료 중심 / 요리 중심&rsquo;, 세로는 &lsquo;간편 / 본격&rsquo;.">
+  <div class="kicker">POSITIONING MAP</div>
+  <div class="title">표로는 안 보이는 것 — <em>우리가 어디에 서 있나</em></div>
+  <div class="body">
+    <div class="grid-2" style="grid-template-columns:1.25fr 1fr">
+      <div>
+        <div class="map">
+          <span class="ax t">간편 · 바로 먹기</span>
+          <span class="ax b">본격 · 요리하기</span>
+          <span class="ax l">재료에서 출발</span>
+          <span class="ax r">메뉴에서 출발</span>
+          <div class="pt" style="left:72%;top:26%"><i></i><span>배달 앱</span></div>
+          <div class="pt" style="left:80%;top:72%"><i></i><span>레시피 커뮤니티</span></div>
+          <div class="pt" style="left:58%;top:55%"><i></i><span>밀키트</span></div>
+          <div class="pt us" style="left:20%;top:30%"><i></i><span>우리</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="card"><h3>축을 고르는 세 가지 규칙</h3>
+          <ul>
+            <li><strong>사용자가 실제로 고민하는 기준</strong>으로. &ldquo;기술력 높음/낮음&rdquo;은 아무도 고민하지 않습니다</li>
+            <li><strong>두 축이 독립적</strong>이어야. &ldquo;비싸다&rdquo;와 &ldquo;고급스럽다&rdquo;는 같은 축이라 대각선에만 점이 찍힙니다</li>
+            <li><strong>우리에게 유리하게 짜지 말 것.</strong> 우리만 오른쪽 위에 오도록 축을 고르면 아무것도 못 배웁니다</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="doit">축 조합을 <b>세 가지</b>로 바꿔가며 그려보세요. 조합마다 <b>다른 빈자리</b>가 보입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="포지셔닝맵을 AI와 함께 그리는 프롬프트입니다.
+포지셔닝맵에서 제일 어려운 게 축을 고르는 거라고 했죠. 그래서 이 프롬프트는 축을 여러 개 제안하게 하고, 우리가 고르는 구조입니다. AI가 축을 정하게 하지 마세요. 축을 정하는 건 판단이고, 그건 우리 몫입니다.
+순서를 보시면 — 먼저 사용자가 실제로 고민하는 기준을 다섯 개 뽑고, 그중 독립적인 조합 세 개를 만들고, 조합마다 서비스들을 배치합니다. 그러면 세 장의 지도가 나와요. 조합마다 빈자리가 다르게 보입니다.
+그리고 마지막 줄이 중요합니다. 빈자리마다 &lsquo;왜 비어 있을지&rsquo;를 추측하게 했어요. 다음 장에서 말할 함정 때문입니다. 빈자리가 보인다고 바로 들어가면 안 됩니다.
+결과는 텍스트로 나올 텐데, 그걸 보고 팀이 종이에 직접 그려보라고 하세요. 그려보는 과정에서 의견이 갈리고, 그 갈리는 지점이 진짜 논의거리입니다.">
+  <div class="kicker">PROMPT — 복사해서 바로 쓰세요</div>
+  <div class="title">포지셔닝맵 — <em>축은 AI가 제안하고, 고르는 건 우리</em></div>
+  <div class="body">
+    <div class="card copybox" style="padding:20px 26px">
+      <button class="copybtn">복사</button>
+      <div class="copytext"><b>[역할]</b> 시장 포지셔닝을 분석하는 초기 스타트업 기획자로서
+<b>[맥락]</b> 우리는 ○○한 상황의 사람이 겪는 ○○ 문제를 풀려고 한다. 아래는 같은 문제 주변의 서비스들이다
+<b>[입력]</b> 서비스 이름과 한 줄 설명을 붙인다: (서비스 A) … (서비스 B) … (서비스 C) … 그리고 (우리 후보) …
+<b>[작업]</b> 다음 순서로 진행하라
+       1. 이 문제의 사용자가 서비스를 고를 때 실제로 고민하는 기준을 5개 뽑아라. "기술력"처럼 사용자가 고민하지 않는 기준은 제외
+       2. 그중 서로 독립적인 기준 두 개씩 짝지어 축 조합 3개를 만들어라. 같은 뜻인 기준끼리는 짝짓지 마라
+       3. 조합마다 위 서비스들을 좌표(각 축 1~5)로 배치하고 이유를 한 줄씩 써라
+       4. 조합마다 비어 있는 자리를 찾고, 그 자리가 왜 비어 있을지 세 가지 가능성(수요 없음 / 돈이 안 됨 / 아직 아무도 안 봄) 중 무엇에 가까운지 추측하라
+<b>[출력]</b> 조합별로 표 하나씩, 그리고 빈자리 분석
+<b>[제약]</b> 우리 후보가 유리해 보이도록 축을 고르지 마라. 우리 후보가 불리하게 나오는 조합도 반드시 포함하라
+<b>[검증]</b> 배치의 근거가 추측이면 [추측]으로 표시하라</div>
+    </div>
+    <div class="doit">결과를 보고 <b>팀이 종이에 직접 그려보세요.</b> 그리다 보면 의견이 갈리고 — 그 갈리는 지점이 진짜 논의거리입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="빈자리의 함정. 오늘 역기획 파트에서 가장 중요한 슬라이드입니다.
+지도에 빈자리가 보이면 학생들은 곧장 &lsquo;여기가 우리 자리다&rsquo;로 갑니다. 그런데 비어 있는 데는 대개 이유가 있어요.
+세 가지로 나눠서 판단하게 하세요.
+1) 아무도 원하지 않아서 비어 있다 — 가장 흔합니다. 수요가 없는 자리예요. 여기 들어가면 아무리 잘 만들어도 안 씁니다.
+2) 돈이 안 돼서 비어 있다 — 수요는 있는데 사업이 안 되는 자리. 큰 회사들이 들어왔다 나간 흔적이 있으면 이 경우입니다.
+3) 아직 아무도 안 봐서 비어 있다 — 이게 진짜 기회입니다. 최근에 생긴 변화 때문에 새로 열린 자리인 경우가 많아요. 기술이 싸졌거나, 사용자 습관이 바뀌었거나.
+구분하는 방법을 알려주세요. 그 자리에 있던 서비스가 과거에 있었는지 검색해보는 겁니다. 있었다가 없어졌으면 1번이나 2번이고, 아예 없었으면 3번일 가능성이 있습니다.
+그리고 가장 확실한 건 사람에게 물어보는 것. 다음다음 장에서 다룹니다.">
+  <div class="kicker">함정</div>
+  <div class="title">비어 있는 자리에는 <em>대개 이유가</em> 있습니다</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">이유 01</span><h3>아무도 원하지 않아서</h3><p>가장 흔합니다. <strong>수요가 없는 자리</strong>예요. 여기 들어가면 아무리 잘 만들어도 안 씁니다.</p></div>
+      <div class="card"><span class="num">이유 02</span><h3>돈이 안 돼서</h3><p>수요는 있는데 사업이 안 되는 자리. <strong>큰 회사가 들어왔다 나간 흔적</strong>이 있으면 이 경우입니다.</p></div>
+      <div class="card blue"><span class="num">이유 03</span><h3>아직 아무도 안 봐서</h3><p><em>이게 진짜 기회입니다.</em> 기술이 싸졌거나 사용자 습관이 바뀌어서 <em>새로 열린 자리</em>인 경우가 많습니다.</p></div>
+    </div>
+    <div class="doit">구분하는 법 — 그 자리에 있던 서비스가 <b>과거에 존재했는지 검색</b>해보세요.<br>있었다가 없어졌으면 1번이나 2번, 아예 없었으면 <b>3번일 가능성</b>이 있습니다. 가장 확실한 건 사람에게 직접 물어보는 것입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="2주차 내용을 실전으로 연결하는 슬라이드. 짧게 짚고 넘어갑니다.
+지난주에 배운 환각 통제가 여기서 처음 실전에 쓰입니다.
+숫자를 받으면 세 가지를 하세요.
+1) 출처 강제 — 프롬프트에 이미 넣었습니다.
+2) 교차 검증 — 한 모델이 준 시장 규모를 다른 모델에게 주고 '이 수치의 문제점 3가지를 지적해줘'라고 시킵니다.
+3) 직접 확인 — 원문 링크를 열어봅니다. 열어본 것만 기획안에 남기세요.
+그리고 딜로이트 이야기를 한 번 더 상기시키면 좋습니다. 44만 호주달러짜리 보고서가 각주 때문에 환불됐다고요. 여러분 기획안도 15주차에 심사받습니다.">
+  <div class="kicker">지난주 복습 — 실전 적용</div>
+  <div class="title">숫자를 받으면 <em>세 가지</em>를 하세요</div>
+  <div class="body grid-3">
+    <div class="card"><span class="num">01</span><h3>출처 강제</h3><p>프롬프트에 이미 넣었습니다. <strong>&ldquo;근거가 없으면 [확인 필요]로 표시하라&rdquo;</strong></p></div>
+    <div class="card"><span class="num">02</span><h3>교차 검증</h3><p>한 모델이 준 수치를 <strong>다른 모델에게</strong> 주고 &ldquo;이 수치의 문제점 3가지를 지적해줘&rdquo;</p></div>
+    <div class="card blue"><span class="num">03</span><h3>직접 확인</h3><p>원문 링크를 열어봅니다. <em>열어본 것만 기획안에 남기세요</em></p></div>
+  </div>
+  <div class="note">지난주 딜로이트 사례 기억하시죠 — <strong style="color:var(--navy)">44만 호주달러짜리 보고서가 각주 때문에 환불</strong>됐습니다. 여러분 기획안도 15주차에 심사받습니다.</div>
+</section>
+
+<section class="slide" data-notes="페르소나. 학생들이 가장 대충 하는 부분이라 강하게 짚습니다.
+'20대 여성 대학생'은 페르소나가 아닙니다. 그건 인구통계예요.
+페르소나는 한 명입니다. 이름이 있고, 하루 동선이 있고, 그 문제를 겪는 구체적인 순간이 있어야 합니다.
+좋은 페르소나는 팀원 세 명이 각자 떠올렸을 때 같은 사람이 떠오릅니다. '민지가 이거 좋아할까?'라고 물었을 때 답이 나오면 성공이에요.
+만드는 법은 간단합니다. 주변에서 실제로 한 명을 고르세요. 친구든 룸메이트든 선배든. 상상해서 만들지 말고 실제 사람으로 시작하면 훨씬 정확합니다.
+그리고 그 사람한테 물어볼 수 있으면 더 좋고요. 그게 다음 장입니다.">
+  <div class="kicker">PERSONA</div>
+  <div class="title">&ldquo;20대 여성 대학생&rdquo;은 <em>페르소나가 아닙니다</em></div>
+  <div class="body grid-2">
+    <div class="card">
+      <h3>그건 인구통계입니다</h3>
+      <ul>
+        <li>페르소나는 <strong>한 명</strong>입니다</li>
+        <li>이름이 있고, <strong>하루 동선</strong>이 있고, 그 문제를 겪는 <strong>구체적인 순간</strong>이 있어야 합니다</li>
+        <li>&ldquo;화요일 저녁 9시, 알바 끝나고 배는 고픈데 냉장고를 열었을 때&rdquo;</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>잘 만들어졌는지 확인하는 법</h3>
+      <ul>
+        <li>팀원 셋이 각자 떠올렸을 때 <em>같은 사람</em>이 떠오른다</li>
+        <li><em>&ldquo;민지가 이거 좋아할까?&rdquo;</em>라고 물었을 때 답이 나온다</li>
+        <li>만들 때는 <em>주변에서 실제로 한 명</em>을 고르세요. 상상보다 훨씬 정확합니다</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="문제 검증. 이번 주에 팀이 밖에서 해야 할 일입니다.
+아이템이 좋은지 나쁜지는 우리끼리 회의해서는 절대 모릅니다. 물어봐야 합니다. 5명이면 충분해요.
+그런데 질문을 잘못하면 안 하느니만 못합니다.
+하지 말아야 할 질문: '이런 서비스 있으면 쓸래?' 다들 '오 좋은데?'라고 합니다. 예의상요. 그리고 안 씁니다.
+해야 할 질문은 과거형입니다. 미래의 의향이 아니라 과거의 행동을 물어야 해요.
+1) 최근에 그 상황이 언제였나요? — 실제로 겪었는지 확인.
+2) 그때 어떻게 해결했나요? — 지금 쓰는 대안이 뭔지. 이게 진짜 경쟁자입니다.
+3) 그게 불편했나요, 아니면 그냥 그랬나요? — 불편의 크기를 봅니다.
+'그냥 그랬다'는 답이 많이 나오면 그건 문제가 아니라 불편입니다. 돈을 내지 않아요.">
+  <div class="kicker">검증</div>
+  <div class="title">&ldquo;이런 거 있으면 쓸래?&rdquo;는 <em>쓸모없는 질문</em>입니다</div>
+  <div class="body">
+    <div class="card plain" style="padding:18px 24px">
+      <p style="font-size:17.5px;color:var(--navy);line-height:1.65">다들 <strong>&ldquo;오 좋은데?&rdquo;</strong>라고 합니다. 예의상요. 그리고 <strong>안 씁니다.</strong></p>
+    </div>
+    <div class="grid-3" style="margin-top:20px">
+      <div class="card"><span class="num">Q1</span><h3>&ldquo;최근에 그 상황이<br>언제였나요?&rdquo;</h3><p>실제로 겪었는지 확인합니다. 기억을 못 하면 <strong>안 겪은 겁니다</strong></p></div>
+      <div class="card"><span class="num">Q2</span><h3>&ldquo;그때 어떻게<br>해결했나요?&rdquo;</h3><p>지금 쓰는 대안이 무엇인지. <strong>그게 진짜 경쟁자</strong>입니다</p></div>
+      <div class="card blue"><span class="num">Q3</span><h3>&ldquo;불편했나요,<br>그냥 그랬나요?&rdquo;</h3><p><em>&lsquo;그냥 그랬다&rsquo;</em>가 많으면 그건 문제가 아니라 <em>불편</em>입니다 — 돈을 내지 않습니다</p></div>
+    </div>
+    <div class="doit">핵심 — <b>미래의 의향이 아니라 과거의 행동</b>을 물으세요. 5명이면 충분합니다.</div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="실습 섹션. '지금부터 팀별로 실제로 해봅니다. 노트북 여세요.'">
+  <div class="kicker">SECTION — 실습</div>
+  <div class="bignum">04</div>
+  <h2>팀별 <em>실습</em></h2>
+  <div class="sub">오늘 배운 걸 우리 아이템에 적용합니다</div>
+</section>
+
+<section class="slide" data-notes="실습 진행. 순회하면서 팀별로 막힌 지점을 풀어주세요.
+1단계 팀 세팅 — 인사 세 질문, 팀 룰 네 가지, 리드 역할. 팀 시트를 채웁니다.
+2단계 발산 — 각자 낸 아이템을 펼치고 규칙 네 가지를 지키며 확장합니다. 목표는 후보 10개 이상.
+3단계 수렴 — 세 개의 체로 걸러 2~3개로 좁힙니다. 그리고 세 번 깎기.
+4단계 역기획 — 남은 후보 중 하나를 골라 경쟁사 3개를 표로 뜯습니다.
+팀마다 속도가 다를 겁니다. 빠른 팀은 4단계까지 가고, 느린 팀은 2~3단계에서 끝나도 괜찮습니다.
+순회할 때 확인할 것: 팀 룰을 진짜 적었는지, 소통 채널을 만들었는지. 이 두 개만 확인해도 절반은 성공입니다.">
+  <div class="kicker">RUN — 실습 진행</div>
+  <div class="title">팀 세팅 → 발산 → 수렴 → <em>역기획</em></div>
+  <div class="rows">
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20v-2a4 4 0 014-4h10a4 4 0 014 4v2"/></svg></div><div><div class="rt">1 · 팀 세팅</div><div class="rd">인사 세 질문 → 팀 룰 네 가지 → 리드 역할. <strong>팀 시트를 채웁니다</strong></div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg></div><div><div class="rt">2 · 발산</div><div class="rd">각자 낸 아이템을 펼치고 규칙 네 가지를 지키며 확장. 목표는 <strong>후보 10개 이상</strong></div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></svg></div><div><div class="rt">3 · 수렴</div><div class="rd">세 개의 체로 걸러 <strong>2~3개</strong>로 좁히고, 남은 것을 <strong>세 번 깎습니다</strong></div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16M9 6v12M15 6v12"/></svg></div><div><div class="rt">4 · 역기획</div><div class="rd">후보 하나를 골라 경쟁사를 표로 뜯고, 복사한 프롬프트로 <strong>BMC 아홉 칸과 포지셔닝맵</strong>까지 돌려봅니다</div></div></div>
+  </div>
+  <div class="note">팀마다 속도가 다릅니다. 빠른 팀은 4단계까지, 느린 팀은 2~3단계에서 끝나도 <strong style="color:var(--navy)">괜찮습니다.</strong></div>
+</section>
+
+<section class="slide" data-notes="제출물은 없습니다. 대신 팀이 스스로 확인하는 체크리스트입니다.
+오늘 이 여섯 개가 됐으면 성공입니다. 아이템 확정은 여기 없습니다. 오늘 안 정해도 괜찮다고 다시 말해주세요.
+수업 끝나기 전에 팀별로 한 번씩 소리 내어 확인하게 하면 좋습니다. 리드가 읽고 나머지가 &lsquo;네&rsquo;라고 답하는 식으로요.
+순회하실 때 특히 두 개만 보세요. 소통 채널을 진짜 만들었는지, 팀 룰을 진짜 적었는지. 이 둘만 되어 있어도 절반은 성공입니다.
+안 된 항목이 있으면 &lsquo;누가 언제까지&rsquo;를 정하고 헤어지라고 하세요. 그냥 &lsquo;나중에 하자&rsquo;는 안 하는 것과 같습니다.">
+  <div class="kicker">CHECK — 팀플 확인</div>
+  <div class="title">헤어지기 전에 <em>여섯 개</em>만 확인하세요</div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card blue">
+        <h3>오늘 안에 되어야 하는 것</h3>
+        <ul>
+          <li><em>소통 채널</em>을 실제로 만들었다 — 전원이 들어와 있다</li>
+          <li><em>팀 룰</em>을 문장으로 적었다 — &ldquo;열심히 하자&rdquo; 말고</li>
+          <li><em>리드 역할</em>을 나눴다 — 누가 무엇을 챙기는지</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>오늘 해보면 좋은 것</h3>
+        <ul>
+          <li>아이디어를 <strong>발산해봤다</strong> — 후보를 늘려봤다</li>
+          <li>후보를 <strong>세 번 깎아봤다</strong></li>
+          <li>경쟁 서비스를 <strong>한 개 이상 직접 써봤다</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="doit">아이템 확정은 이 목록에 <b>없습니다.</b> 오늘 안 정해도 괜찮습니다.<br>안 된 항목이 있으면 <b>&ldquo;누가 언제까지&rdquo;</b>를 정하고 헤어지세요. 그냥 &ldquo;나중에 하자&rdquo;는 안 하는 것과 같습니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="남의 것은 아홉 칸이 다 보입니다. 이미 만들어져 있으니까요. 그런데 우리 것을 채울 땐 순서가 있습니다. 여기는 방향이 잡힌 팀만 해당됩니다.
+한 번에 아홉 칸을 다 채우려고 하면 전부 추측이 됩니다.
+1단계, 지금 — 고객, 가치 제안, 수익원. 이 셋이 안 서면 나머지는 의미가 없습니다.
+2단계, 검증하면서 — 채널과 고객관계는 다음 주 브랜딩과 12주차 마케팅에서 실제로 해보면서 채워집니다.
+3단계, 만들면서 — 핵심활동, 핵심자원, 파트너, 비용구조는 9~11주 개발에서 실제로 뭐가 필요한지 알게 되면 채웁니다.
+그러니 오늘 세 칸만 채우는 건 &lsquo;나머지는 몰라도 된다&rsquo;가 아니라 &lsquo;아직 알 수 없다&rsquo;는 뜻입니다. 빈칸은 빈칸으로 두세요.">
+  <div class="kicker">방향이 잡힌 팀 — 우리 것을 채울 때</div>
+  <div class="title">남의 것은 다 보이지만, 우리 것은 <em>순서대로</em></div>
+  <div class="body">
+    <div class="flow">
+      <div class="fbox gate"><div class="ft">① 지금</div><div class="fd"><b>고객 · 가치제안 · 수익원</b><br>이 셋이 안 서면 나머지는 의미 없음</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">② 검증하면서</div><div class="fd"><b>채널 · 고객관계</b><br>4주 브랜딩 · 12주 마케팅에서<br>해보면서 채운다</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">③ 만들면서</div><div class="fd"><b>핵심활동 · 자원 · 파트너 · 비용</b><br>9~11주 개발에서<br>뭐가 필요한지 알게 되면</div></div>
+    </div>
+    <div class="doit" style="margin-top:26px">세 칸만 채우는 건 <b>&ldquo;나머지는 몰라도 된다&rdquo;</b>가 아니라 <b>&ldquo;아직 알 수 없다&rdquo;</b>는 뜻입니다. 근거 없이 채운 칸이 심사에서 가장 먼저 지적당합니다 — 빈칸은 빈칸으로.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="다음 주 예고. 4주차 브랜딩입니다.
+다음 주부터 브랜드를 만듭니다. 이름, 스토리, 말투, 그리고 brand.md라는 파일까지요.
+그런데 아이템이 아직 안 정해진 팀도 괜찮습니다. 브랜딩 수업은 '후보 중 하나'를 재료로 진행해도 배울 게 똑같아요. 오히려 브랜드를 만들어보다가 아이템이 정해지는 팀도 있습니다.
+준비물 하나만 말씀드릴게요. 마음에 드는 브랜드나 화면 이미지를 20장쯤 모아오세요. 뭐든 좋습니다. 카페 간판, 앱 화면, 포스터. 그게 다음 주 재료입니다.">
+  <div class="kicker">NEXT — WEEK 04</div>
+  <div class="title">다음 주는 <em>브랜딩</em>입니다</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">01</span><h3>브랜드 스토리</h3><p>왜 우리가 이걸 만드는지를 <strong>한 문단</strong>으로</p></div>
+      <div class="card"><span class="num">02</span><h3>보이스 &amp; 톤</h3><p>형용사 세 개와 <strong>금지어 열 개</strong>. 말투를 규칙으로 만듭니다</p></div>
+      <div class="card blue"><span class="num">03</span><h3>brand.md</h3><p>2주차에 배운 <em>Context 자산</em>. 학기 내내 모든 프롬프트에 붙입니다</p></div>
+    </div>
+    <div class="doit">아이템이 아직 안 정해진 팀도 괜찮습니다. <b>후보 중 하나를 재료로</b> 진행해도 배울 건 똑같습니다.<br>준비물 — <b>마음에 드는 브랜드·화면 이미지 20장.</b> 카페 간판, 앱 화면, 포스터 뭐든 좋습니다.</div>
+  </div>
+</section>
+
+<section class="slide cover" data-notes="마무리.
+오늘 한 일을 한 줄로 정리하면 — 같이 갈 사람을 정하고, 규칙을 만들고, 아이디어를 펼쳤습니다.
+아이템이 정해진 팀은 축하드리고, 아직인 팀도 괜찮습니다. 오늘 팀 룰을 적은 게 아이템을 정한 것보다 더 중요할 수 있어요.
+15주 동안 여러분을 버티게 하는 건 좋은 아이디어가 아니라 같이 하는 사람들입니다. 아이디어는 바꿀 수 있지만 팀은 못 바꾸니까요.
+
+Q&A 대비:
+- 팀원이 연락이 안 되면요? → 팀 규칙에 적은 기한이 지나면 저한테 알려주세요. 제가 개입합니다.
+- 아이템이 다른 팀이랑 겹쳐요 → 같은 문제라도 접근이 다르면 다른 제품입니다. 오히려 비교하면서 배울 수 있어요.
+- 경쟁사를 못 찾겠어요 → 완전히 없는 건 거의 없습니다. 해외 서비스도 보시고, 아날로그 방식(엑셀, 수첩, 카톡)도 경쟁자입니다.
+- 인터뷰할 사람이 없어요 → 같은 수업 다른 팀이 가장 가까운 사용자입니다. 서로 인터뷰하세요.
+- 아이템을 지금 정하면 나중에 못 바꾸나요? → 바꿀 수 있습니다. 다만 바꿀 이유가 생겼을 때만 바꾸세요.">
+  <div class="kicker">CLOSING</div>
+  <h1>15주를 버티게 하는 건<br>좋은 아이디어가 아니라<br><em>같이 하는 사람들</em>입니다</h1>
+  <div class="meta">아이디어는 바꿀 수 있지만 팀은 못 바꿉니다.<br>오늘 팀 룰을 적은 게 아이템을 정한 것보다 중요할 수 있습니다.<br><br>
+  4주차 [브랜딩] AI로 끝내는 브랜드 아이덴티티 구축 — what-axis.com</div>
+</section>
+</div></div>
+<div id="hud"></div>
+<div id="help">← → 이동 · S 노트 · G 목차 · F 전체화면 · P 인쇄(PDF)</div>
+<div id="notes"></div>
+<div id="grid"></div>
+<script>
+var S=[].slice.call(document.querySelectorAll('.slide')),i=0,N=S.length;
+var deck=document.getElementById('deck'),hud=document.getElementById('hud'),
+    bar=document.getElementById('bar'),nt=document.getElementById('notes'),gr=document.getElementById('grid');
+S.forEach(function(s,n){
+  if(!s.classList.contains('cover')&&!s.classList.contains('sect')&&!s.classList.contains('nofoot')){
+    var f=document.createElement('div');f.className='foot';
+    f.innerHTML='<span>what-axis.com</span><span>'+(n+1)+'</span>';s.appendChild(f);
+  }
+});
+function fit(){var w=innerWidth/1280,h=innerHeight/720,k=Math.min(w,h);deck.style.transform='scale('+k+')';}
+function show(n){
+  i=Math.max(0,Math.min(N-1,n));
+  S.forEach(function(s,x){s.classList.toggle('active',x===i)});
+  hud.textContent=(i+1)+' / '+N;
+  bar.style.width=((i+1)/N*100)+'%';
+  nt.innerHTML='<b>SLIDE '+(i+1)+'</b>\n'+(S[i].dataset.notes||'(노트 없음)');
+  history.replaceState(null,'','#'+(i+1));
+}
+function buildGrid(){
+  gr.innerHTML='';
+  S.forEach(function(s,n){
+    var t=s.querySelector('.title,h1,h2');
+    var d=document.createElement('div');d.className='g';
+    d.innerHTML='<div class="gn">'+(n+1)+'</div><div class="gt">'+(t?t.textContent.slice(0,46):'—')+'</div>';
+    d.onclick=function(){gr.classList.remove('on');show(n)};gr.appendChild(d);
+  });
+}
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k==='ArrowDown'||k===' '||k==='PageDown'){show(i+1);e.preventDefault()}
+  else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){show(i-1);e.preventDefault()}
+  else if(k==='Home'){show(0)} else if(k==='End'){show(N-1)}
+  else if(k==='s'||k==='S'||k==='ㄴ'){nt.classList.toggle('on')}
+  else if(k==='g'||k==='G'||k==='ㅎ'){gr.classList.toggle('on')}
+  else if(k==='f'||k==='F'||k==='ㄹ'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  else if(k==='p'||k==='P'||k==='ㅔ'){print()}
+  else if(k==='Escape'){gr.classList.remove('on');nt.classList.remove('on')}
+});
+addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.copybtn'); if(!b)return;
+  var box=b.parentElement, el=box&&box.querySelector('.copytext'); if(!el)return;
+  var txt=el.innerText;
+  function done(){b.textContent='복사됨';b.classList.add('done');setTimeout(function(){b.textContent='복사';b.classList.remove('done')},1400);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback);}
+  else fallback();
+  function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity=0;
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(x){}document.body.removeChild(ta);}
+});
+addEventListener('resize',fit);
+buildGrid();fit();show(parseInt((location.hash||'#1').slice(1))-1||0);
+</script>
+</body>
+</html>

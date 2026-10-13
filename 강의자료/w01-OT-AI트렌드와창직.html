@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1주차 OT — AI 시대의 창직과 1인 기업의 탄생</title>
+<style>
+:root{
+  --white:#FFFFFF; --navy:#1A2130; --gray:#6B7280; --lgray:#9AA1AB;
+  --card:#F2F3F5; --line:#E5E7EB; --blue:#2E5CB8; --bluebg:#EAF0FA;
+  --arrow:#C9CDD4; --foot:#C3C8CF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#DEE1E5;overflow:hidden}
+body{font-family:'Pretendard','Malgun Gothic','맑은 고딕',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--navy);-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1280px;height:720px;position:relative;transform-origin:center center;background:var(--white)}
+.slide{position:absolute;inset:0;background:var(--white);padding:60px 58px 0 58px;display:none}
+.slide.active{display:block}
+.kicker{font-size:17px;font-weight:700;letter-spacing:.14em;color:var(--lgray);text-transform:uppercase;margin-bottom:22px}
+.title{font-size:40px;font-weight:800;line-height:1.24;letter-spacing:-.01em}
+.title.sm{font-size:34px}
+.title em{font-style:normal;color:var(--blue)}
+.sub{font-size:19px;color:var(--gray);line-height:1.6;margin-top:14px}
+.sub em{font-style:normal;color:var(--navy);font-weight:700}
+.hr{height:1px;background:var(--line);margin:26px 0}
+.body{margin-top:30px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--card);padding:24px 24px 26px;border:0}
+.card.blue{background:var(--bluebg);border:1px solid var(--blue)}
+.card.plain{background:var(--white);border:1px solid var(--line)}
+.card h3{font-size:21px;font-weight:800;line-height:1.35;margin-bottom:10px}
+.card h3 em{font-style:normal;color:var(--blue)}
+.card p{font-size:16.5px;color:var(--gray);line-height:1.62}
+.card p strong{color:var(--navy);font-weight:700}
+.card ul{margin-top:10px}
+.num{font-family:Arial,Helvetica,sans-serif;font-size:17px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:12px;display:block}
+.bignum{font-family:Arial,Helvetica,sans-serif;font-weight:700;color:var(--blue);font-size:76px;line-height:1}
+.bignum.sm{font-size:56px}
+ul{list-style:none}
+ul li{font-size:17.5px;line-height:1.72;color:var(--gray);padding-left:16px;position:relative}
+ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;background:var(--arrow)}
+ul li strong{color:var(--navy);font-weight:700}
+ul li em{font-style:normal;color:var(--blue);font-weight:700}
+ul.big li{font-size:20px;line-height:1.85}
+.rows{margin-top:26px}
+.row{display:flex;gap:18px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .rt{font-size:19px;font-weight:800;margin-bottom:4px}
+.row .rd{font-size:16px;color:var(--gray);line-height:1.55}
+.iconbox{width:38px;height:38px;background:var(--bluebg);flex:0 0 38px;display:flex;align-items:center;justify-content:center;color:var(--blue)}
+.iconbox svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:square;stroke-linejoin:miter}
+.quote{background:var(--card);padding:38px 40px;position:relative}
+.quote .qm{font-family:Arial;font-size:64px;color:var(--blue);line-height:.8;font-weight:700}
+.quote p{font-size:28px;font-weight:800;line-height:1.5;margin-top:14px}
+.quote cite{display:block;font-style:normal;font-size:16px;color:var(--gray);margin-top:16px}
+.flow{display:flex;align-items:center;gap:0;margin-top:8px}
+.fbox{flex:1;background:var(--card);padding:18px 14px;text-align:center}
+.fbox.gate{background:var(--bluebg);border:1px solid var(--blue)}
+.fbox .ft{font-size:18px;font-weight:800}
+.fbox .fd{font-size:14px;color:var(--gray);margin-top:6px;line-height:1.45}
+.arrow{width:34px;height:1.5px;background:var(--arrow);position:relative;flex:0 0 34px}
+.arrow::after{content:"";position:absolute;right:0;top:-3.5px;border-left:8px solid var(--arrow);border-top:4px solid transparent;border-bottom:4px solid transparent}
+.tbl{width:100%;border-collapse:collapse;margin-top:22px}
+.tbl th{font-size:15px;text-align:left;color:var(--lgray);font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0 14px 12px;border-bottom:1px solid var(--line)}
+.tbl td{font-size:16.5px;color:var(--gray);line-height:1.55;padding:15px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td.k{color:var(--navy);font-weight:800;font-size:17.5px;white-space:nowrap}
+.tbl td em{font-style:normal;color:var(--blue);font-weight:700}
+.chip{display:inline-block;background:var(--bluebg);color:var(--blue);font-size:14px;font-weight:700;padding:5px 11px;margin-right:7px}
+.chip.g{background:var(--card);color:var(--gray)}
+.note{font-size:14px;color:var(--lgray);margin-top:18px;line-height:1.5}
+.foot{position:absolute;left:58px;right:58px;bottom:24px;display:flex;justify-content:space-between;
+  font-family:Arial,Helvetica,sans-serif;font-size:13px;color:var(--foot)}
+.slide.cover,.slide.nofoot{padding-top:0}
+.slide.cover .foot,.slide.nofoot .foot{display:none}
+.cover{display:none;flex-direction:column;justify-content:center;padding:0 58px}
+.cover.active{display:flex}
+.cover .kicker{margin-bottom:26px}
+.cover h1{font-size:52px;font-weight:800;line-height:1.22;letter-spacing:-.015em}
+.cover h1 em{font-style:normal;color:var(--blue)}
+.cover .meta{font-size:18px;color:var(--gray);margin-top:22px;line-height:1.7}
+.sect{display:none;flex-direction:column;justify-content:center;padding:0 58px}
+.sect.active{display:flex}
+.sect .bignum{margin-bottom:18px}
+.sect h2{font-size:44px;font-weight:800;line-height:1.25}
+.sect h2 em{font-style:normal;color:var(--blue)}
+.sect .sub{max-width:800px}
+/* UI */
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);z-index:50;transition:width .18s}
+#hud{position:fixed;right:16px;bottom:12px;font-family:Arial;font-size:12px;color:#8A9099;z-index:50}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38%;overflow:auto;background:#1A2130;color:#E6E9EE;
+  padding:18px 24px;font-size:15.5px;line-height:1.66;display:none;z-index:60;white-space:pre-wrap}
+#notes.on{display:block}
+#notes b{color:#8FB3F0}
+#grid{position:fixed;inset:0;background:#F5F6F8;overflow:auto;padding:24px;display:none;z-index:70;
+  grid-template-columns:repeat(4,1fr);gap:14px}
+#grid.on{display:grid}
+#grid .g{background:#fff;border:1px solid var(--line);padding:14px;cursor:pointer;height:120px;overflow:hidden}
+#grid .g .gn{font-family:Arial;font-size:11px;color:var(--lgray)}
+#grid .g .gt{font-size:14px;font-weight:700;margin-top:6px;line-height:1.35}
+#help{position:fixed;left:16px;bottom:12px;font-size:11.5px;color:#9AA1AB;z-index:50}
+@media print{
+  html,body{overflow:visible;background:#fff}
+  #stage{position:static;display:block}
+  #deck{width:auto;height:auto;transform:none!important}
+  .slide{position:relative;display:block!important;width:1280px;height:720px;page-break-after:always;break-after:page}
+  .cover,.sect{display:flex!important}
+  #bar,#hud,#help,#notes,#grid{display:none!important}
+  @page{size:1280px 720px;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section class="slide cover active" data-notes="학생들이 자리에 앉는 동안. 인사는 짧게.
+'반갑습니다. 앞으로 15주 동안 함께할 이해든입니다.'
+바로 다음 슬라이드의 질문으로 넘어간다. 첫 5분에 강의 전체의 온도가 결정된다.">
+  <div class="kicker">WEEK 01 — OT &amp; MINDSET</div>
+  <h1>AI 시대의 창직과<br><em>1인 기업</em>의 탄생</h1>
+  <div class="meta">생성형 AI를 활용한 크리에이팅/마케팅 (대학생 창직)<br>
+  이해든 · AX is 대표 / 창업교육·지원팀</div>
+</section>
+
+<section class="slide" data-notes="아이스브레이킹. 49명이라 개별 자기소개는 불가능하니 손들기로 대체한다.
+1) 'AI 써보신 분?' — 거의 전부 든다.
+2) 'AI로 뭔가를 끝까지 만들어서 남한테 보여준 적 있는 분?' — 확 줄어든다. 이 낙차가 오늘의 주제.
+3) '코딩 배워야 하나 고민해본 분?' — 많이 든다.
+'세 번째에 손 드신 분들, 오늘 그 고민의 답을 드리겠습니다.'
+오래 끌지 말 것.">
+  <div class="kicker">OPENING</div>
+  <div class="title">시작하기 전에, <em>세 가지</em>만 여쭤볼게요</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">01</span><h3>AI를 써본 적 있다</h3><p>과제, 검색, 번역 — 무엇이든</p></div>
+      <div class="card"><span class="num">02</span><h3>AI로 만든 걸<br>남에게 보여준 적 있다</h3><p>끝까지 완성해서, 링크나 파일로</p></div>
+      <div class="card blue"><span class="num">03</span><h3>코딩을 배워야 하나<br>고민해본 적 있다</h3><p>&ldquo;개발을 모르면 못 만든다&rdquo;는 생각</p></div>
+    </div>
+    <div class="note" style="font-size:17px;color:var(--gray);margin-top:24px">1번과 2번 사이의 <strong style="color:var(--navy)">낙차</strong>가 오늘 이야기의 전부입니다. 그리고 3번에 손드신 분들 — 오늘 그 고민의 답을 드리겠습니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="오늘의 지도. 05번이 오늘의 진짜 목적이라고 못박는다. 앞의 01~04는 그걸 위한 재료.
+'오늘 정한 아이템은 구글 폼으로 제출합니다. 주제는 앞으로 바뀔 수 있으니 부담 없이 내면 됩니다.'
+팀 이야기는 오늘 하지 않는다. 2주차에 신청을 받고 3주차에 시작한다고만 예고.">
+  <div class="kicker">AGENDA</div>
+  <div class="title">오늘 우리는 <em>아이템 한 줄</em>을 들고 나갑니다</div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">01</span><h3>생성형 AI 트렌드</h3><p>지금 사람들이 실제로 무엇을 검색하고 무엇을 쓰는가</p></div>
+      <div class="card"><span class="num">02</span><h3>변화하는 직업관</h3><p>채용공고가 어떻게 바뀌었고, 회사 안에서 무슨 일이 벌어지는가</p></div>
+      <div class="card"><span class="num">03</span><h3>1인 기업 사례</h3><p>글로벌 3 · 국내 3 — 혼자서 어디까지 갔는가</p></div>
+    </div>
+    <div class="grid-2" style="margin-top:18px">
+      <div class="card"><span class="num">04</span><h3>15주 로드맵</h3><p>무엇을 배우고, 무엇으로 평가받는가</p></div>
+      <div class="card blue"><span class="num">05</span><h3>아이템 브레인스토밍 &amp; 구글 폼 제출</h3><p>오늘의 진짜 목적입니다. <em>3문장으로 정리해 가볍게 제출</em></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '먼저 지금 시장이 어떻게 움직이는지, 데이터로 보겠습니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">01</div>
+  <h2>생성형 AI <em>트렌드</em></h2>
+  <div class="sub">기사 말고, 사람들이 실제로 검색한 것으로</div>
+</section>
+
+<section class="slide" data-notes="라이브 데모 슬라이드. 미리 브라우저 탭을 열어두고 수업 중에 직접 보여준다.
+구글 트렌드에 접속해 네 개를 비교한다: Claude / Gemini / Grok / Higgsfield. 기간은 지난 12개월, 지역은 전 세계와 대한민국을 각각 한 번씩.
+주소는 화면에 있는 대로. 미리 열어두고 새로고침만 하면 된다.
+왜 미리 캡처해서 넣지 않았냐고 하면 — 이 그래프는 매주 바뀌기 때문이다. 오늘 여러분이 보는 게 오늘의 답이다. 이것 자체가 이 수업의 태도이기도 하다.
+학생들에게 먼저 예측시킨다: '네 개 중 검색량 1등이 뭘까요?' 손들기로 투표한 뒤 화면을 연다. 예측이 틀리는 게 더 좋다.
+보고 나서 반드시 짚을 것: 검색량은 인기지 성능이 아니다. 그리고 순위는 신제품 발표마다 뒤집힌다.">
+  <div class="kicker">LIVE — 구글 트렌드</div>
+  <div class="title">지금 이 순간 사람들은 <em>무엇을 검색</em>하고 있나</div>
+  <div class="body">
+    <div class="card blue" style="padding:22px 26px">
+      <h3>화면에서 함께 볼 것</h3>
+      <p style="font-size:17px;color:var(--navy);line-height:1.7"><strong>비교 검색어</strong> Claude · Gemini · Grok · Higgsfield<br>
+      <strong>기간</strong> 지난 12개월 &nbsp;/&nbsp; <strong>지역</strong> 전 세계 → 대한민국 순으로</p>
+      <p style="font-size:14.5px;color:var(--gray);margin-top:12px;font-family:Arial,'Malgun Gothic'">trends.google.co.kr/trends/explore?date=today%2012-m&amp;q=Claude,Gemini,Grok,Higgsfield</p>
+    </div>
+    <div class="grid-2" style="margin-top:22px">
+      <div class="card"><h3>먼저 예측해보세요</h3><p>네 개 중 검색량 <strong>1등</strong>은 무엇일까요? 그리고 <strong>전 세계와 한국</strong>의 순위는 같을까요?</p></div>
+      <div class="card"><h3>보고 나서 기억할 것</h3><p>검색량은 <strong>인기</strong>지 성능이 아닙니다. 그리고 순위는 <strong>신제품 발표마다 뒤집힙니다.</strong></p></div>
+    </div>
+    <div class="note">미리 캡처해두지 않은 이유 — 이 그래프는 매주 바뀝니다. 오늘 여러분이 보는 것이 오늘의 답입니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="앞의 네 개 중 학생들이 가장 낯설어할 힉스필드를 따로 다룬다. 여기가 오늘 첫 번째 인사이트 지점.
+힉스필드는 이미지·영상 생성 플랫폼이다. 그런데 특이한 게 있다. 자기 모델만 파는 게 아니라 Sora, Veo, Kling 같은 남의 모델까지 한곳에 모아 크레딧 하나로 쓰게 한다. 애그리게이터 구조다.
+규모: 2,500만 사용자, 기업가치 13억 달러 유니콘, 하루 600만 건 생성·200만 개 영상. Snap 출신 창업자가 만들었다.
+여기서 학생들에게 던질 질문: '모델을 직접 만들지 않았는데 유니콘이 됐습니다. 무엇을 판 걸까요?'
+답: 흩어진 도구를 하나로 모으고, 카메라 무빙 프리셋처럼 '어떻게 써야 하는지'까지 설계해서 판 것. 기술이 아니라 사용 경험을 판 것이다.
+이게 여러분에게 중요한 이유 — 여러분도 모델을 만들 수 없습니다. 하지만 조립하고 설계하는 건 할 수 있습니다.">
+  <div class="kicker">CASE — Higgsfield</div>
+  <div class="title">모델을 안 만들고 <em>유니콘</em>이 된 회사</div>
+  <div class="body grid-2">
+    <div class="card plain">
+      <h3>무엇을 하는 회사인가</h3>
+      <ul>
+        <li>이미지·영상 생성 플랫폼. 자체 모델도 있지만</li>
+        <li><strong>Sora · Veo · Kling</strong> 등 남의 모델까지 한곳에 모아 <strong>크레딧 하나로</strong> 쓰게 한다</li>
+        <li>카메라 무빙 프리셋처럼 <strong>&ldquo;어떻게 쓰는지&rdquo;까지 설계</strong>해서 판다</li>
+        <li>Snap 출신 창업자, 2026년 기업가치 13억 달러</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>규모</h3>
+      <ul>
+        <li>사용자 <em>2,500만 명</em></li>
+        <li>하루 생성 <em>600만 건</em> · 영상 <em>200만 개</em></li>
+      </ul>
+      <div class="hr" style="margin:16px 0"></div>
+      <p style="font-size:17px;color:var(--navy);font-weight:700">질문 — 모델을 직접 만들지 않았는데 유니콘이 됐습니다.<br>그럼 무엇을 판 걸까요?</p>
+    </div>
+  </div>
+  <div class="note">여러분도 모델을 만들 수는 없습니다. 하지만 <strong style="color:var(--navy)">조립하고, 어떻게 쓸지 설계하는 일</strong>은 할 수 있습니다.</div>
+</section>
+
+<section class="slide" data-notes="트렌드 섹션의 결론. 세 줄로 정리하고 넘어간다.
+1) 경쟁이 '누가 더 똑똑한 모델인가'에서 '누가 더 쓰기 쉬운가'로 옮겨갔다. 힉스필드가 증거.
+2) 영상 생성이 대중화됐다. 13주차에 여러분도 직접 만든다.
+3) 이름은 계속 바뀐다. 오늘 1등이 6개월 뒤 3등이 된다. 그러니 도구 이름을 외우는 공부는 하지 마라.
+그래서 이 수업은 도구가 아니라 판단을 가르친다고 예고하고 다음 섹션으로.">
+  <div class="kicker">READ</div>
+  <div class="title">트렌드에서 읽어야 할 <em>세 가지</em></div>
+  <div class="body grid-3">
+    <div class="card"><span class="num">01</span><h3>모델 전쟁에서<br>도구 전쟁으로</h3><p>&ldquo;누가 더 똑똑한가&rdquo;가 아니라 <strong>&ldquo;누가 더 쓰기 쉬운가&rdquo;</strong>로 경쟁이 옮겨갔습니다</p></div>
+    <div class="card"><span class="num">02</span><h3>영상 생성이<br>대중화됐다</h3><p>몇 년 전 스튜디오가 하던 걸 지금은 브라우저에서 합니다. <strong>13주차에 직접 만듭니다</strong></p></div>
+    <div class="card blue"><span class="num">03</span><h3>이름은<br>계속 바뀐다</h3><p>오늘 1등이 6개월 뒤 3등이 됩니다. <em>도구 이름을 외우는 공부는 하지 마세요</em></p></div>
+  </div>
+  <div class="note">그래서 이 수업은 도구 사용법이 아니라 <strong style="color:var(--navy)">판단</strong>을 가르칩니다.</div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '이제 여러분이 가장 궁금해할 이야기입니다. 그래서 취업은 어떻게 되는가.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">02</div>
+  <h2>변화하는 <em>직업관</em></h2>
+  <div class="sub">채용공고가 바뀌었고, 회사 안에 새 조직이 생겼습니다</div>
+</section>
+
+<section class="slide" data-notes="오늘 가장 중요한 데이터. 천천히 읽어준다.
+PwC가 27개국 10억 건의 채용공고를 분석했다. 결론은 흔히 듣는 'AI가 일자리를 없앤다'가 아니었다.
+신입 일자리가 사라진 게 아니라, 신입에게 요구하는 능력의 문턱이 올라갔다.
+- AI 노출이 높은 신입 직무의 52%가 리더십·창의성·대면 소통 같은 시니어급 역량을 요구한다. AI 노출이 낮은 직무는 7%다. 7배 차이.
+- '시니어화된' 신입 공고는 2019년 이후 35% 늘었고, 평범한 신입 공고는 10% 줄었다.
+- AI 스킬을 가진 사람의 임금 프리미엄은 62%.
+여기서 잠깐 멈추고 말한다: '기업이 22세에게 35세가 가졌을 법한 능력을 요구하기 시작한 겁니다.'
+왜 이렇게 됐나 — 전통적으로 신입은 단순 반복 업무를 하면서 일을 배웠다. 도제식 수련이었다. 그 업무를 AI가 가져가자, 신입에게 남는 일이 판단과 대인 능력 쪽으로 통째로 옮겨갔다.">
+  <div class="kicker">DATA — PwC Global AI Jobs Barometer 2026</div>
+  <div class="title">사라진 건 일자리가 아니라 <em>진입로</em>였습니다</div>
+  <div class="body">
+    <div class="sub" style="margin-top:0">27개국 <strong>10억 건</strong>의 채용공고를 분석한 결과</div>
+    <div class="grid-3" style="margin-top:20px">
+      <div class="card"><div class="bignum sm">52%</div><h3 style="margin-top:12px">시니어 역량을 요구하는 신입 공고</h3><p>AI 노출이 높은 신입 직무 기준. 노출이 낮은 직무는 <strong>7%</strong> — <strong>7배 차이</strong></p></div>
+      <div class="card"><div class="bignum sm">+35%<span style="font-size:22px"> / −10%</span></div><h3 style="margin-top:12px">공고 수의 두 갈래</h3><p>2019년 대비 &lsquo;시니어화된&rsquo; 신입 공고는 <strong>35% 증가</strong>, 평범한 신입 공고는 <strong>10% 감소</strong></p></div>
+      <div class="card blue"><div class="bignum sm">62%</div><h3 style="margin-top:12px">AI 스킬 임금 프리미엄</h3><p>같은 직무라도 AI 역량이 있는 사람에게 매겨지는 <em>임금 차이</em></p></div>
+    </div>
+    <div class="note" style="font-size:17px;color:var(--gray);margin-top:22px">한 줄로 줄이면 — 기업이 <strong style="color:var(--navy)">22세에게 35세가 가졌을 법한 능력</strong>을 요구하기 시작했습니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="앞 데이터의 원인과, 학생에게 주는 의미. 여기서 학생들이 불안해할 수 있으니 반드시 출구를 함께 준다.
+원인: 전통적으로 신입은 단순·반복 업무를 하며 일을 배웠다. 도제식 수련이다. AI가 그 업무를 가져가면서 사다리의 첫 칸이 없어졌다.
+그래서 뭘 해야 하나 — 사다리 첫 칸이 없으면 '경험'을 밖에서 만들어서 들어가야 한다.
+이게 이 수업의 존재 이유다. 15주 뒤에 여러분은 이력서에 쓸 문장이 아니라 실제로 만든 링크를 갖게 된다.
+면접에서 '제가 기획하고 만들고 배포했습니다'라며 링크를 내미는 사람은 아직 매우 드물다.
+그리고 오해 금지: 취업하지 말라는 이야기가 절대 아니다. 오히려 취업에 가장 강한 무기가 된다.">
+  <div class="kicker">SO WHAT</div>
+  <div class="title">사다리의 <em>첫 칸</em>이 없어졌습니다</div>
+  <div class="body grid-2">
+    <div class="card">
+      <h3>왜 이렇게 됐나</h3>
+      <ul>
+        <li>전통적으로 신입은 <strong>단순·반복 업무</strong>를 하며 일을 배웠습니다 — 일종의 도제식 수련</li>
+        <li>그 업무를 AI가 가져갔습니다</li>
+        <li>신입에게 남은 일이 <strong>판단과 대인 능력</strong> 쪽으로 통째로 옮겨갔습니다</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>그래서 무엇을 해야 하나</h3>
+      <ul>
+        <li>사다리 첫 칸이 없으면 <em>경험을 밖에서 만들어서</em> 들어가야 합니다</li>
+        <li>15주 뒤 여러분은 이력서 문장이 아니라 <em>실제로 만든 링크</em>를 갖게 됩니다</li>
+        <li>면접에서 <em>&ldquo;제가 기획하고 만들고 배포했습니다&rdquo;</em>라며 링크를 내미는 사람은 아직 드뭅니다</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">오해 금지 — 취업하지 말라는 이야기가 아닙니다. 오히려 <strong style="color:var(--navy)">취업 시장에서 가장 강한 무기</strong>가 됩니다.</div>
+</section>
+
+<section class="slide" data-notes="국내 신호. 앞의 글로벌 데이터가 한국에서도 똑같이 나타난다는 걸 보여준다.
+- 인크루트 조사에서 인사 담당자의 33.5%가 2026년 HR 이슈 1위로 '더 강화된 중고 신입 선호'를 꼽았다. 즉시 투입 가능한 사람을 원한다는 뜻.
+- 채용 기준이 학력·경력 연차에서 '스킬'로 옮겨가고 있다. 직무기술서가 '경영학과 학사 이상'에서 '데이터 시각화 능력(상), 이해관계자 대상 발표(최상)'처럼 바뀐다.
+- 링크드인 리포트는 AI 리터러시를 '특정 직군의 도구가 아니라 모든 직무의 기본 역량'으로 규정했다.
+학생들에게: 여러분이 준비해야 할 건 자격증 한 줄이 아니라 '무엇을 할 수 있는지 보여줄 증거'다.">
+  <div class="kicker">KOREA</div>
+  <div class="title">국내 채용 시장에서도 <em>같은 신호</em></div>
+  <div class="rows">
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 20v-2a4 4 0 014-4h8a4 4 0 014 4v2"/><circle cx="12" cy="7" r="3"/></svg></div><div><div class="rt">&ldquo;중고 신입&rdquo; 선호가 더 강해진다</div><div class="rd">인사 담당자의 <strong>33.5%</strong>가 2026년 HR 이슈 1위로 꼽았습니다 — 즉시 현업 투입 가능한 사람을 원한다는 뜻</div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h12M4 18h8"/></svg></div><div><div class="rt">직무기술서가 &lsquo;스킬&rsquo;로 바뀐다</div><div class="rd">&ldquo;경영학과 학사 이상 / 경력 5년&rdquo; → <strong>&ldquo;데이터 시각화 능력(상), 이해관계자 대상 발표(최상)&rdquo;</strong></div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg></div><div><div class="rt">AI 리터러시는 특정 직군의 도구가 아니다</div><div class="rd">링크드인 리포트 기준 <strong>모든 직무에서 요구되는 기본 역량</strong>으로 분류됐습니다</div></div></div>
+  </div>
+  <div class="note">여러분이 준비할 것은 자격증 한 줄이 아니라 <strong style="color:var(--navy)">무엇을 할 수 있는지 보여줄 증거</strong>입니다.</div>
+</section>
+
+<section class="slide" data-notes="회사 안에서 실제로 벌어지는 일. 학생들은 뉴스로만 듣던 걸 조직도 수준으로 보게 된다.
+AX는 AI Transformation, 즉 AI 전환의 약자다. 도구를 도입하는 수준이 아니라 일하는 방식 자체를 AI에 맞춰 바꾸는 걸 뜻한다.
+지금 국내 기업들이 이걸 전담할 조직을 앞다퉈 만들고 있다.
+- 삼성: 일부 관계사가 CAIO(최고인공지능책임자) 직책을 신설. 삼성디스플레이·삼성전기가 AX 총괄 임원을 CAIO로 선임.
+- SKC: CEO 직속으로 'AI 프런티어 TF' 신설. 투자사 구성원까지 포함.
+- SK텔레콤: CEO 직속 'AI 보드'라는 거버넌스 체계 신설, 사내 조직을 CIC 체제로 개편.
+- 크몽: 'AX팀' 신설하고 외부에서 리더를 영입.
+- 인크루트: 'AX 리더' 포지션을 신설하고 10여 명 규모 조직 구축.
+공통점 두 가지를 짚는다: 거의 전부 CEO 직속이라는 것, 그리고 외부에서 리더를 데려온다는 것. 왜 그럴까? 부서 하나가 아니라 회사 전체의 일하는 방식을 바꾸는 일이라서, 그리고 사내에 그 경험을 가진 사람이 아직 없어서다.
+저도 이 일을 합니다. 기업 임직원 교육으로 들어가서 이 팀들과 같이 일해요.">
+  <div class="kicker">INSIDE — AX 전담조직</div>
+  <div class="title">회사 안에 <em>새로운 조직</em>이 생기고 있습니다</div>
+  <div class="body">
+    <div class="sub" style="margin-top:0"><strong>AX</strong> = AI Transformation. 도구 도입이 아니라 <em>일하는 방식 자체를 AI에 맞춰 바꾸는 일</em></div>
+    <table class="tbl" style="margin-top:16px">
+      <tr><th style="width:150px">기업</th><th>움직임</th></tr>
+      <tr><td class="k">삼성</td><td>일부 관계사가 <em>CAIO(최고인공지능책임자)</em> 직책 신설 — 삼성디스플레이·삼성전기가 AX 총괄 임원을 CAIO로 선임</td></tr>
+      <tr><td class="k">SKC</td><td>CEO 직속 <em>&lsquo;AI 프런티어 TF&rsquo;</em> 신설 — 투자사 구성원까지 포함해 AX 과제 발굴</td></tr>
+      <tr><td class="k">SK텔레콤</td><td>CEO 직속 <em>&lsquo;AI 보드&rsquo;</em> 거버넌스 체계 신설, 사내 조직을 CIC 체제로 개편</td></tr>
+      <tr><td class="k">크몽</td><td><em>&lsquo;AX팀&rsquo;</em> 신설, 외부에서 팀 리더 영입 — 기업 AI 전환 전 과정 담당</td></tr>
+      <tr><td class="k">인크루트</td><td><em>&lsquo;AX 리더&rsquo;</em> 포지션 신설, 10여 명 규모 전담 조직 구축</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-notes="AX 전담팀이 실제로 어떻게 일하는지. 여기가 학생들에게 가장 실질적인 진로 정보다.
+일하는 순서는 대체로 이렇다: 업무 프로세스 진단 → 과제 발굴 → 솔루션 도입 → 가이드라인 제정 → 성과 연결.
+중요한 건 이 순서의 첫 단계가 '기술'이 아니라 '업무 관찰'이라는 점이다. 어느 부서가 무엇을 반복하고 있는지를 먼저 본다.
+구성도 특이하다. 외부에서 영입한 리더 + 내부 현업 담당자. 즉 AI를 아는 사람 한 명과 업무를 아는 사람 여럿이 붙는다.
+그럼 이 팀이 원하는 사람은 누구일까? 도구를 잘 다루는 사람이 아니다. 업무를 알고, 어디를 바꿔야 효과가 나는지 판단할 수 있는 사람이다.
+학생들에게 던지는 말: 여러분이 지금 훈련할 것은 프롬프트 암기가 아니라 그 판단이다. 그리고 그 판단은 직접 만들어봐야 생깁니다.">
+  <div class="kicker">HOW THEY WORK</div>
+  <div class="title">AX 팀은 <em>기술이 아니라 업무</em>에서 시작합니다</div>
+  <div class="body">
+    <div class="flow">
+      <div class="fbox"><div class="ft">업무 진단</div><div class="fd">어느 부서가<br>무엇을 반복하는가</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">과제 발굴</div><div class="fd">바꿨을 때<br>효과가 큰 지점</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">솔루션 도입</div><div class="fd">도구 선정<br>사내 에이전트 구축</div></div>
+      <div class="arrow"></div>
+      <div class="fbox gate"><div class="ft">가이드라인</div><div class="fd">쓰는 법과<br>지켜야 할 선</div></div>
+      <div class="arrow"></div>
+      <div class="fbox"><div class="ft">성과 연결</div><div class="fd">실제 업무 결과로<br>증명</div></div>
+    </div>
+    <div class="grid-2" style="margin-top:26px">
+      <div class="card"><h3>팀 구성이 말해주는 것</h3><p><strong>외부 영입 리더 1명 + 내부 현업 담당자 여럿.</strong> AI를 아는 사람 한 명에, 업무를 아는 사람이 붙습니다.</p></div>
+      <div class="card blue"><h3>그래서 이 팀이 원하는 사람</h3><p>도구를 잘 다루는 사람이 아니라, <em>업무를 알고 어디를 바꿔야 효과가 나는지 판단하는 사람</em>입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '그럼 회사 밖에서는 무슨 일이 벌어지고 있을까요. 혼자 일하는 사람들 이야기입니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">03</div>
+  <h2>혼자서 <em>어디까지</em> 갔나</h2>
+  <div class="sub">글로벌 3 · 국내 3 — 1인 기업 사례</div>
+</section>
+
+<section class="slide" data-notes="글로벌 사례 1. 가장 충격적인 숫자부터 던진다.
+검로드(Gumroad)는 창작자가 디지털 상품을 파는 플랫폼이다. 창업자 사힐 라빙기아는 한때 70명이 넘는 팀을 운영했다.
+그런데 팀을 해산하고 AI 자동화 중심의 1인 운영 체제로 전환했다. 2024년 매출 2,380만 달러, 영업이익률 40%대. 정규 직원 수는 0명.
+여기서 학생들이 오해하기 쉬운 지점을 짚어준다: 이건 '혼자가 더 좋다'는 이야기가 아니다. 이미 만들어진 제품과 고객이 있었기 때문에 가능했던 전환이다.
+그럼 우리가 배울 건 뭔가 — 운영의 상당 부분이 자동화 가능해졌다는 사실. 그리고 그 자동화를 설계하는 게 곧 경영이 됐다는 것.">
+  <div class="kicker">GLOBAL 01 — Gumroad</div>
+  <div class="title">직원 <em>0명</em>, 매출 2,380만 달러</div>
+  <div class="body grid-2">
+    <div class="card plain">
+      <h3>무슨 일이 있었나</h3>
+      <ul>
+        <li>창작자가 디지털 상품을 파는 플랫폼</li>
+        <li>창업자 사힐 라빙기아는 한때 <strong>70명 넘는 팀</strong>을 운영했습니다</li>
+        <li>팀을 해산하고 <strong>AI 자동화 중심 1인 체제</strong>로 전환</li>
+        <li>2024년 매출 <strong>2,380만 달러</strong>, 영업이익률 <strong>40%대</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>오해하지 말 것</h3>
+      <ul>
+        <li>&ldquo;혼자가 더 좋다&rdquo;는 이야기가 <em>아닙니다</em></li>
+        <li>이미 <em>제품과 고객이 있었기 때문에</em> 가능했던 전환입니다</li>
+        <li>배울 것은 하나 — <em>운영의 상당 부분이 자동화 가능해졌고, 그 설계가 곧 경영이 됐다</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="글로벌 사례 2. 학생들이 가장 따라 해보고 싶어할 유형이다.
+피터 레벨스는 네덜란드 출신 1인 개발자다. 직원 없이 여러 서비스를 동시에 굴린다. 노매드리스트, 리모트OK, 포토AI, 인테리어AI.
+연 수백만 달러 매출에 순이익률 90% 수준. VC 투자를 받은 경쟁사들이 20~30% 마진을 낼 때 그렇다.
+핵심 구조를 짚는다: 하나의 큰 제품이 아니라 여러 개의 작은 캐시카우. 각각 고객층도 가격도 유입 채널도 다르다. 하나가 죽어도 나머지가 산다.
+그리고 그는 만드는 과정을 전부 공개한다. 매출도 공개한다. 그 공개 자체가 마케팅이 된다.
+학생 적용 포인트: 여러분의 15주 프로젝트도 '하나의 완벽한 것'보다 '작동하는 작은 것'을 목표로 하라. 그리고 만드는 과정을 공개하라 — 12주차 마케팅에서 다룬다.">
+  <div class="kicker">GLOBAL 02 — Pieter Levels</div>
+  <div class="title">하나의 큰 제품이 아니라 <em>여러 개의 작은 것</em></div>
+  <div class="body grid-2">
+    <div class="card plain">
+      <h3>구조</h3>
+      <ul>
+        <li>네덜란드 출신 1인 개발자. 직원 없이 여러 서비스를 동시에 운영</li>
+        <li>노매드리스트 · 리모트OK · 포토AI · 인테리어AI</li>
+        <li>연 <strong>수백만 달러</strong> 매출, 순이익률 <strong>90%</strong> 수준<br><span style="color:var(--lgray)">(VC 투자를 받은 경쟁사들은 20~30% 마진)</span></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>배울 것</h3>
+      <ul>
+        <li>각각 <em>고객층·가격·유입 채널이 다릅니다</em>. 하나가 죽어도 나머지가 삽니다</li>
+        <li>만드는 과정과 매출을 <em>전부 공개</em>합니다 — 그 공개 자체가 마케팅입니다</li>
+        <li>여러분의 목표도 &lsquo;하나의 완벽한 것&rsquo;이 아니라 <em>&lsquo;작동하는 작은 것&rsquo;</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="글로벌 사례 3. 오늘 강의에서 가장 실용적인 교훈이 나오는 사례.
+대니 포스트마는 여러 AI 서비스를 연속으로 만든 1인 창업자다. 첫 제품 헤드라임(AI 카피라이팅)을 8개월 만에 100만 달러에 매각했고, 챗베이스(웹사이트용 챗봇 빌더)를 몇 달 만에 월 5만 달러까지 키웠다.
+그리고 헤드샷프로. 링크드인이나 기업 팀 프로필용 AI 사진을 만들어주는 서비스인데 이것만으로 월 30만 달러 수준이다.
+여기서 핵심 문장을 강조한다. 본인 말이다 — '이 구체성이 월 30만 달러를 만든다.'
+무슨 뜻인가: 'AI 이미지 생성기'가 아니라 '링크드인 프로필 사진 생성기'다. 'AI 챗봇'이 아니라 '내 웹사이트 FAQ 기반 챗봇 빌더'다.
+시장이 좁을수록 경쟁이 적고, 타겟이 명확하고, 마케팅이 쉽다.
+오늘 실습에서 여러분 아이디어를 계속 깎을 텐데, 그 이유가 이겁니다.">
+  <div class="kicker">GLOBAL 03 — Danny Postma</div>
+  <div class="title">&ldquo;<em>구체성</em>이 돈을 만든다&rdquo;</div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card plain">
+        <h3>연속으로 만든 사람</h3>
+        <ul>
+          <li>헤드라임(AI 카피라이팅) — <strong>8개월 만에 100만 달러에 매각</strong></li>
+          <li>챗베이스(웹사이트용 챗봇 빌더) — 몇 달 만에 월 5만 달러</li>
+          <li>헤드샷프로(프로필 사진 생성) — <strong>월 30만 달러 수준</strong></li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h3>차이는 이름 하나에 있었습니다</h3>
+        <ul>
+          <li>&ldquo;AI 이미지 생성기&rdquo; ✕ → <em>&ldquo;링크드인 프로필 사진 생성기&rdquo;</em> ○</li>
+          <li>&ldquo;AI 챗봇&rdquo; ✕ → <em>&ldquo;내 웹사이트 FAQ 기반 챗봇 빌더&rdquo;</em> ○</li>
+          <li>시장이 좁을수록 <em>경쟁이 적고 타겟이 명확하고 마케팅이 쉽습니다</em></li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">오늘 실습에서 여러분의 아이디어를 계속 깎을 겁니다. <strong style="color:var(--navy)">그 이유가 이것입니다.</strong></div>
+  </div>
+</section>
+
+<section class="slide" data-notes="글로벌 사례 세 개를 데이터로 마무리. '특별한 사람 몇 명 이야기 아닌가요?'라는 반론을 여기서 막는다.
+- 카르타 집계 기준 미국 전체 스타트업 중 1인 스타트업 비율이 2015년 17%에서 35%로 두 배 이상 늘었다.
+- 스트라이프 분석에 따르면 연매출 100만 달러 이상을 올리는 1인 사업자가 최근 몇 년 사이 뚜렷하게 늘었다.
+- 하버드경영대학원 연구팀이 스타트업 5만 개를 분석했더니 AI 중심 스타트업은 일반 스타트업보다 직원 수가 평균 25% 적었다.
+즉 개인의 재능 문제가 아니라 구조의 변화다. 같은 일을 더 적은 사람으로 할 수 있게 됐다는 뜻이고, 그건 취업 시장 이야기이기도 하다.">
+  <div class="kicker">NOT AN EXCEPTION</div>
+  <div class="title">특별한 몇 명이 아니라 <em>구조의 변화</em>입니다</div>
+  <div class="body grid-3">
+    <div class="card"><div class="bignum sm">17→35%</div><h3 style="margin-top:12px">1인 스타트업 비율</h3><p>미국 전체 스타트업 중 1인 창업 비중. 2015년 대비 <strong>두 배 이상</strong> (카르타 집계)</p></div>
+    <div class="card"><div class="bignum sm">$1M+</div><h3 style="margin-top:12px">1인 사업자의 매출대</h3><p>연매출 100만 달러를 넘는 <strong>직원 없는 사업자</strong>가 뚜렷하게 늘었습니다 (스트라이프 분석)</p></div>
+    <div class="card blue"><div class="bignum sm">−25%</div><h3 style="margin-top:12px">직원 수</h3><p>스타트업 5만 개 분석 결과, AI 중심 기업은 일반 기업보다 <em>직원 수가 평균 25% 적었습니다</em> (하버드경영대학원)</p></div>
+  </div>
+  <div class="note">같은 일을 <strong style="color:var(--navy)">더 적은 사람으로</strong> 할 수 있게 됐다는 뜻입니다 — 창업 이야기이자 곧 취업 이야기이기도 합니다.</div>
+</section>
+
+<section class="slide" data-notes="국내 사례 1. 글로벌 숫자를 보고 '미국 얘기잖아요'라고 생각하는 학생들을 잡는 슬라이드.
+국내에도 혼자 만들어 운영하며 그 과정을 전부 공개하는 사람들이 있다. 대표적인 게 해커톤에서 시작한 생성형 AI 서비스를 1년 동안 혼자 키우며 기록을 공개한 사례다.
+중요한 건 매출 규모가 아니다. 공개된 기록에서 배울 수 있는 것들이다: 언제 무엇을 만들었고, 무엇이 안 됐고, 어디에 시간을 썼는지.
+학생들에게 권할 것: 여러분도 오늘부터 기록을 남기세요. 15주 뒤에 그 기록 자체가 포트폴리오가 됩니다.
+그리고 한국 시장의 현실도 솔직히 말한다. 미국 1인 사업자는 처음부터 영어와 글로벌 플랫폼 위에서 출발한다. 우리는 시장 크기가 다르다. 그래서 더 좁게 가야 한다.">
+  <div class="kicker">KOREA 01 — 기록을 남기는 사람들</div>
+  <div class="title">국내에도 <em>혼자 만들고 공개하는</em> 사람들이 있습니다</div>
+  <div class="body grid-2">
+    <div class="card plain">
+      <h3>대표적인 형태</h3>
+      <ul>
+        <li>해커톤에서 시작한 생성형 AI 서비스를 <strong>1년 동안 혼자</strong> 키우며 기록을 공개</li>
+        <li>사이드 프로젝트로 시작해 1인 창업으로 이어가는 경로</li>
+        <li>중요한 건 매출 규모가 아니라 <strong>공개된 기록</strong>입니다 — 무엇이 안 됐고 어디에 시간을 썼는지</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>한국 시장의 현실도 같이</h3>
+      <ul>
+        <li>미국 1인 사업자는 <em>영어와 글로벌 플랫폼 위에서</em> 출발합니다</li>
+        <li>우리는 시장 크기가 다릅니다 — 그래서 <em>더 좁게</em> 가야 합니다</li>
+        <li>여러분도 <em>오늘부터 기록을 남기세요.</em> 15주 뒤엔 그 기록이 포트폴리오입니다</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="국내 사례 2. 크리에이티브·마케팅 쪽 진로를 생각하는 학생들에게 가장 중요한 슬라이드.
+국내 AI 크리에이티브 시장에서 벌어진 변화가 명확하다.
+- 전통 광고 제작이 12~16주 걸리던 것이 AI를 쓰면 4~6주로 압축됐다. 시간이 3분의 1이 됐다.
+- 그런데 더 중요한 건 이거다. 대형 광고대행사부터 1인 프리랜서까지 전부 같은 도구를 쓴다. Veo, Midjourney, Runway. 도구는 평준화됐다.
+그럼 뭐가 차별화되나? 두 가지로 압축된다.
+1) 좋은 컨셉을 만드는 능력 — AI가 백 가지 비주얼을 만들지만 어떤 컨셉으로 갈지는 사람의 몫.
+2) 백 가지 중 베스트를 고르는 안목 — AI는 평균을 잘 만들고, 사람은 예외적인 한 컷을 알아본다.
+이 두 문장이 이 수업 전체의 요약이기도 하다. 5~7주차 디자인 수업이 정확히 이걸 훈련한다.">
+  <div class="kicker">KOREA 02 — AI 크리에이티브 시장</div>
+  <div class="title">도구는 <em>평준화</em>됐습니다. 그럼 무엇이 남을까요</div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card">
+        <h3>무엇이 바뀌었나</h3>
+        <ul>
+          <li>전통 광고 제작 <strong>12~16주</strong> → AI 활용 <strong>4~6주</strong>. 시간이 3분의 1로</li>
+          <li>대형 대행사부터 <strong>1인 프리랜서까지 같은 도구</strong>를 씁니다</li>
+          <li>&ldquo;어떤 도구를 쓰는가&rdquo;는 더 이상 차별화가 아닙니다</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h3>그럼 무엇이 차별화인가</h3>
+        <ul>
+          <li><em>좋은 컨셉을 만드는 능력</em> — AI가 백 가지를 만들지만 어떤 컨셉으로 갈지는 사람의 몫</li>
+          <li><em>백 가지 중 베스트를 고르는 안목</em> — AI는 평균을 잘 만들고, 사람은 예외적인 한 컷을 알아봅니다</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">이 두 문장이 이 수업 전체의 요약입니다. <strong style="color:var(--navy)">5~7주차 디자인 수업</strong>이 정확히 이걸 훈련합니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="국내 사례 3. 여기는 일부러 '김빠지는' 사례를 넣는다. 성공담만 보면 학생들이 잘못된 기대를 갖는다.
+AI 가상 인플루언서로 돈 벌기. 요즘 유튜브에 '월 천만원' 같은 제목이 넘친다.
+현실은 이렇다. 로지 같은 성공 사례는 기업이 전문 팀과 자본을 투입한 결과지, 개인이 며칠 만에 만든 게 아니다.
+개인이 부업으로 시작하면 초반 몇 달은 수익이 거의 없는 게 보통이다. 진짜 장벽은 같은 얼굴을 유지하는 기술적 어려움, 매일 콘텐츠를 만들어야 하는 부담, 팔로워가 쌓이기까지의 긴 기다림이다.
+그럼 왜 이 사례를 넣었나 — 두 가지 교훈 때문이다.
+1) '한 방'을 노리면 진다. 한 캐릭터를 길게 키운다는 마음이어야 버틴다.
+2) 그래도 구조적 장점은 진짜다. 한 번 캐릭터를 만들면 시간·장소 제약 없이 콘텐츠를 만들 수 있다.
+이번 학기에도 마찬가지다. 15주 안에 대박이 나지는 않습니다. 대신 굴러가는 걸 만들 겁니다.">
+  <div class="kicker">KOREA 03 — 현실 점검</div>
+  <div class="title">&ldquo;AI로 월 천만원&rdquo;에 대해 <em>솔직하게</em></div>
+  <div class="body grid-2">
+    <div class="card">
+      <h3>현실</h3>
+      <ul>
+        <li>로지 같은 성공 사례는 <strong>기업이 전문 팀과 자본을 투입한 결과</strong>입니다</li>
+        <li>개인이 부업으로 시작하면 <strong>초반 몇 달은 수익이 거의 없는 게 보통</strong></li>
+        <li>진짜 장벽: 같은 얼굴 유지, 매일 콘텐츠 제작, 팔로워가 쌓이기까지의 긴 기다림</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <h3>그래도 배울 것</h3>
+      <ul>
+        <li><em>&lsquo;한 방&rsquo;을 노리면 집니다.</em> 하나를 길게 키운다는 마음이어야 버팁니다</li>
+        <li>구조적 장점은 진짜입니다 — 한 번 만들면 <em>시간·장소 제약 없이</em> 계속 굴릴 수 있습니다</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">이번 학기에도 마찬가지입니다. 15주 안에 대박은 안 납니다. 대신 <strong style="color:var(--navy)">굴러가는 것</strong>을 만듭니다.</div>
+</section>
+
+<section class="slide" data-notes="강사 본인 사례. 한 장으로만 짧게 하고 넘어간다. 오늘의 주인공은 학생이지 내가 아니다.
+'저도 같은 걸 하고 있습니다'만 전달하면 된다.
+- LawWin: 법률 문서를 넣으면 쟁점과 위험 조항을 쉬운 말로 정리해주는 서비스.
+- 김사수, 상냥: 진단·공유형. 결과 카드가 곧 유입 채널이 되는 구조.
+- RE:ME: 자기이해 질문 카드 브랜드. 소프트웨어가 아니라 관점을 판 사례.
+한마디만 덧붙인다: 저는 개발자가 아니라 기획·UX 출신입니다. 그래서 여러분이 어디서 막힐지 압니다.
+그리고 이 서비스들은 학기 중에 사례로 계속 등장할 거라고 예고.">
+  <div class="kicker">그리고 저는</div>
+  <div class="title">가르치면서 <em>동시에 만듭니다</em></div>
+  <div class="body">
+    <div class="grid-3">
+      <div class="card"><span class="num">A</span><h3>LawWin</h3><p>법률 문서를 넣으면 쟁점과 위험 조항을 쉬운 말로 정리 — <strong>문서 하나만 잘 읽어주는</strong> 서비스</p></div>
+      <div class="card"><span class="num">B</span><h3>김사수 · 상냥</h3><p>진단·공유형. <strong>결과 카드가 곧 유입 채널</strong>이 되는 구조</p></div>
+      <div class="card"><span class="num">C</span><h3>RE:ME</h3><p>자기이해 질문 카드 브랜드. 소프트웨어가 아니라 <strong>관점을 판</strong> 사례</p></div>
+    </div>
+    <div class="hr"></div>
+    <div class="sub" style="margin-top:0">저는 개발자가 아니라 <em>기획·UX</em>를 하던 사람입니다. 그래서 여러분이 어디서 막힐지 압니다.<br>
+    이 서비스들은 학기 중에 사례로 계속 등장합니다.</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="사례 전체에서 공통 패턴 뽑기. 먼저 학생들에게 물어본다.
+'오늘 본 사례들에서 공통점이 뭐였을까요?' 몇 명 발표시키고 정리해준다.
+이 다섯 가지가 오늘 실습의 채점 기준이기도 하다고 예고한다.
+특히 1번과 2번은 오늘 구글 폼에 쓸 3문장의 기준이 된다.">
+  <div class="kicker">PATTERN</div>
+  <div class="title">오늘 본 사례들의 <em>다섯 가지</em> 공통점</div>
+  <div class="rows">
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/></svg></div><div><div class="rt">1. 문제가 좁다</div><div class="rd">&ldquo;AI 이미지 생성기&rdquo;가 아니라 &ldquo;링크드인 프로필 사진 생성기&rdquo; — 좁을수록 이깁니다</div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div><div><div class="rt">2. 입력과 출력이 한 문장으로 설명된다</div><div class="rd">무엇을 넣고 무엇을 받는지 즉시 이해됩니다. <strong>설명이 길면 이미 진 것</strong>입니다</div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M12 4v16M6 10l6-6 6 6"/></svg></div><div><div class="rt">3. 첫 버전이 작다</div><div class="rd">완성이 아니라 <strong>작동</strong>을 먼저 만듭니다. 기능은 사용자가 생긴 뒤에 붙입니다</div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div><div class="rt">4. 만드는 과정을 공개한다</div><div class="rd">공개 자체가 마케팅이 됩니다. 완성 후에 홍보를 붙이려 하면 <strong>붙을 자리가 없습니다</strong></div></div></div>
+    <div class="row"><div class="iconbox"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15V9M13 15v-4M18 15V7"/></svg></div><div><div class="rt">5. 만든 사람이 그 문제의 당사자다</div><div class="rd">직접 겪은 불편이라야 품질을 판단할 수 있습니다 — <strong>AI 시대에 유일하게 대체 불가한 자산</strong></div></div></div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="섹션 전환. '이걸 15주 동안 어떻게 만들어 나가는지 지도를 보여드립니다.'">
+  <div class="kicker">SECTION</div>
+  <div class="bignum">04</div>
+  <h2>15주 <em>로드맵</em></h2>
+  <div class="sub">무엇을 배우고, 무엇으로 평가받는가</div>
+</section>
+
+<section class="slide" data-notes="학기 전체 지도. 각 단계가 '무엇을 손에 쥐고 끝나는가'로 설명한다.
+- 학생들이 가장 불안해하는 건 개발(9~11주). '코딩 못해도 됩니다. 대신 구조를 이해해야 합니다'라고 미리 안심시킬 것.
+- 2주차는 온라인 사전 녹화라는 점 명확히 공지. 영상 시청으로 출석을 갈음한다.
+- 3주차부터 팀 활동이 시작된다는 것도 여기서 한 번 언급. 자세한 안내는 2주차 온라인 강의에서.
+- 강조: 이 표의 오른쪽 열이 곧 포트폴리오다.">
+  <div class="kicker">ROADMAP</div>
+  <div class="title">기획에서 <em>데모데이</em>까지, 손에 남는 결과물 기준</div>
+  <table class="tbl">
+    <tr><th style="width:110px">단계</th><th style="width:100px">주차</th><th>배우는 것</th><th style="width:250px">손에 남는 것</th></tr>
+    <tr><td class="k">기반</td><td>1–3주</td><td>AI 트렌드와 원리, 프롬프트 구조화, 역기획·시장조사·BMC</td><td>창업 아이템 <em>기획안</em></td></tr>
+    <tr><td class="k">브랜딩<br>디자인</td><td>4–7주</td><td>브랜드 스토리·카피, 이미지 생성, UX/UI 설계, 상세페이지</td><td>로고·키비주얼·<em>랜딩 디자인</em></td></tr>
+    <tr><td class="k">중간평가</td><td>8주</td><td>기획 의도·타겟·브랜드 결과물 발표 / 동료 피드백</td><td>중간 <em>PT</em></td></tr>
+    <tr><td class="k">개발</td><td>9–11주</td><td>바이브 코딩, MCP, v0, 기능 구현과 배포</td><td>작동하는 <em>MVP 링크</em></td></tr>
+    <tr><td class="k">마케팅</td><td>12–13주</td><td>콘텐츠 자동화 파이프라인, SEO/GEO, 숏폼 영상 제작</td><td>콘텐츠 &amp; <em>홍보 영상</em></td></tr>
+    <tr><td class="k">데모데이</td><td>14–15주</td><td>IR 덱 작성, 크리틱, 모의 투자 심사</td><td>링크 + 성과 + <em>IR 자료</em></td></tr>
+  </table>
+  <div class="note">* 2주차는 <strong style="color:var(--navy)">온라인 사전 녹화 강의</strong>입니다 (<strong style="color:var(--navy)">시청으로 출석 갈음</strong>) · <strong style="color:var(--navy)">3주차부터 팀 활동</strong>이 시작되며, 자세한 안내는 2주차 강의에서 드립니다.</div>
+</section>
+
+<section class="slide" data-notes="평가 방식과 운영 규칙을 담백하게 안내한다.
+- 배점 네 가지를 그대로 읽어준다.
+- 중간·기말은 팀 단위, 출석·과제는 개인 단위로 평가한다는 점을 미리 알린다. 팀 구성 자체는 3주차에 시작한다.
+- 운영 규칙 세 가지: AI 사용 전면 허용(대신 어떻게 시켰는지 함께 제출), 매주 결과 남기기, 남의 것 가져오지 않기.
+- 저작권 부분은 5주차 이미지 생성에서 자세히 다룬다고 예고한다.">
+  <div class="kicker">EVALUATION &amp; RULES</div>
+  <div class="title">평가와 <em>운영 규칙</em></div>
+  <div class="body">
+    <div class="grid-4">
+      <div class="card"><div class="bignum sm">20%</div><h3 style="margin-top:12px">출석</h3><p>참여도 및 성실성 <strong>(개인)</strong></p></div>
+      <div class="card"><div class="bignum sm">20%</div><h3 style="margin-top:12px">중간평가</h3><p>기획안 &amp; 브랜딩 발표 (8주) <strong>(팀)</strong></p></div>
+      <div class="card blue"><div class="bignum sm">40%</div><h3 style="margin-top:12px">기말평가</h3><p>최종 결과물 + IR 피칭 (15주) <em>(팀)</em></p></div>
+      <div class="card"><div class="bignum sm">20%</div><h3 style="margin-top:12px">과제·실습</h3><p>주차별 실습 결과물 <strong>(개인)</strong></p></div>
+    </div>
+    <div class="hr"></div>
+    <div class="grid-3" style="margin-top:0">
+      <div class="card plain"><h3>AI 사용은 전면 허용</h3><p>대신 <strong>어떻게 시켰는지</strong>를 함께 제출합니다. 결과물보다 과정이 실력입니다.</p></div>
+      <div class="card plain"><h3>매주 결과를 남긴다</h3><p>수업 시간에 만든 것을 <strong>그 주에 제출</strong>합니다. 주차별 산출물이 그대로 쌓여 최종 결과물이 됩니다.</p></div>
+      <div class="card plain"><h3>남의 것을 가져오지 않는다</h3><p>AI 생성물도 저작권·상표 이슈가 있습니다. <strong>상업적 사용 조건 확인</strong>은 기본기입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide sect" data-notes="실습 섹션. '지금부터가 오늘의 본론입니다. 노트북 여세요.'">
+  <div class="kicker">SECTION — 실습</div>
+  <div class="bignum">05</div>
+  <h2>아이템 <em>브레인스토밍</em></h2>
+  <div class="sub">오늘 끝나기 전에 3문장을 완성하고, 구글 폼에 제출합니다</div>
+</section>
+
+<section class="slide" data-notes="아이템 발굴 프레임. '아이디어가 없어요'라고 할 때 쓰는 세 개의 우물.
+- 1번이 가장 강력하다. 최근 2주 안에 짜증났던 순간 3개를 적게 한다. 오늘 사례의 5번 패턴(당사자성)과 연결.
+- 2번은 부모님 가게, 동아리 운영, 조교 업무, 알바 현장 등 주변의 반복 노동. AX 팀이 하는 일과 똑같은 관찰이라고 짚어주면 좋다.
+- 3번은 학과·알바·취미 중 남들보다 5% 더 아는 것. 전문가일 필요 없다.
+- 절대 하지 말 것: '요즘 뜨는 아이템' 검색으로 시작하기. 남이 이미 판단한 문제에는 내 판단 근거가 없다.">
+  <div class="kicker">HOW TO FIND</div>
+  <div class="title">아이디어를 뽑는 <em>세 개의 우물</em></div>
+  <div class="body grid-3">
+    <div class="card blue"><span class="num">01</span><h3>내 불편</h3><p>최근 2주 안에 <em>내가 짜증났던 순간</em> 3개. 가장 강력한 출발점입니다 — 오늘 본 다섯 번째 패턴이 이것입니다</p></div>
+    <div class="card"><span class="num">02</span><h3>남의 반복 노동</h3><p>주변 사람이 <strong>매번 손으로 하는 일</strong>. 부모님 가게, 동아리 운영, 조교 업무, 알바 현장 — <strong>AX 팀이 하는 관찰과 똑같습니다</strong></p></div>
+    <div class="card"><span class="num">03</span><h3>내가 아는 도메인</h3><p>학과·알바·취미 중 <strong>남들보다 5% 더 아는 것</strong>. 전문가일 필요 없습니다</p></div>
+  </div>
+  <div class="note">하지 말 것: &ldquo;요즘 뜨는 아이템&rdquo; 검색으로 시작하기 — 남이 이미 판단한 문제에는 <strong style="color:var(--navy)">내 판단 근거가 없습니다.</strong></div>
+</section>
+
+<section class="slide" data-notes="오늘의 산출물 양식. 화면에 띄워놓고 그대로 채우게 한다.
+- 3문장 규칙: 누가 / 무엇을 / 왜 지금.
+- 예시를 같이 읽는다. 나쁜 예도 반드시 보여준다.
+- 강조: 지금 완벽할 필요 없다. 3주차 팀 활동 시작 전까지 바꿀 수 있다.
+- 오늘 본 대니 포스트마 사례를 다시 언급하면서 '좁히기'를 반복 강조.">
+  <div class="kicker">WORKSHEET</div>
+  <div class="title">아이템 정의서 — <em>3문장</em>이면 충분합니다</div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card">
+        <h3>양식</h3>
+        <ul class="big">
+          <li><strong>누가</strong> — 어떤 상황에 있는 누구인가</li>
+          <li><strong>무엇을</strong> — 무엇을 넣으면 무엇을 받는가</li>
+          <li><strong>왜 지금</strong> — 왜 하필 지금, 왜 하필 내가</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h3>작성 예시</h3>
+        <p><strong>누가</strong> 자취 2개월 차라 냉장고에 남은 재료를 매번 썩히는 대학생이<br><br>
+        <strong>무엇을</strong> 남은 재료 3개를 입력하면 오늘 만들 수 있는 한 그릇 레시피와 장보기 목록을 받는다<br><br>
+        <strong>왜 지금</strong> 내가 지난달에 배추 반 통을 버렸고, 자취 커뮤니티에 같은 글이 매일 올라온다</p>
+      </div>
+    </div>
+    <div class="note">나쁜 예: &ldquo;대학생을 위한 AI 플랫폼&rdquo; — 누가·무엇을·왜가 하나도 없습니다. <strong style="color:var(--navy)">구체성이 돈을 만듭니다.</strong></div>
+  </div>
+</section>
+
+<section class="slide" data-notes="구글 폼 제출 안내. 가볍게, 짧게.
+- 화면의 링크를 열어 지금 이 자리에서 제출하게 한다. QR로 띄워도 좋다. 링크는 LMS에도 올려둔다.
+- 부담을 덜어주는 게 핵심이다. 완성된 사업계획을 내라는 게 아니라, 지금 떠오른 아이템을 3문장으로 적어 내면 된다고 말한다.
+- 주제는 앞으로 얼마든지 바뀔 수 있다는 점을 분명히 말한다. 제출한 걸로 확정되는 게 아니다.
+- 제출된 아이템은 3주차 팀 빌딩에 참고용으로만 쓴다고 안내한다.">
+  <div class="kicker">SUBMIT</div>
+  <div class="title">작성한 <em>3문장</em>을 구글 폼에 내주세요</div>
+  <div class="body">
+    <div class="card blue" style="padding:26px 30px">
+      <h3>제출 링크</h3>
+      <p style="font-size:15px;color:var(--navy);line-height:1.6;font-family:Arial,'Malgun Gothic';word-break:break-all">https://docs.google.com/forms/d/e/1FAIpQLSfNuvsZwqKh5L_UZcqf0JpgaK9Lj73XAnaVPVk_UfZGM6Uu4w/viewform</p>
+    </div>
+    <div class="grid-2" style="margin-top:22px">
+      <div class="card"><h3>부담 없이 내세요</h3><p>완성된 사업계획이 아니어도 됩니다. <strong>지금 떠오른 아이템을 3문장으로</strong> 적어 내면 충분합니다.</p></div>
+      <div class="card"><h3>주제는 바뀔 수 있습니다</h3><p>제출한 것으로 확정되지 않습니다. <strong>3주차 팀 빌딩에 참고</strong>하려고 받는 것입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-notes="다음 주 예고. 마지막에 반드시 크게 말하고 끝낸다. 학생들이 가장 많이 잊는 두 가지다.
+1) 다음 주는 강의실에 오지 않는다. 온라인 강의 영상 시청으로 출석을 갈음한다. '헛걸음하지 마세요'라고 한 번 더 말할 것.
+2) 팀 빌딩 결과를 공개한다. 오늘 제출한 아이템을 바탕으로 팀을 짜서 공개하고, 그 뒤에 이의신청을 받는다.
+   — 강조: 팀이 마음에 안 들면 그때 말하면 된다. 지금 걱정할 필요 없다.
+   — 아무 말이 없으면 공개된 대로 확정된다는 점도 분명히.
+3) 3주차부터 팀으로 앉는다고 예고하고 닫는다.
+모든 공지와 자료는 LMS에 올라간다는 점을 안내할 것.">
+  <div class="kicker">NEXT WEEK — 두 가지만 기억하세요</div>
+  <div class="title">다음 주는 <em>강의실에 오지 않습니다</em></div>
+  <div class="body">
+    <div class="grid-2">
+      <div class="card blue">
+        <span class="num">01</span>
+        <h3>2주차는 온라인 강의</h3>
+        <ul>
+          <li>강의실 수업 <em>없습니다</em></li>
+          <li>온라인 강의 <em>영상 시청으로 출석을 갈음</em>합니다</li>
+          <li>영상은 <strong>LMS</strong>에 올라갑니다</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>팀 빌딩 결과 공개 &amp; 이의신청</h3>
+        <ul>
+          <li>오늘 제출한 아이템을 바탕으로 <strong>팀을 구성해 공개</strong>합니다</li>
+          <li>공개 후 <strong>이의신청</strong>을 받습니다 — 팀이나 아이템이 맞지 않으면 그때 말하면 됩니다</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="font-size:17px;color:var(--gray);margin-top:22px">지금 팀을 걱정하지 않으셔도 됩니다. <strong style="color:var(--navy)">공개된 뒤에 말하면 되는 구조</strong>입니다. 다만 아무 말이 없으면 공개된 대로 확정됩니다.<br>그리고 <strong style="color:var(--navy)">3주차부터는 팀으로 앉습니다.</strong></div>
+  </div>
+</section>
+
+<section class="slide cover" data-notes="마무리. 오늘 데이터를 한 문장으로 묶어서 닫는다.
+'오늘 본 숫자들을 한 줄로 줄이면 이겁니다 — 사다리의 첫 칸이 없어졌고, 대신 혼자 만들 수 있는 도구가 생겼습니다.'
+'15주 뒤에 여러분은 이력서에 쓸 문장이 아니라, 남들이 눌러볼 수 있는 링크를 갖게 됩니다.'
+
+Q&A 대비:
+- 코딩 전혀 못 하는데 괜찮나요? → 9~11주는 자연어로 개발합니다. 필요한 건 구조 이해지 문법 암기가 아닙니다.
+- 아이템이 안 떠올라요 → 세 개의 우물 중 1번으로 돌아가세요. 최근에 짜증났던 순간을 적는 것부터 시작합니다.
+- 아이템이 겹치면요? → 같은 문제라도 접근이 다르면 다른 제품입니다. 3주차 팀 편성에서 오히려 유리할 수 있습니다.
+- 유료 결제 필수인가요? → 아닙니다. 무료 플랜으로 전 과정 수행 가능하도록 설계했습니다.
+- 창업을 진짜 해야 하나요? → 아닙니다. 포트폴리오로 끝내도 됩니다. 평가 기준은 동일합니다.
+- 팀은 언제 정하나요? → 2주차 온라인 강의에서 신청을 받고, 3주차부터 팀 활동을 시작합니다.
+- 제출한 아이템으로 확정되나요? → 아닙니다. 팀 빌딩 참고용이고 주제는 얼마든지 바뀔 수 있습니다.
+
+마지막 안내: 구글 폼 제출과 2주차 온라인 강의 시청, 두 가지만 기억하라고 말하고 닫는다. 2주차는 시청으로 출석을 갈음한다.">
+  <div class="kicker">NEXT — WEEK 02 (온라인)</div>
+  <h1>사다리의 첫 칸이 없어진 대신<br><em>혼자 만들 수 있는 도구</em>가<br>생겼습니다</h1>
+  <div class="meta">2주차 [AI 원리] 공학적 이해와 프롬프트 엔지니어링 — 온라인 강의로 만나요<br>
+  what-axis.com</div>
+</section>
+</div></div>
+<div id="hud"></div>
+<div id="help">← → 이동 · S 노트 · G 목차 · F 전체화면 · P 인쇄(PDF)</div>
+<div id="notes"></div>
+<div id="grid"></div>
+<script>
+var S=[].slice.call(document.querySelectorAll('.slide')),i=0,N=S.length;
+var deck=document.getElementById('deck'),hud=document.getElementById('hud'),
+    bar=document.getElementById('bar'),nt=document.getElementById('notes'),gr=document.getElementById('grid');
+S.forEach(function(s,n){
+  if(!s.classList.contains('cover')&&!s.classList.contains('sect')&&!s.classList.contains('nofoot')){
+    var f=document.createElement('div');f.className='foot';
+    f.innerHTML='<span>what-axis.com</span><span>'+(n+1)+'</span>';s.appendChild(f);
+  }
+});
+function fit(){var w=innerWidth/1280,h=innerHeight/720,k=Math.min(w,h);deck.style.transform='scale('+k+')';}
+function show(n){
+  i=Math.max(0,Math.min(N-1,n));
+  S.forEach(function(s,x){s.classList.toggle('active',x===i)});
+  hud.textContent=(i+1)+' / '+N;
+  bar.style.width=((i+1)/N*100)+'%';
+  nt.innerHTML='<b>SLIDE '+(i+1)+'</b>\n'+(S[i].dataset.notes||'(노트 없음)');
+  history.replaceState(null,'','#'+(i+1));
+}
+function buildGrid(){
+  gr.innerHTML='';
+  S.forEach(function(s,n){
+    var t=s.querySelector('.title,h1,h2');
+    var d=document.createElement('div');d.className='g';
+    d.innerHTML='<div class="gn">'+(n+1)+'</div><div class="gt">'+(t?t.textContent.slice(0,46):'—')+'</div>';
+    d.onclick=function(){gr.classList.remove('on');show(n)};gr.appendChild(d);
+  });
+}
+addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k==='ArrowDown'||k===' '||k==='PageDown'){show(i+1);e.preventDefault()}
+  else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){show(i-1);e.preventDefault()}
+  else if(k==='Home'){show(0)} else if(k==='End'){show(N-1)}
+  else if(k==='s'||k==='S'||k==='ㄴ'){nt.classList.toggle('on')}
+  else if(k==='g'||k==='G'||k==='ㅎ'){gr.classList.toggle('on')}
+  else if(k==='f'||k==='F'||k==='ㄹ'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  else if(k==='p'||k==='P'||k==='ㅔ'){print()}
+  else if(k==='Escape'){gr.classList.remove('on');nt.classList.remove('on')}
+});
+addEventListener('resize',fit);
+buildGrid();fit();show(parseInt((location.hash||'#1').slice(1))-1||0);
+</script>
+</body>
+</html>
