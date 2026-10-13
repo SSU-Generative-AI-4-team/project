@@ -74,3 +74,30 @@
 ## 쓰는 법
 
 글을 쓸 때 이 문서를 프롬프트 맨 앞에 붙이고 "위 brand.md의 말투와 금지어를 지켜서"라고 시작한다.
+
+## 이미지 스타일 블록 (5주차) — 모든 이미지 프롬프트 = 피사체 한 줄 + 아래 블록
+
+### 로고용 (flat vector)
+SUBJECT 예시: Haechi head peeking over one horizontal brush handle, mane as one spiral coil, two paws resting on the handle
+STYLE: flat vector logo mark, organic shapes, two-shape mark (head-with-paws silhouette + brush handle), bold stroke weight, no shading, no gradient
+COLOR: single color — the red of a cinnabar seal stamp on paper, white background
+COMPOSITION: centered, negative space ≥ 60% of canvas, elements ≤ 2, readable at 32px
+CONSTRAINTS: no text, 1:1, no drop shadow, no 3D, no mockup
+
+### 키 비주얼용 (일러스트 — 3D render 하나로 고정)
+MEDIUM: 3D render of a vinyl-toy figurine on a clay diorama floor
+LIGHT: overcast-window key light from front-top, one contact shadow pooled under the subject
+COLOR: palette of hill-shade moss and stream greens with one accent — the yellow of a yuzu peel on Haechi's mane coil; background: morning haze behind frosted glass, one gradient
+MOOD NOUNS: morning haze, river pebble, clay figurine, folded hanji sheet, cinnabar seal impression
+INSTEAD OF:
+- black-ink outline + flat vector fill → 3D volume shaped by shadow alone
+- cobalt-blue full bleed with flame-orange → morning-haze backdrop with one yuzu-yellow accent
+- frame-to-edge pattern density → one figurine and two-thirds backdrop space
+- human figures → Haechi figurine alone; human trace only as a sheet of hanji
+- folk-art beast with fangs, scales, flame strokes → toy guardian with stubby legs, closed-mouth smile, mane as one clay coil
+CONSTRAINTS: no text, no logos, no watermark, 9:16 (앱 화면·스토리) / 1:1 (피드) / 16:9 (발표 슬라이드)
+
+### 참조 이미지
+- 로고 기준 이미지: (첨부한 3D 해치 앱 아이콘 파일명 기입) — 항상 함께 첨부
+- 키 비주얼 기준 이미지: Figma 'image 9' (강·집·일출 풍경) https://www.figma.com/design/Fvd1eI3LuUp9aBOklWhR7M/?node-id=132-6
+  보조: '우리 같은 레퍼런스' 프레임 https://www.figma.com/design/Fvd1eI3LuUp9aBOklWhR7M/?node-id=122-4
