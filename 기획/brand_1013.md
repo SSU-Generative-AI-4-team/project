@@ -2,7 +2,7 @@
 
 | 항목 | 내용 |
 | --- | --- |
-| 작성일 | 2026-09-29 (2026-10-06 해치 버전으로 수정, 2026-10-13 시각 방향을 이미지 스타일 블록에 맞춰 수정) |
+| 작성일 | 2026-09-29 (2026-10-06 해치 버전으로 수정, 2026-10-13 시각 방향을 이미지 스타일 블록에 맞춰 수정, 2026-10-13 김서영: 컬러 가이드 · 글꼴 반영) |
 | 작성자 | 홍석민 (Claude Code로 작성) |
 | 기준 문서 | `PRD.md` v0.1 |
 | 참고 | `기획/해치MVP기획안_정연화.md`, `기획/2안 정리본_정민규.md`, `기획/기획종합_김서영.md` |
@@ -57,24 +57,29 @@
 
 ## 시각 방향
 
-2026-10-13 아래 '이미지 스타일 블록'(키 비주얼 3D 점토 인형)과 확정 로고(`Design/brand/logo/haechi_yellow.png`)에 맞춰 다시 썼다. 이전 방향(한지결 · 먹빛 · 쪽빛 메인)은 키 비주얼과 결이 달라 바꿨다 (`Design/decisions/logo-decision.md` 남은 일 1). 화면 색 HEX는 `기획/design_1013.md`와 같다.
+2026-10-13 아래 '이미지 스타일 블록'(키 비주얼 3D 점토 인형)과 확정 로고(`Design/brand/logo/haechi_yellow.png`)에 맞춰 다시 썼다. 이전 방향(한지결 · 먹빛 · 쪽빛 메인)은 키 비주얼과 결이 달라 바꿨다 (`Design/decisions/logo-decision.md` 남은 일 1). 같은 날 컬러는 `Design/brand/color/haechi_color_palette_guideline.md`(해치 블루 메인)로 다시 바꿨다. 화면 색 HEX는 `기획/design.md`와 같다.
 
 - 무드 키워드 5: 아침 안개 · 강가 조약돌 · 점토 인형 해치 · 접힌 한지 한 장 · 주홍 낙관 (키 비주얼 MOOD NOUNS와 같은 순서)
-  - 아침 안개: 바탕은 젖빛 유리 너머 아침 안개처럼 옅은 초록빛 하나의 그라데이션. 무늬를 채우지 않는다
+  - 아침 안개: 바탕은 한지 크림 한 가지로 조용하게 둔다. 무늬를 채우지 않고 그라데이션을 넓게 쓰지 않는다
   - 강가 조약돌: 모서리가 둥글고 매끈한 형태. 버튼·카드·말풍선 모서리는 날카롭지 않게, 그림자는 바닥에 닿는 한 곳에만 고인다
   - 점토 인형 해치: 짧은 다리, 입을 다문 미소, 갈기는 점토 한 가닥을 말아 놓은 모양. 송곳니·비늘·불꽃 무늬 없는, 무섭지 않고 듬직한 장난감 수호신
   - 접힌 한지 한 장: 사람의 흔적은 한지 한 장으로만 보인다. 사람을 그리지 않는다. 한지는 바탕색이 아니라 쓰기 화면의 한지 질감과 접히는 한지로 나온다
   - 주홍 낙관: 종이에 찍힌 도장 자국. 로고 마크와 필사 카드 낙관처럼 아주 작은 자리에만
 - 빛과 공간: 앞 위쪽에서 흐린 창빛이 들어오고 그림자는 해치 아래 하나. 화면의 2/3는 비워 둔다. 버튼과 장식은 최소, 소리와 진동은 작게
-- 컬러 (메인 1 + 보조 3):
-  - **메인 — 이끼 위 물빛 `#3F6B57`**: 키 비주얼의 "산그늘 이끼와 시냇물 초록". 그림의 주조색을 버튼 색으로 써야 화면과 그림이 한 앱으로 보인다. 주요 버튼·선택 상태·링크에만 쓰고 배경에 깔지 않는다
-  - 보조 — 안개 `#F5F8F4`: 바탕
-  - 보조 — 먹 `#2A2826`: 본문 글씨, 먹 갈기의 먹물
-  - 보조 — 유자 껍질 노랑 `#F1B439`: 해치 갈기와 로고 바탕 한 곳뿐인 강조. 로고·이미지 안에서만 쓰고 화면 버튼에는 쓰지 않는다 (흰 글자 대비 1.85:1)
-  - 주홍 낙관(이미지 안에서만): 로고 단색 마크와 필사 카드 낙관. 불을 떠올리게 하므로 화면 색으로 쓰지 않는다
+- 컬러 — `Design/brand/color/haechi_color_palette_guideline.md` 기준 (2026-10-13 교체). 화면 HEX와 토큰은 `기획/design.md`와 같다
+  - 원칙: **한지색으로 공간을 만들고, 먹색으로 정보를 보여 주며, 해치 블루로 행동을 이끌고, 골드와 레드는 해치의 개성을 보여 주는 데만 쓴다**
+  - 비율: 한지 크림 · 아이보리 70% / 해치 블루 20% / 골드 + 레드 10%
+  - **메인 — 해치 블루 `#2A6090`**: 확정 로고 해치의 눈썹 색. 주요 버튼 · 링크 · 선택 상태에 쓴다. 화면에서 가장 많이 보이는 유채색이다
+  - 바탕 — 한지 크림 `#F2EBDD`: 페이지 배경. 순백은 쓰지 않는다
+  - 표면 — 해치 아이보리 `#FDF5E9`: 카드 · 입력창 · 쓰기 한지. 해치 몸 색이기도 하다
+  - 글씨 — 먹 `#2A2826`: 본문. 순검정은 쓰지 않는다. 짙은 그림 요소는 웜 블랙 `#38322B`
+  - 강조 — 해치 골드 `#F0B237`: 해치 갈기, 완료 · 작은 강조. 넓은 배경으로 깔지 않는다
+  - 강조 — 해치 레드 `#EB4531`: 해치 귀 · 코, 아주 중요한 포인트 하나. 버튼에 반복해 쓰지 않는다
+  - 캐릭터는 고유 색(골드 · 레드 · 블루 · 아이보리 · 검정)을 그대로 쓰고, 화면은 한지 크림 · 아이보리 · 먹 · 블루로 제한한다. **화면에서 가장 컬러풀한 것은 해치다**
+- 글꼴 (2개): 제목과 해치 말풍선은 **영남일보체(YNAMNEWS) Bold · Medium** (`Design/brand/font/`), 본문은 **Pretendard**. 둥근 손글씨 결의 영남일보체가 해치의 목소리를 맡고, 안내는 담백한 고딕으로 쓴다. `[확인 필요]` 영남일보체 라이선스(상업 이용 · 웹폰트 · 재배포)
 - 하지 않는 것 (키 비주얼 INSTEAD OF와 같다):
   - 검은 먹 외곽선 + 납작한 채색 → 그림자만으로 빚은 3D 덩어리
-  - 코발트 파랑 전면 + 불꽃 주황 → 아침 안개 바탕 + 유자 노랑 강조 하나
+  - 파랑을 전면에 깔고 불꽃 주황을 더하는 것 → 한지 크림 바탕 + 블루는 버튼에만 + 골드 · 레드는 해치에게만
   - 화면 끝까지 꽉 찬 무늬 → 해치 하나와 2/3의 빈 공간
   - 사람 인물 → 해치 혼자, 사람의 흔적은 한지 한 장
   - 송곳니·비늘·불꽃 획의 민화 속 짐승 → 짧은 다리·다문 입 미소의 장난감 수호신
@@ -98,17 +103,18 @@ CONSTRAINTS: no text, 1:1, no drop shadow, no 3D, no mockup
 ### 키 비주얼용 (일러스트 — 3D render 하나로 고정)
 MEDIUM: 3D render of a vinyl-toy figurine on a clay diorama floor
 LIGHT: overcast-window key light from front-top, one contact shadow pooled under the subject
-COLOR: palette of hill-shade moss and stream greens with one accent — the yellow of a yuzu peel on Haechi's mane coil; background: morning haze behind frosted glass, one gradient
+COLOR: hanji-cream and ivory surfaces with ink-black wood and stone; the figurine keeps its own colors — yuzu-peel gold mane (#F0B237), cinnabar-red side manes (#EB4531), haechi-blue brows (#2A6090), ivory body (#FDF5E9); no other saturated color in the scene
 MOOD NOUNS: morning haze, river pebble, clay figurine, folded hanji sheet, cinnabar seal impression
 INSTEAD OF:
 - black-ink outline + flat vector fill → 3D volume shaped by shadow alone
-- cobalt-blue full bleed with flame-orange → morning-haze backdrop with one yuzu-yellow accent
+- cobalt-blue full bleed with flame-orange → calm hanji-cream backdrop; gold and red only on the figurine
 - frame-to-edge pattern density → one figurine and two-thirds backdrop space
 - human figures → Haechi figurine alone; human trace only as a sheet of hanji
 - folk-art beast with fangs, scales, flame strokes → toy guardian with stubby legs, closed-mouth smile, mane as one clay coil
 CONSTRAINTS: no text, no logos, no watermark, 9:16 (앱 화면·스토리) / 1:1 (피드) / 16:9 (발표 슬라이드)
 
 ### 참조 이미지
-- 로고 기준 이미지: (첨부한 3D 해치 앱 아이콘 파일명 기입) — 항상 함께 첨부
-- 키 비주얼 기준 이미지: Figma 'image 9' (강·집·일출 풍경) https://www.figma.com/design/Fvd1eI3LuUp9aBOklWhR7M/?node-id=132-6
+- 로고 기준 이미지: `Design/brand/logo/haechi_yellow.png` — 항상 함께 첨부
+- 키 비주얼 기준 이미지: `Design/brand/key visual/haechi_1x1.png` (확정 키 비주얼, 16x9 · 9x16 같은 폴더)
+- 이전 기준: Figma 'image 9' (강·집·일출 풍경) https://www.figma.com/design/Fvd1eI3LuUp9aBOklWhR7M/?node-id=132-6
   보조: '우리 같은 레퍼런스' 프레임 https://www.figma.com/design/Fvd1eI3LuUp9aBOklWhR7M/?node-id=122-4
