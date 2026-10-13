@@ -9,3 +9,7 @@
 - 모집 상태와 인원은 확인되지 않아 표시하지 않습니다.
 
 프로젝트 루트에서 정적 서버로 열거나 `landing.html`을 브라우저로 직접 열어 확인할 수 있습니다.
+
+## cardnews.html
+
+카드뉴스 10장(4:5) 편집 화면입니다. 글자는 카드 위에서 고치고, 이미지는 카드마다 바꿉니다. 고친 내용은 브라우저에 저장됩니다. PNG 저장은 프로젝트 루트에서 `python3 -m http.server`로 연 뒤 `localhost:8000/Design/frontend/cardnews.html`에서 합니다. 근거: `../decisions/cardnews-decision.md`, 대본: `../../기획/카드뉴스_김서영.md`
