@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해칫 화면 시안</title>
+<!--
+  해칫 (hatch eat) 모바일 웹 화면 시안 · 2026-10-13
+  기준: 기획/design.md(디자인 시스템), 기획/brand_1013.md(말투·금지어), 기획/여정맵_홍석민(1013).md(흐름 카드)
+  이미지: Design/brand/key visual/haechi_1x1.png, Design/brand/logo/haechi_yellow.png (이 파일 기준 상대 경로)
+  외부 라이브러리·CDN 없음. 더블클릭으로 열린다.
+-->
+<style>
+/* ── 디자인 시스템 (design.md 그대로) ───────────────────────── */
+:root {
+  --color-primary: #3F6B57;
+  --color-text: #2A2826;
+  --color-muted: #6E6A63;
+  --color-line: #DDE3DC;
+  --color-bg: #F5F8F4;
+  --color-success: #2E8B57;
+  --color-warning: #D99A1E;
+  --color-danger: #C0392B;
+  --color-info: #6E6A63;
+  --fs-xs: 13px; --fs-s: 15px; --fs-m: 17px; --fs-l: 22px; --fs-xl: 28px;
+  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --radius: 8px;
+  --btn-h: 48px;
+
+  /* ── 보조 변수 (design.md에 없는 값만. 화면 UI 색은 위 9개만 쓴다) ── */
+  --color-on-primary: #FFFFFF;           /* primary 버튼 흰 글자 (design.md "흰 글자") */
+  --font-body: Pretendard, "Pretendard Variable", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --font-heading: "Gowun Batang", Pretendard, "Malgun Gothic", serif;
+
+  /* 이미지 전용 색: 해치 캐릭터·한지 그림 안에서만 (brand_1013 "유자 노랑·주홍은 이미지 안에서만") */
+  --char-body: #FFFDF8;
+  --char-shade: #E8E2D6;
+  --char-mane: #F1B439;
+  --char-mane-deep: #D58F1F;
+  --char-cheek: #E04A3A;
+  --char-cheek-deep: #B5523B;
+  --char-brow: #2F5FA8;
+  --char-eye: #1E1C1B;
+  --img-hanji: #FBF7EE;
+  --img-hanji-fiber: #EFE7D6;
+
+  /* 화면 틀·그림 크기 */
+  --frame-w: 390px;
+  --frame-h: 844px;
+  --frame-r: 40px;
+  --line-w: 1px;
+  --logo: 24px;
+  --icon: 24px;
+  --kv-h: 320px;
+  --chip-h: 40px;
+  --tab-h: 56px;
+  --char-l: 220px;
+  --char-m: 168px;
+  --char-s: 128px;
+  --hanji-h: 184px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-s);
+  line-height: 1.5;
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-line) 60%, var(--color-bg));
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: calc(var(--line-w) * 2) solid var(--color-primary); outline-offset: calc(var(--line-w) * 2); }
+
+/* ── 위쪽 화면 전환 탭 (시안 보기용, 폰 밖) ──────────────────── */
+.viewer-tabs {
+  display: flex; gap: var(--sp-1); flex-wrap: wrap; justify-content: center;
+  max-width: calc(var(--frame-w) * 2);
+}
+.viewer-tabs button {
+  height: var(--chip-h); padding: 0 var(--sp-2);
+  border: var(--line-w) solid var(--color-line); border-radius: var(--radius);
+  background: var(--color-bg); color: var(--color-muted); font-size: var(--fs-xs);
+}
+.viewer-tabs button[aria-selected="true"] {
+  border-color: var(--color-primary); color: var(--color-primary); font-weight: 600;
+}
+
+/* ── 폰 프레임 ───────────────────────────────────────────────── */
+.phone {
+  position: relative;
+  width: min(var(--frame-w), 100%);
+  height: min(var(--frame-h), calc(100vh - var(--chip-h) * 2 - var(--sp-4)));
+  min-height: calc(var(--frame-h) * 0.7);
+  background: var(--color-bg);
+  border: var(--sp-1) solid var(--color-text);
+  border-radius: var(--frame-r);
+  overflow: hidden;
+  box-shadow: 0 var(--sp-3) var(--sp-4) color-mix(in srgb, var(--color-text) 18%, transparent);
+}
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  animation: screen-in .35s ease both;
+}
+.screen[hidden] { display: none; }
+@keyframes screen-in { from { opacity: 0; transform: translateY(var(--sp-1)); } }
+
+.top {
+  height: calc(var(--btn-h) + var(--sp-2));
+  padding: var(--sp-1) var(--sp-2) 0;
+  display: flex; align-items: center; gap: var(--sp-1);
+  flex: none;
+}
+.top .title { font-size: var(--fs-m); font-weight: 600; }
+.brand { display: flex; align-items: center; gap: var(--sp-1); font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-m); }
+.brand img { width: var(--logo); height: var(--logo); object-fit: contain; border-radius: calc(var(--radius) / 2); }
+.back {
+  width: var(--btn-h); height: var(--btn-h); margin-left: calc(var(--sp-1) * -1);
+  display: grid; place-items: center; border-radius: var(--radius); color: var(--color-text);
+}
+.back:active { background: var(--color-line); }
+.back svg { width: var(--icon); height: var(--icon); }
+
+.body {
+  flex: 1; overflow-y: auto;
+  padding: 0 var(--sp-2) var(--sp-3);
+  display: flex; flex-direction: column; gap: var(--sp-2);
+}
+h1, h2 { font-family: var(--font-heading); font-weight: 700; line-height: 1.4; }
+h1 { font-size: var(--fs-l); }
+h2 { font-size: var(--fs-l); }
+.muted { color: var(--color-muted); }
+.xs { font-size: var(--fs-xs); }
+.center { text-align: center; }
+
+/* ── 아래 고정 영역 · 버튼 3종 × 상태 4 ─────────────────────── */
+.foot {
+  flex: none;
+  padding: var(--sp-1) var(--sp-2) var(--sp-3);
+  background: linear-gradient(to top, var(--color-bg) 70%, color-mix(in srgb, var(--color-bg) 0%, transparent));
+  display: flex; flex-direction: column; gap: var(--sp-1);
+}
+.foot.with-tabs { padding-bottom: var(--sp-1); }
+.btn {
+  position: relative; overflow: hidden;
+  width: 100%; height: var(--btn-h);
+  border-radius: var(--radius);
+  font-size: var(--fs-m); font-weight: 600;
+  transition: filter .15s, background-color .2s, transform .1s;
+}
+.btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
+.btn-secondary { border: var(--line-w) solid var(--color-primary); color: var(--color-primary); background: var(--color-bg); }
+.btn-danger { background: var(--color-danger); color: var(--color-on-primary); }
+.btn:active:not(:disabled) { filter: brightness(.9); transform: scale(.99); }      /* pressed: 10% 어둡게 */
+.btn:disabled {                                                                    /* disabled: muted 40% */
+  background: color-mix(in srgb, var(--color-muted) 40%, var(--color-bg));
+  color: var(--color-on-primary); cursor: not-allowed;
+}
+.btn.loading { pointer-events: none; background: var(--color-primary); color: var(--color-on-primary); }  /* loading: 글자 → 진행 문구 */
+.btn.loading::after {                                                             /* 빙글빙글 대신 빛이 한 방향으로 지나간다 */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-on-primary) 22%, transparent), transparent);
+  transform: translateX(-100%);
+  animation: sweep 1.3s linear infinite;
+}
+@keyframes sweep { to { transform: translateX(100%); } }
+.hint { min-height: calc(var(--fs-xs) * 1.5); font-size: var(--fs-xs); color: var(--color-muted); text-align: center; }
+.text-link {
+  align-self: center; height: var(--btn-h); padding: 0 var(--sp-2);
+  color: var(--color-primary); font-size: var(--fs-s);
+  text-decoration: underline; text-underline-offset: calc(var(--sp-1) / 2);
+}
+
+/* 탭바 (필요할 때만: 첫 화면) */
+.tabbar {
+  height: var(--tab-h); flex: none;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: var(--line-w) solid var(--color-line); background: var(--color-bg);
+}
+.tabbar button { font-size: var(--fs-xs); color: var(--color-muted); display: grid; place-items: center; align-content: center; gap: calc(var(--sp-1) / 2); }
+.tabbar button[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
+.tabbar svg { width: var(--icon); height: var(--icon); }
+
+/* ── 말풍선 (해치는 하오체 한 줄) ───────────────────────────── */
+.bubble {
+  position: absolute; z-index: 10;
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--color-on-primary);
+  border: var(--line-w) solid var(--color-line);
+  border-radius: var(--radius);
+  font-family: var(--font-heading); font-size: var(--fs-s); white-space: nowrap;
+  box-shadow: 0 var(--sp-1) var(--sp-2) color-mix(in srgb, var(--color-text) 10%, transparent);
+  transition: transform .25s, opacity .25s;
+}
+.bubble::after {
+  content: ""; position: absolute; left: 50%; bottom: calc(var(--sp-1) * -1);
+  width: var(--sp-2); height: var(--sp-2); transform: translateX(-50%) rotate(45deg) scale(.7);
+  background: inherit; border-right: inherit; border-bottom: inherit;
+}
+.bubble.pop { animation: pop .35s ease; }
+@keyframes pop { 40% { transform: translateX(-50%) scale(1.06); } }
+
+/* ── ① 첫 화면 · 키 비주얼 ─────────────────────────────────── */
+.kv-wrap { position: relative; perspective: calc(var(--frame-w) * 2); flex: none; }
+.kv {
+  display: block; width: 100%; height: var(--kv-h);
+  object-fit: cover; object-position: 50% 72%;
+  border-radius: var(--radius);
+  background: var(--color-line);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.02);
+  transition: transform .2s ease-out;
+  cursor: pointer;
+}
+.kv-wrap.boing .kv { animation: kv-boing .45s ease; }
+@keyframes kv-boing { 35% { transform: scale(.97); } 70% { transform: scale(1.04); } }
+.kv-wrap .bubble { left: 50%; top: var(--sp-2); transform: translateX(-50%); }
+
+/* ── 해치 (CSS로 빚은 3D 점토 인형) ────────────────────────── */
+.stage { position: relative; display: grid; place-items: center; perspective: calc(var(--frame-w) * 2); }
+.haechi {
+  --s: var(--char-m);
+  --rx: 0deg; --ry: 0deg; --ex: 0; --ey: 0;
+  position: relative; width: var(--s); height: var(--s);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.haechi.l { --s: var(--char-l); }
+.haechi.s { --s: var(--char-s); }
+.rig {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .18s ease-out;
+  animation: breathe 3.6s ease-in-out infinite;
+}
+@keyframes breathe { 50% { translate: 0 calc(var(--s) * -0.012); } }
+.haechi.boing .rig { animation: boing .5s ease; }
+@keyframes boing { 30% { scale: 1.08 .9; } 60% { scale: .95 1.07; } 80% { scale: 1.02 .98; } }
+
+.p { position: absolute; border-radius: 50%; }
+.shadow { left: 18%; width: 64%; bottom: 1%; height: 8%; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-text) 22%, transparent), transparent); }
+.clay-white { background: radial-gradient(circle at 34% 28%, var(--char-body) 0 52%, var(--char-shade) 100%); }
+.clay-yellow { background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--char-mane) 70%, var(--char-body)) 0 18%, var(--char-mane) 45%, var(--char-mane-deep) 100%); }
+.clay-red { background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--char-cheek) 70%, var(--char-body)) 0 15%, var(--char-cheek) 45%, var(--char-cheek-deep) 100%); }
+.curl::after {                                    /* 갈기의 소용돌이 */
+  content: ""; position: absolute; inset: 24%;
+  border-radius: 50%;
+  border: calc(var(--s) * 0.014) solid color-mix(in srgb, var(--curl, var(--char-mane-deep)) 85%, var(--char-eye));
+  border-left-color: transparent; border-bottom-color: transparent;
+  transform: rotate(20deg);
+  opacity: .55;
+}
+.curl.clay-red { --curl: var(--char-cheek-deep); }
+
+.body-p  { left: 22%; width: 56%; top: 58%; height: 36%; border-radius: 46% 46% 40% 40%; transform: translateZ(0); transition: all .35s ease; }
+.side    { width: 21%; height: 21%; transform: translateZ(calc(var(--s) * -0.03)); }
+.side.l1 { left: 5%; top: 29%; } .side.l2 { left: 6%; top: 47%; }
+.side.r1 { right: 5%; top: 29%; } .side.r2 { right: 6%; top: 47%; }
+.head    { left: 14%; width: 72%; top: 24%; height: 46%; border-radius: 48% 48% 44% 44% / 54% 54% 46% 46%; transform: translateZ(calc(var(--s) * 0.02)); transition: transform .3s ease; }
+.top-c   { left: 32%; width: 36%; top: 5%; height: 32%; transform: translateZ(calc(var(--s) * 0.05)); }
+.top-l   { left: 17%; width: 23%; top: 15%; height: 21%; transform: translateZ(calc(var(--s) * 0.04)); }
+.top-r   { right: 17%; width: 23%; top: 15%; height: 21%; transform: translateZ(calc(var(--s) * 0.04)); }
+.face    { position: absolute; inset: 0; transform: translateZ(calc(var(--s) * 0.07)); transition: transform .3s ease; }
+.brow    { width: 15%; height: 6%; top: 40%; border-radius: 50% 50% 40% 40%; background: radial-gradient(circle at 40% 30%, color-mix(in srgb, var(--char-brow) 60%, var(--char-body)) 0 15%, var(--char-brow) 60%); }
+.brow.l  { left: 29%; transform: rotate(-10deg); } .brow.r { right: 29%; transform: rotate(10deg); }
+.eye     { width: 8%; height: 8%; top: 49%; background: radial-gradient(circle at 35% 30%, var(--char-body) 0 14%, var(--char-eye) 22%); transform: translate(calc(var(--ex) * 22%), calc(var(--ey) * 18%)); animation: blink 4.8s infinite; transition: all .25s ease; }
+.eye.l   { left: 35%; } .eye.r { right: 35%; }
+@keyframes blink { 0%, 94%, 100% { scale: 1 1; } 97% { scale: 1 .1; } }
+.nose    { left: 43%; width: 14%; top: 57%; height: 8%; border-radius: 50% 50% 46% 46% / 60% 60% 40% 40%; }
+.mouth   { left: 45%; width: 10%; top: 65.5%; height: 0; border-radius: 0 0 50% 50%; background: color-mix(in srgb, var(--char-cheek-deep) 50%, var(--char-eye)); transition: height .15s ease; }
+.paws    { position: absolute; inset: 0; transform: translateZ(calc(var(--s) * 0.09)); }
+.paw     { width: 19%; height: 14%; top: 81%; border-radius: 50% 50% 44% 44%; transition: top .35s cubic-bezier(.3,1.4,.5,1), left .35s ease, right .35s ease; }
+.paw.l   { left: 28%; } .paw.r { right: 28%; }
+.paw::after {                                     /* 발가락 두 줄 */
+  content: ""; position: absolute; left: 32%; right: 32%; bottom: 0; height: 38%;
+  border-left: calc(var(--s) * 0.006) solid var(--char-shade); border-right: calc(var(--s) * 0.006) solid var(--char-shade);
+}
+
+/* 상태 */
+.haechi.peek .body-p, .haechi.peek .shadow { opacity: 0; }
+.haechi.peek .paw { top: 62%; }
+.haechi.peek.covering .paw { top: 43%; }
+.haechi.peek.covering .paw.l { left: 31%; } .haechi.peek.covering .paw.r { right: 31%; }
+.haechi.chew .mouth { animation: chew .32s ease-in-out infinite; }
+@keyframes chew { 50% { height: 7%; } }
+.haechi.chew .head, .haechi.chew .face { animation: nod .64s ease-in-out infinite; }
+@keyframes nod { 50% { translate: 0 calc(var(--s) * 0.012); } }
+.haechi.open .mouth { height: 9%; }
+.haechi.full .body-p { left: 15%; width: 70%; top: 52%; height: 44%; }
+.haechi.full .paw { top: 70%; } .haechi.full .paw.l { left: 30%; } .haechi.full .paw.r { right: 30%; }
+.haechi.full .eye { background: transparent; border-radius: 50% 50% 0 0; height: 4%; top: 51%; border: calc(var(--s) * 0.014) solid var(--char-eye); border-bottom: 0; animation: none; }
+.haechi.tilt .rig { rotate: z -9deg; }
+.haechi.tilt .eye { translate: 0 calc(var(--s) * -0.01); }
+
+/* ── ② 입력 · 한지 ─────────────────────────────────────────── */
+.write-stage { position: relative; display: flex; flex-direction: column; align-items: center; }
+.peek-wrap { position: relative; z-index: 4; width: var(--char-m); height: calc(var(--char-m) * 0.76); margin-bottom: calc(var(--sp-1) * -1.5); overflow: hidden; flex: none; }
+.peek-wrap .haechi { position: absolute; top: 0; left: 0; }
+.write-stage .bubble { top: calc(var(--sp-1) * -1); left: 50%; transform: translateX(-50%); }
+.hanji {
+  position: relative; width: 100%;
+  background:
+    repeating-linear-gradient(17deg, transparent 0 calc(var(--sp-1) - var(--line-w)), color-mix(in srgb, var(--img-hanji-fiber) 70%, transparent) calc(var(--sp-1) - var(--line-w)) var(--sp-1)),
+    repeating-linear-gradient(-71deg, transparent 0 calc(var(--sp-2) - var(--line-w)), color-mix(in srgb, var(--img-hanji-fiber) 55%, transparent) calc(var(--sp-2) - var(--line-w)) var(--sp-2)),
+    var(--img-hanji);
+  border-radius: var(--radius);
+  box-shadow: 0 var(--sp-1) var(--sp-2) color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+.brush {                                         /* 로고처럼 해치 앞발이 걸치는 붓대 */
+  position: absolute; z-index: 3; left: calc(var(--sp-2) * -0.5); right: calc(var(--sp-2) * -0.5); top: calc(var(--sp-1) * -0.5);
+  height: var(--sp-1); border-radius: var(--radius);
+  background: linear-gradient(var(--color-muted), var(--color-text));
+}
+.hanji textarea {
+  display: block; width: 100%; height: var(--hanji-h);
+  padding: var(--sp-3) var(--sp-2) var(--sp-2);
+  border: var(--line-w) solid var(--color-line); border-radius: var(--radius);
+  background: transparent; resize: none;
+  font: inherit; font-size: var(--fs-m); line-height: 1.7; color: var(--color-text);
+}
+.hanji textarea:focus { outline: none; border-color: var(--color-primary); }
+.hanji textarea::placeholder { color: var(--color-muted); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.chip {
+  height: var(--chip-h); padding: 0 var(--sp-2);
+  border: var(--line-w) solid var(--color-line); border-radius: var(--radius);
+  background: var(--color-bg); font-size: var(--fs-s); color: var(--color-text);
+  transition: background-color .15s, border-color .15s;
+}
+.chip:active { filter: brightness(.95); }
+.chip[aria-pressed="true"] { border-color: var(--color-primary); color: var(--color-primary); font-weight: 600; background: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg)); }
+.q { font-size: var(--fs-m); font-weight: 600; font-family: var(--font-body); }
+
+/* ── ③ 처리 중 ─────────────────────────────────────────────── */
+.eat-stage { position: relative; flex: 1; display: grid; place-items: center; align-content: center; gap: var(--sp-3); }
+.sheet {
+  position: absolute; left: 50%; top: 66%;
+  width: calc(var(--char-s) * 0.9); height: calc(var(--char-s) * 0.62);
+  translate: -50% 0;
+  background: var(--img-hanji);
+  border: var(--line-w) solid var(--img-hanji-fiber); border-radius: calc(var(--radius) / 2);
+  box-shadow: 0 var(--sp-1) var(--sp-2) color-mix(in srgb, var(--color-text) 10%, transparent);
+  transform-origin: 50% 0;
+}
+.sheet::before, .sheet::after {                    /* 한지 위 먹 글씨 자국 (읽히지 않는 선) */
+  content: ""; position: absolute; left: 14%; right: 22%; height: calc(var(--line-w) * 3);
+  border-radius: var(--radius); background: color-mix(in srgb, var(--color-text) 20%, transparent);
+}
+.sheet::before { top: 30%; } .sheet::after { top: 55%; right: 38%; }
+.sheet.go { animation: feed 2.6s cubic-bezier(.5,0,.4,1) forwards; }
+@keyframes feed {
+  0%   { transform: none; opacity: 1; }
+  30%  { transform: perspective(var(--frame-w)) rotateX(70deg) scaleY(.6); }
+  45%  { transform: perspective(var(--frame-w)) rotateX(70deg) scale(.55, .35); }
+  85%  { transform: translateY(calc(var(--char-l) * -0.42)) scale(.18); opacity: 1; }
+  100% { transform: translateY(calc(var(--char-l) * -0.44)) scale(.05); opacity: 0; }
+}
+.steps { width: 100%; display: grid; gap: var(--sp-1); }
+.step-text { min-height: calc(var(--fs-m) * 1.5); font-size: var(--fs-m); font-weight: 600; text-align: center; }
+.step-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--sp-1) / 2); }
+.step-bar i { height: calc(var(--sp-1) / 2); border-radius: var(--radius); background: var(--color-line); overflow: hidden; position: relative; }
+.step-bar i::after { content: ""; position: absolute; inset: 0; background: var(--color-primary); transform: scaleX(0); transform-origin: left; transition: transform 1.2s linear; }
+.step-bar i.on::after { transform: scaleX(1); }
+
+/* ── ④ 결과 · ⑤ 결과 없음 ──────────────────────────────────── */
+.image-slot {
+  position: relative; flex: none;
+  height: calc(var(--char-l) + var(--sp-4) * 3);
+  display: grid; place-items: end center; padding-bottom: var(--sp-2);
+  border-radius: var(--radius);
+  background: radial-gradient(ellipse at 50% 30%, var(--color-bg), color-mix(in srgb, var(--color-line) 70%, var(--color-bg)));
+  overflow: hidden;
+}
+.image-slot .bubble { top: var(--sp-2); left: 50%; transform: translateX(-50%); }
+.pedestal {
+  position: absolute; bottom: var(--sp-2); left: 50%; translate: -50% 0;
+  width: calc(var(--char-l) * 0.95); height: calc(var(--sp-4) + var(--sp-1));
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, color-mix(in srgb, var(--color-line) 40%, var(--color-muted)), var(--color-muted));
+  opacity: .55;
+}
+.image-slot .haechi { margin-bottom: var(--sp-2); }
+.empty-sheet {
+  position: absolute; right: var(--sp-3); bottom: var(--sp-3);
+  width: calc(var(--char-s) * 0.6); height: calc(var(--char-s) * 0.42);
+  background: var(--img-hanji); border: var(--line-w) dashed var(--color-muted);
+  border-radius: calc(var(--radius) / 2); transform: rotate(-8deg);
+}
+.result-card { display: grid; gap: var(--sp-1); }
+.result-card .tag {
+  justify-self: start; display: inline-flex; align-items: center; gap: calc(var(--sp-1) / 2);
+  font-size: var(--fs-xs); color: var(--color-success); font-weight: 600;
+}
+.result-card .tag svg, .notice svg { width: var(--fs-s); height: var(--fs-s); }
+.notice { display: flex; gap: var(--sp-1); align-items: flex-start; font-size: var(--fs-s); color: var(--color-info); }
+.notice svg { flex: none; margin-top: calc(var(--sp-1) / 2); }
+.account-note { font-size: var(--fs-xs); color: var(--color-muted); text-align: center; }
+
+/* 토스트 */
+.toast {
+  position: absolute; left: var(--sp-2); right: var(--sp-2); bottom: calc(var(--btn-h) + var(--sp-4) * 2);
+  z-index: 20; padding: var(--sp-2);
+  border-radius: var(--radius); background: var(--color-text); color: var(--color-bg);
+  font-size: var(--fs-s); text-align: center;
+  opacity: 0; translate: 0 var(--sp-1); pointer-events: none;
+  transition: opacity .25s, translate .25s;
+}
+.toast.show { opacity: 1; translate: 0 0; }
+
+.sr-only { position: absolute; width: var(--line-w); height: var(--line-w); overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="viewer-tabs" role="tablist" aria-label="화면 고르기">
+  <button role="tab" data-go="s1" aria-selected="true">① 첫 화면</button>
+  <button role="tab" data-go="s2" aria-selected="false">② 입력</button>
+  <button role="tab" data-go="s3" aria-selected="false">③ 처리 중</button>
+  <button role="tab" data-go="s4" aria-selected="false">④ 결과</button>
+  <button role="tab" data-go="s5" aria-selected="false">⑤ 결과 없음</button>
+</nav>
+
+<main class="phone" id="phone">
+
+  <!-- ① 첫 화면 · 결정: 여기에 적어 볼까 -->
+  <section class="screen" id="s1" aria-label="첫 화면">
+    <header class="top">
+      <div class="brand"><img src="../Design/brand/logo/haechi_yellow.png" alt="해칫 로고">해칫</div>
+    </header>
+    <div class="body">
+      <div class="kv-wrap" id="kvWrap">
+        <img class="kv" id="kv" src="../Design/brand/key%20visual/haechi_1x1.png" alt="궁궐 담 아래 돌 받침 위에 앉은 해치와 접힌 한지 한 장">
+        <p class="bubble" id="kvBubble">적은 것은 아무도 읽지 않소</p>
+      </div>
+      <h1>털어놓고 싶지만 기록이 남는 건 싫은 사람이 남겨두기 싫은 말을 한지에 적으면, 해치가 먹어 없애 원문이 남지 않는 끝맺음을 받는 서비스</h1>
+      <p class="muted">가입 없이 바로 적을 수 있어요. 적은 글은 어디에도 저장되지 않아요.</p>
+    </div>
+    <div class="foot with-tabs">
+      <button class="btn btn-primary" data-go="s2" data-flow="1">한지에 적기</button>
+    </div>
+    <nav class="tabbar" aria-label="메뉴">
+      <button aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>한지
+      </button>
+      <button data-toast="먹 갈기는 다음 시안에서 보여 드려요.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="15" rx="8" ry="5"/><rect x="10" y="3" width="4" height="10" rx="1"/></svg>먹 갈기
+      </button>
+      <button data-toast="필사첩은 다음 시안에서 보여 드려요.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5h7v15H4zM13 5h7v15h-7z"/></svg>필사첩
+      </button>
+    </nav>
+  </section>
+
+  <!-- ② 입력 · 결정: 이 글을 해치에게 건넬까 -->
+  <section class="screen" id="s2" aria-label="입력" hidden>
+    <header class="top">
+      <button class="back" data-go="s1" aria-label="뒤로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="title">한지</span>
+    </header>
+    <div class="body">
+      <div class="write-stage">
+        <div class="peek-wrap">
+          <div class="haechi peek" id="hWrite" data-lines="적은 것은 아무도 읽지 않소|천천히 적으시오|여기 있소"></div>
+        </div>
+        <p class="bubble" id="writeBubble" style="display:none"></p>
+        <div class="hanji">
+          <span class="brush" aria-hidden="true"></span>
+          <label class="sr-only" for="memo">한지에 적기</label>
+          <textarea id="memo" placeholder="남겨두기 싫은 말을 여기에 적어 보세요."></textarea>
+        </div>
+      </div>
+      <p class="q" id="q">오늘 마음에 걸린 일은 어느 쪽이었나요?</p>
+      <div class="chips" role="group" aria-labelledby="q">
+        <button class="chip" aria-pressed="true" data-start="오늘 회사 일 때문에 ">회사 일</button>
+        <button class="chip" aria-pressed="false" data-start="오늘 사람 사이에서 ">사람 사이</button>
+        <button class="chip" aria-pressed="false" data-start="오늘 시험·취업 때문에 ">시험·취업</button>
+        <button class="chip" aria-pressed="false" data-start="오늘 집안 일 때문에 ">집안 일</button>
+        <button class="chip" aria-pressed="false" data-start="오늘 돈 문제로 ">돈 문제</button>
+        <button class="chip" aria-pressed="false" data-start="오늘은 그냥 ">그냥 지친 날</button>
+      </div>
+      <p class="muted xs">칩을 고르면 첫 문장을 대신 놓아 드려요. 적은 글은 어디에도 저장되지 않아요.</p>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" id="giveBtn">해치에게 건네기</button>
+      <p class="hint" id="giveHint" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ③ 처리 중 · 결정 없음 (보기만) -->
+  <section class="screen" id="s3" aria-label="처리 중" hidden>
+    <header class="top"><span class="title">해치가 먹는 중</span></header>
+    <div class="body">
+      <div class="eat-stage">
+        <div class="stage">
+          <div class="haechi l" id="hEat"></div>
+          <div class="sheet" id="sheet" aria-hidden="true"></div>
+        </div>
+        <div class="steps">
+          <p class="step-text" id="stepText" aria-live="polite">한지를 곱게 접고 있어요</p>
+          <div class="step-bar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary loading" disabled id="eatBtn">해치가 먹는 중이에요</button>
+    </div>
+  </section>
+
+  <!-- ④ 결과 · 결정: 여기서 끝낼까, 조금 더 머물까 -->
+  <section class="screen" id="s4" aria-label="결과" hidden>
+    <header class="top">
+      <div class="brand"><img src="../Design/brand/logo/haechi_yellow.png" alt="">해칫</div>
+    </header>
+    <div class="body">
+      <div class="image-slot" aria-label="배부른 해치 그림">
+        <span class="pedestal" aria-hidden="true"></span>
+        <div class="haechi l full" id="hFull" data-lines="잘 먹었소. 읽지는 않았소|배가 부르오|다음에 또 건네시오"></div>
+        <p class="bubble" id="fullBubble">잘 먹었소. 읽지는 않았소</p>
+      </div>
+      <div class="result-card">
+        <span class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>다 먹었어요
+        </span>
+        <h2>원문은 남지 않았어요</h2>
+        <p class="muted">이 기기에도, 서버에도 적은 글이 없어요. 해치를 쓰다듬어 보세요.</p>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" data-go="s1">닫기</button>
+      <button class="text-link" data-toast="먹 갈기는 다음 시안에서 보여 드려요.">다른 거 해 볼래요 · 먹 갈러 가기</button>
+      <p class="account-note">필사첩을 다른 기기로 옮기고 싶을 때만 나중에 계정을 만들면 돼요. 지금은 없어도 돼요.</p>
+    </div>
+  </section>
+
+  <!-- ⑤ 결과 없음 · 결정: 다시 적으러 갈까 -->
+  <section class="screen" id="s5" aria-label="결과 없음" hidden>
+    <header class="top">
+      <button class="back" data-go="s2" aria-label="뒤로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="title">한지</span>
+    </header>
+    <div class="body">
+      <div class="image-slot" aria-label="빈 한지 앞에서 고개를 갸웃한 해치 그림">
+        <span class="pedestal" aria-hidden="true"></span>
+        <span class="empty-sheet" aria-hidden="true"></span>
+        <div class="haechi l tilt" id="hEmpty" data-lines="아직 먹을 것이 없소|한 글자면 되오|기다리고 있소"></div>
+        <p class="bubble" id="emptyBubble">아직 먹을 것이 없소</p>
+      </div>
+      <div class="result-card">
+        <h2>한지가 비어 있어요</h2>
+        <p class="notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
+          <span>한 글자라도 적으면 해치에게 건넬 수 있어요. 무엇을 적을지 막막하면 칩을 하나 고르세요. 첫 문장을 대신 놓아 드려요.</span>
+        </p>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" data-go="s2" data-flow="1">한지에 적으러 가기</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status"></div>
+</main>
+
+<script>
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const phone = $('#phone');
+
+  /* ── 해치 조립 ── */
+  const PARTS = `
+    <div class="rig">
+      <span class="p shadow"></span>
+      <span class="p body-p clay-white"></span>
+      <span class="p side l1 clay-red curl"></span><span class="p side l2 clay-red curl"></span>
+      <span class="p side r1 clay-red curl"></span><span class="p side r2 clay-red curl"></span>
+      <span class="p head clay-white"></span>
+      <span class="p top-l clay-yellow curl"></span><span class="p top-r clay-yellow curl"></span>
+      <span class="p top-c clay-yellow curl"></span>
+      <div class="face">
+        <span class="p brow l"></span><span class="p brow r"></span>
+        <span class="p eye l"></span><span class="p eye r"></span>
+        <span class="p nose clay-red"></span>
+        <span class="p mouth"></span>
+      </div>
+      <div class="paws"><span class="p paw l clay-white"></span><span class="p paw r clay-white"></span></div>
+    </div>`;
+  $$('.haechi').forEach(h => { h.innerHTML = PARTS; h.setAttribute('role', 'img'); h.setAttribute('aria-label', '해치'); });
+
+  /* ── 화면 전환 ── */
+  let current = 's1';
+  let eatTimers = [];
+  function show(id, fromFlow = false) {
+    eatTimers.forEach(clearTimeout); eatTimers = [];
+    $$('.screen').forEach(s => s.hidden = s.id !== id);
+    $$('.viewer-tabs [role=tab]').forEach(t => t.setAttribute('aria-selected', t.dataset.go === id));
+    current = id;
+    if (id === 's2') {
+      if (fromFlow && !memo.value.trim()) pickChip(chips[0]);   // 새 한지마다 기본값 문구를 다시 놓는다
+      updateGive();
+      if (fromFlow) setTimeout(() => memo.focus(), 350);
+    }
+    if (id === 's3') runEating(fromFlow);
+  }
+  document.addEventListener('click', e => {
+    const go = e.target.closest('[data-go]');
+    if (go) show(go.dataset.go, !!go.dataset.flow);
+    const t = e.target.closest('[data-toast]');
+    if (t) toast(t.dataset.toast);
+  });
+
+  let toastTimer;
+  function toast(msg) {
+    const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+
+  /* ── 말풍선 ── */
+  function say(bubble, text) {
+    bubble.style.display = ''; bubble.textContent = text;
+    bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+  }
+
+  /* ── 손가락·마우스를 따라 기울고 눈을 굴린다 ── */
+  phone.addEventListener('pointermove', e => {
+    const scr = $('#' + current);
+    $$('.haechi', scr).forEach(h => {
+      const r = h.getBoundingClientRect();
+      const dx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 1.2)));
+      const dy = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 1.2)));
+      h.style.setProperty('--ry', (dx * 18) + 'deg');
+      h.style.setProperty('--rx', (-dy * 12) + 'deg');
+      h.style.setProperty('--ex', dx.toFixed(2));
+      h.style.setProperty('--ey', dy.toFixed(2));
+    });
+    if (current === 's1') {
+      const r = $('#kv').getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      $('#kv').style.setProperty('--ry', (dx * 8) + 'deg');
+      $('#kv').style.setProperty('--rx', (-dy * 6) + 'deg');
+    }
+  });
+  phone.addEventListener('pointerleave', () => {
+    $$('.haechi').forEach(h => ['--rx', '--ry', '--ex', '--ey'].forEach(v => h.style.removeProperty(v)));
+    $('#kv').style.removeProperty('--rx'); $('#kv').style.removeProperty('--ry');
+  });
+
+  /* ── 해치를 누르면 출렁이고 한마디 ── */
+  const bubbles = { hWrite: '#writeBubble', hFull: '#fullBubble', hEmpty: '#emptyBubble' };
+  $$('.haechi[data-lines]').forEach(h => {
+    let i = 0;
+    const lines = h.dataset.lines.split('|');
+    h.addEventListener('click', () => {
+      if (h.classList.contains('covering')) return;
+      h.classList.remove('boing'); void h.offsetWidth; h.classList.add('boing');
+      i = (i + 1) % lines.length;
+      say($(bubbles[h.id]), lines[i]);
+    });
+  });
+  const kvLines = ['적은 것은 아무도 읽지 않소', '여기서 기다리고 있소', '한지 한 장이면 되오'];
+  let kvI = 0;
+  $('#kv').addEventListener('click', () => {
+    const w = $('#kvWrap'); w.classList.remove('boing'); void w.offsetWidth; w.classList.add('boing');
+    kvI = (kvI + 1) % kvLines.length; say($('#kvBubble'), kvLines[kvI]);
+  });
+
+  /* ── ② 입력: 칩 · 기본값 · 쓰는 동안 해치가 눈을 가린다 ── */
+  const memo = $('#memo'), give = $('#giveBtn'), hint = $('#giveHint'), hWrite = $('#hWrite');
+  const chips = $$('.chip');
+  let starter = chips[0].dataset.start;
+  memo.value = starter;                                       // 기본값 문구
+  function pickChip(c) {
+    chips.forEach(x => x.setAttribute('aria-pressed', x === c));
+    const rest = starter && memo.value.startsWith(starter) ? memo.value.slice(starter.length) : memo.value;
+    starter = c.dataset.start;
+    memo.value = starter + rest;
+  }
+  chips.forEach(c => c.addEventListener('click', () => {
+    pickChip(c);
+    updateGive(); memo.focus(); memo.setSelectionRange(memo.value.length, memo.value.length);
+  }));
+  function updateGive() {
+    const empty = memo.value.trim().length === 0;
+    give.disabled = empty;
+    hint.textContent = empty ? '한지가 비어 있어요. 한 글자라도 적으면 건넬 수 있어요.' : '';
+  }
+  memo.addEventListener('input', updateGive);
+  memo.addEventListener('focus', () => { hWrite.classList.add('covering'); say($('#writeBubble'), '안 보고 있소'); });
+  memo.addEventListener('blur', () => { hWrite.classList.remove('covering'); $('#writeBubble').style.display = 'none'; });
+  give.addEventListener('click', () => {
+    if (!memo.value.trim()) { show('s5'); return; }
+    memo.value = '';                                          // 원문은 화면 메모리에서 지운다
+    starter = '';
+    chips.forEach(x => x.setAttribute('aria-pressed', 'false'));
+    memo.blur();
+    show('s3', true);
+  });
+
+  /* ── ③ 처리 중: 진행 문구가 바뀐다 (약 5초) ── */
+  const STEPS = ['한지를 곱게 접고 있어요', '해치에게 건네는 중이에요', '해치가 꼭꼭 씹고 있어요', '원문을 지우고 있어요'];
+  function runEating(fromFlow) {
+    const h = $('#hEat'), sheet = $('#sheet'), text = $('#stepText'), bars = $$('.step-bar i');
+    const reset = () => {
+      h.classList.remove('chew', 'open'); sheet.classList.remove('go');
+      bars.forEach(b => b.classList.remove('on')); text.textContent = STEPS[0];
+    };
+    reset(); void sheet.offsetWidth;
+    sheet.classList.add('go');
+    const at = (ms, fn) => eatTimers.push(setTimeout(fn, ms));
+    STEPS.forEach((s, i) => at(i * 1300, () => { text.textContent = s; bars[i].classList.add('on'); }));
+    at(1300, () => h.classList.add('open'));
+    at(2500, () => { h.classList.remove('open'); h.classList.add('chew'); });
+    at(5200, () => {
+      if (fromFlow) {
+        show('s4');
+        const b = $('#fullBubble'); say(b, '잘 먹었소. 읽지는 않았소');
+        if (navigator.vibrate) navigator.vibrate(30);
+      } else {
+        runEating(false);                                     // 탭으로 열었을 때는 반복해서 보여 준다
+      }
+    });
+  }
+
+  /* ── 위쪽 탭 키보드 이동 ── */
+  $('.viewer-tabs').addEventListener('keydown', e => {
+    const tabs = $$('.viewer-tabs [role=tab]');
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); n.click();
+    }
+  });
+
+  show(/^#s[1-5]$/.test(location.hash) ? location.hash.slice(1) : 's1');   // index.html#s3 처럼 바로 열기
+})();
+</script>
+</body>
+</html>
