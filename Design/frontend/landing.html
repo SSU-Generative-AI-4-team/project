@@ -1,250 +1,44 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>해칫 — 한지에 적으면 해치가 먹어요</title>
+<meta name="description" content="모든 마음을 기록해 둘 필요는 없으니까. 남겨두기 싫은 말을 한지에 적어 해치에게 건네 보세요.">
+<meta name="theme-color" content="#F2EBDD">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+<link rel="icon" href="../brand/logo/haechi_yellow.png">
 <style>
-  /* 기획/design.md (6주차 화면 규칙) 값 그대로 — 색 5 · 글자 2 · 간격 8의 배수 · 버튼 높이 48 · 모서리 8
-     유자 노랑·쪽빛·단청 주홍은 화면 색에 쓰지 않는다 (design.md 검증 항목) */
-  :root {
-    --color-primary: #3F6B57;
-    --color-text: #2A2826;
-    --color-muted: #6E6A63;
-    --color-line: #DDE3DC;
-    --color-bg: #F5F8F4;
-    --color-success: #2E8B57;
-    --color-warning: #D99A1E;
-    --color-danger: #C0392B;
-    --color-info: #6E6A63;
-    --fs-xs: 13px; --fs-s: 15px; --fs-m: 17px; --fs-l: 22px; --fs-xl: 28px;
-    --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
-    --radius: 8px;
-    --btn-h: 48px;
-
-    --font-heading: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", "Batang", serif;
-    --font-body: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-body);
-    font-size: var(--fs-s);
-    line-height: 1.5;
-    word-break: keep-all;
-    -webkit-font-smoothing: antialiased;
-  }
-  .page {
-    max-width: 430px;
-    margin: 0 auto;
-    padding: 0 var(--sp-2) calc(var(--btn-h) + var(--sp-4) + var(--sp-2));
-  }
-
-  /* 로고: 첫 화면 왼쪽 위 1회 */
-  .top { display: flex; align-items: center; gap: var(--sp-1); height: 56px; }
-  .logo-img { width: 32px; height: 32px; object-fit: contain; }
-  .wordmark { font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-m); }
-
-  /* 글자 크기 5단계: 13 · 15 · 17 · 22 · 28 */
-  h1, h2 { font-family: var(--font-heading); font-weight: 700; line-height: 1.35; }
-  h1 { font-size: var(--fs-xl); }
-  h2 { font-size: var(--fs-l); margin-bottom: var(--sp-1); }
-  .lead { font-size: var(--fs-m); }
-  .muted { color: var(--color-muted); }
-  .em { color: var(--color-primary); }
-
-  /* 첫 화면 */
-  .hero { min-height: calc(100svh - 56px); display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-4); }
-  .scene { color: var(--color-muted); border-left: 2px solid var(--color-primary); padding-left: var(--sp-2); }
-  .for { font-weight: 600; color: var(--color-primary); }
-  .kv {
-    position: relative; flex: 1; min-height: 240px; max-height: 420px;
-    border-radius: var(--radius); background: var(--color-line); overflow: hidden;
-  }
-  .kv img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
-
-  /* 버튼: primary 한 종류만 */
-  .btn {
-    display: flex; align-items: center; justify-content: center;
-    width: 100%; height: var(--btn-h); border: 0; border-radius: var(--radius);
-    background: var(--color-primary); color: #fff;
-    font-family: var(--font-body); font-size: var(--fs-m); font-weight: 600;
-    text-decoration: none; cursor: pointer;
-  }
-  .btn:active { filter: brightness(0.9); }
-  .btn:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
-  .cond { text-align: center; font-size: var(--fs-xs); color: var(--color-muted); margin-top: var(--sp-1); }
-
-  /* 블록: 섹션 사이 24 */
-  section.block { padding: var(--sp-4) 0; border-top: 1px solid var(--color-line); }
-  .label { font-size: var(--fs-xs); color: var(--color-muted); margin-bottom: var(--sp-1); }
-  .items { list-style: none; display: grid; gap: var(--sp-1); margin-top: var(--sp-3); }
-  .items li { border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--sp-2); background: #fff; }
-  .items b { font-weight: 600; color: var(--color-primary); }
-  .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-1); margin-top: var(--sp-3); counter-reset: s; }
-  .steps li {
-    counter-increment: s; text-align: center; font-weight: 600;
-    border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--sp-2) var(--sp-1); background: #fff;
-  }
-  .steps li::before { content: counter(s); display: block; font-family: var(--font-heading); font-size: var(--fs-l); color: var(--color-primary); }
-
-  /* 해치 말풍선 (하오체) */
-  .bubble {
-    display: inline-block; margin-top: var(--sp-3); padding: var(--sp-1) var(--sp-2);
-    border: 1px solid var(--color-primary); border-radius: var(--radius); background: #fff;
-    font-family: var(--font-heading); font-weight: 700;
-  }
-
-  /* 증거 */
-  .beta {
-    display: inline-block; margin-bottom: var(--sp-2); padding: 4px var(--sp-1);
-    border: 1px solid var(--color-primary); border-radius: var(--radius);
-    color: var(--color-primary); font-size: var(--fs-xs); font-weight: 600;
-  }
-  .quote { margin-top: var(--sp-2); font-size: var(--fs-m); }
-
-  /* 안심 */
-  details { border-bottom: 1px solid var(--color-line); padding: var(--sp-2) 0; }
-  summary { font-weight: 600; cursor: pointer; list-style: none; }
-  summary::-webkit-details-marker { display: none; }
-  summary::before { content: "Q. "; color: var(--color-primary); }
-  details p { margin-top: var(--sp-1); color: var(--color-muted); }
-  .contact { margin-top: var(--sp-3); font-size: var(--fs-xs); color: var(--color-muted); }
-
-  /* 끝 */
-  .end { text-align: center; }
-  .end .btn { margin-top: var(--sp-3); }
-
-  /* 화면 아래 고정 버튼 */
-  .sticky {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
-    padding: var(--sp-1) var(--sp-2) calc(var(--sp-1) + env(safe-area-inset-bottom));
-    background: linear-gradient(rgba(245,248,244,0), var(--color-bg) 30%);
-    transition: transform .2s ease, opacity .2s ease;
-  }
-  .sticky .btn { max-width: 398px; margin: 0 auto; }
-  .sticky.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+/* 영남일보체: 설치된 폰트(local) → 같은 폴더 구조의 파일 순서로 찾는다. 파일은 라이선스(재배포 금지 · 웹 임베딩은 영남일보 사전 협의) 때문에 저장소에 없다.
+   둘 다 없는 사람에게는 Google Fonts의 고운돋움(OFL)이 대신 보인다. 근거: Design/decisions/landing-font-decision.md */
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS Medium'),local('YNAMNEWS'),local('영남일보체(M)'),url('../brand/font/YNAMNEWS(M).otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS(B) Bold'),local('YNAMNEWS(B)'),local('영남일보체(B)'),url('../brand/font/YNAMNEWS(B).otf') format('opentype');font-weight:700;font-display:swap}
+:root{--haechi-gold:#F0B237;--haechi-red:#EB4531;--haechi-blue:#2A6090;--haechi-ivory:#FDF5E9;--hanji-cream:#F2EBDD;--ink-black:#2A2826;--warm-black:#38322B;--color-primary:var(--haechi-blue);--color-text:var(--ink-black);--color-muted:rgba(42,40,38,.72);--color-line:rgba(42,40,38,.15);--hanji-texture:url('../asset/hanji%20texture%20background.jpg');--hanji-texture-tone:#F4F3F0;--color-bg:var(--hanji-texture-tone);--color-surface:var(--haechi-ivory);--color-accent-warm:var(--haechi-gold);--font-heading:Yeongnam,'Gowun Dodum',sans-serif;--font-body:Yeongnam,'Gowun Dodum',sans-serif;--fs-xs:13px;--fs-s:15px;--fs-m:17px;--fs-l:22px;--fs-xl:28px;--radius:8px;--btn-h:48px}
+*{box-sizing:border-box}body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;pointer-events:none}html{scroll-behavior:smooth}body{margin:0;background:var(--color-bg);color:var(--color-text);font:400 var(--fs-s)/1.7 var(--font-body);word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--font-heading);font-weight:400;line-height:1.45}a{color:inherit}button,textarea{font:inherit}button{cursor:pointer}.wrap{width:min(1080px,calc(100% - 64px));margin:auto}.top{height:88px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-line)}.brand{display:flex;align-items:center;gap:12px;font-size:22px;text-decoration:none}.brand img{width:40px;height:40px;border-radius:8px}.top-note{font-size:13px;color:var(--color-muted)}.hero{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:64px 0 72px}.scene{font-size:15px;color:var(--color-muted);padding-left:16px;border-left:1px solid var(--color-primary);margin-bottom:24px}h1{font-size:48px;letter-spacing:-.03em;line-height:1.3}.em{color:var(--color-primary)}.for{margin-top:24px;color:var(--color-muted);font-size:17px}.hero-action{margin-top:32px;max-width:320px}.btn{display:flex;align-items:center;justify-content:center;min-height:48px;width:100%;border:0;border-radius:8px;padding:12px 16px;background:var(--color-primary);color:var(--color-surface);font-size:17px;text-decoration:none;line-height:1.4}.btn:hover{filter:brightness(.93)}.btn:disabled{opacity:.45;cursor:default}.cond{font-size:13px;color:var(--color-muted);margin-top:8px;text-align:center}.visual{margin:0}.visual img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;border-radius:8px}.visual figcaption{font-size:13px;text-align:right;color:var(--color-muted);margin-top:12px}.belief{border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);padding:40px 0;text-align:center;font-size:28px;color:var(--color-primary)}.block{padding:64px 0;border-bottom:1px solid var(--color-line);display:grid;grid-template-columns:1fr 1.35fr;gap:64px}.label{font-size:13px;color:var(--color-muted);margin-bottom:16px}.block h2{font-size:28px;letter-spacing:-.02em}.lead{font-size:17px;margin-top:16px}.muted{color:var(--color-muted)}.items{list-style:none;margin:0;padding:0;display:grid;gap:0}.items li{padding:20px 0;border-bottom:1px solid var(--color-line);display:grid;grid-template-columns:100px 1fr;gap:16px}.items li:first-child{padding-top:0}.items li:last-child{border:0;padding-bottom:0}.items b{color:var(--color-primary);font-weight:400}.steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0;padding:0}.steps li{padding:24px 8px;border:1px solid var(--color-line);border-radius:8px;text-align:center}.number{display:block;font-size:28px;color:var(--color-primary);margin-bottom:16px}.bubble{display:inline-block;border:1px solid var(--color-primary);color:var(--color-primary);padding:12px 16px;border-radius:8px;margin-top:24px;font-size:17px}.team-copy{font-size:22px;line-height:1.7}.names{font-size:13px;color:var(--color-muted);margin-top:24px}.detail-note{padding:24px;background:var(--color-surface);border:1px solid var(--color-line);border-radius:8px;margin-bottom:24px}.detail-note p{font-size:17px}.detail-note small{display:block;margin-top:12px;color:var(--color-muted);font-size:13px}details{border-bottom:1px solid var(--color-line);padding:20px 0}details:first-child{padding-top:0}details:last-child{border:0}summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-size:17px}summary::-webkit-details-marker{display:none}summary::after{content:'+';color:var(--color-primary)}details[open] summary::after{content:'−'}details p{padding-top:16px;color:var(--color-muted);font-size:15px}.end{text-align:center;padding:72px 0}.end h2{font-size:28px}.end .btn{max-width:320px;margin:32px auto 0}.end .bubble{border:0;padding:0;font-size:15px}.footer{border-top:1px solid var(--color-line);padding:24px 0 32px;font-size:13px;color:var(--color-muted);display:flex;justify-content:space-between;gap:16px}.skip{position:absolute;top:-100px;left:16px}.skip:focus{top:16px;background:var(--color-surface);z-index:20}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--color-primary);outline-offset:5px}.sticky{position:fixed;bottom:0;left:0;right:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--color-bg) 25%);z-index:5;display:none}.sticky .btn{max-width:398px;margin:auto}.sticky[hidden]{display:none}dialog{width:min(430px,calc(100% - 32px));border:1px solid var(--color-line);border-radius:8px;padding:24px;background:var(--color-bg);color:var(--color-text)}dialog::backdrop{background:rgba(42,40,38,.45)}.dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.dialog-top h2{font-size:22px}.close{border:0;background:transparent;font-size:22px;color:var(--color-muted);min-width:44px;min-height:44px}.demo-note{font-size:13px;color:var(--color-muted);margin-bottom:16px}.paper{display:block;width:100%;min-height:200px;resize:vertical;border:1px solid var(--color-line);background:var(--color-surface);padding:16px;line-height:1.7;border-radius:8px;font-size:17px;color:var(--color-text);transition:opacity .7s,transform .7s}.paper:focus{outline:2px solid var(--color-primary)}.paper.eating{opacity:0;transform:translateY(-16px) scale(.9)}.demo-button{margin-top:16px}.status{margin-top:16px;font-size:15px;min-height:26px;color:var(--color-primary)}
+@media(max-width:760px){.wrap{width:min(430px,calc(100% - 32px))}.top{height:64px}.brand{font-size:17px;gap:8px}.brand img{width:32px;height:32px}.top-note{font-size:13px}.hero{display:flex;flex-direction:column;gap:24px;padding:24px 0 32px;align-items:stretch}.scene{margin-bottom:16px}h1{font-size:28px;line-height:1.35;letter-spacing:0}.for{font-size:15px;margin-top:16px}.hero-action{margin-top:24px;max-width:none}.visual figcaption{display:none}.belief{font-size:22px;padding:32px 0}.block{grid-template-columns:1fr;gap:24px;padding:32px 0}.block h2{font-size:22px}.label{margin-bottom:8px}.lead{margin-top:8px}.items li{padding:16px 0;grid-template-columns:96px 1fr;gap:8px}.steps{gap:8px}.steps li{padding:16px 8px}.number{font-size:22px;margin-bottom:8px}.bubble{font-size:15px;margin-top:16px}.team-copy{font-size:17px}.names{margin-top:16px}.detail-note{padding:16px;margin-bottom:16px}.detail-note p{font-size:15px}.end{padding:40px 0}.end h2{font-size:28px}.end .btn{max-width:none;margin-top:24px}.footer{padding-bottom:104px;flex-direction:column;gap:8px}.sticky{display:block}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.paper{transition:none}}
 </style>
 </head>
-<body>
-<main class="page">
-
-  <!-- 첫 화면: ⓪ 장면 ① 한 줄 소개 ② 누구 ③ 버튼 ④ 조건 -->
-  <header class="top">
-    <img class="logo-img" src="../brand/logo/haechi_yellow.png" alt="" onerror="this.remove()">
-    <span class="wordmark">해칫</span>
-  </header>
-
-  <section class="hero" aria-label="첫 화면">
-    <p class="scene">취준 2년 차, 불합격 문자를 받은 밤.<br>인스타에 친구 합격 소식이 떴다.</p>
-    <h1>한지에 적으면<br><span class="em">해치가 먹어요</span></h1>
-    <p class="for">취준생과 사회초년생의, 말 못 하는 밤을 위해</p>
-    <div class="kv">
-      <img src="../brand/key%20visual/key%20visual.png" alt="궁궐 처마 아래 돌 받침에 앉은 해치와 접힌 한지" onerror="this.remove()">
-    </div>
-    <div>
-      <a class="btn" id="hero-btn" href="#">해치에게만 털어놓기</a>
-      <p class="cond">가입 없이 · 무료</p>
-    </div>
-  </section>
-
-  <!-- ② 문제 -->
-  <section class="block">
-    <p class="label">말 못 하는 이유</p>
-    <h2>말하면 속좁아 보일까 봐,<br>어디서 말이 돌까 봐.</h2>
-    <p class="lead">그래서 결국 아무한테도 못 털어놔요.</p>
-    <ul class="items">
-      <li><b>친구에게</b> — 속좁아 보일까 봐 못 해요</li>
-      <li><b>단톡방에</b> — 말이 돌까 봐 못 해요</li>
-      <li><b>메모장에</b> — 써 두면 계속 남아요</li>
-    </ul>
-  </section>
-
-  <!-- ③ 해결 -->
-  <section class="block">
-    <p class="label">해칫에서는</p>
-    <h2>한지에 적으면 해치가 먹어요.</h2>
-    <p class="lead">아무도 읽지 않아요. 세 번이면 끝나요.</p>
-    <ol class="steps">
-      <li>한지에 쓰기</li>
-      <li>해치에게 주기</li>
-      <li>끝</li>
-    </ol>
-    <p class="bubble">잘 먹었소. 읽지는 않았소</p>
-  </section>
-
-  <!-- ④ 증거: 실제 있는 것만 -->
-  <section class="block">
-    <p class="label">만드는 사람</p>
-    <span class="beta">지금 베타 테스트 100명 모집 중</span>
-    <h2>숭실대 학생 다섯이 만들어요.</h2>
-    <p class="quote">"누구에게도 말 못 하는 말이 있어서요."</p>
-    <p class="muted">김서영 · 정민규 · 정연화 · 조재영 · 홍석민</p>
-  </section>
-
-  <!-- ⑤ 디테일 -->
-  <section class="block">
-    <p class="label">조금 더 머물고 싶다면</p>
-    <h2>마음이 남으면 먹을 갈아요.</h2>
-    <p class="lead">100번 갈면 해치가 고전 한 구절을 필사해 줘요. 필사첩은 내 폰에만 있어요.</p>
-    <ul class="items">
-      <li><b>가입 없음</b> — 열자마자 바로 써요</li>
-      <li><b>글자 수 제한 없음</b> — 한 줄도, 긴 글도 돼요</li>
-      <li><b>약 5초</b> — 해치가 먹는 시간이에요</li>
-    </ul>
-  </section>
-
-  <!-- ⑥ 안심 -->
-  <section class="block">
-    <p class="label">망설여진다면</p>
-    <h2>가격은 <span class="em">무료</span>예요.</h2>
-    <p class="muted">결제할 곳이 없어요.</p>
-    <details>
-      <summary>정말 아무도 못 봐요?</summary>
-      <p>적은 글은 서버로 가지 않고, 폰에도 남지 않아요. 원문은 남지 않아요.</p>
-    </details>
-    <details>
-      <summary>매일 써야 해요?</summary>
-      <p>아니요. 연속 기록도, 재촉 알림도 없어요. 필요할 때만 오면 돼요.</p>
-    </details>
-    <details>
-      <summary>다시 볼 수 있어요?</summary>
-      <p>없어요. 해치가 먹은 글은 돌아오지 않아요.</p>
-    </details>
-    <p class="contact">무료라 결제도 환불도 없어요 · 문의 〔팀 메일 주소〕</p>
-  </section>
-
-  <!-- ⑦ 행동 -->
-  <section class="block end">
-    <h2>말 못 한 한 줄,<br>해치에게 건네 보세요.</h2>
-    <p class="bubble">적은 것은 아무도 읽지 않소</p>
-    <a class="btn" id="end-btn" href="#">해치에게만 털어놓기</a>
-    <p class="cond">가입 없이 · 무료</p>
-  </section>
-
-</main>
-
-<!-- 스크롤해도 아래에 붙어 있는 같은 버튼 -->
-<div class="sticky hidden" id="sticky">
-  <a class="btn" href="#">해치에게만 털어놓기</a>
-</div>
-
+<body><a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top wrap"><a class="brand" href="#main"><img src="../brand/logo/haechi_yellow.png" alt="">해칫</a><span class="top-note">말 못 하는 밤을 위해</span></header>
+<main id="main" class="wrap">
+<section class="hero"><div class="hero-copy"><p class="scene">취준 2년 차, 불합격 문자를 받은 밤.<br>인스타에 친구 합격 소식이 떴다.</p><h1>한지에 적으면<br><span class="em">해치가 먹어요</span></h1><p class="for">취준생과 사회초년생의,<br>말 못 하는 밤을 위해</p><div class="hero-action"><button class="btn launch" id="hero-btn">해치에게만 털어놓기</button><p class="cond">가입 없이, 무료</p></div></div><figure class="visual"><img src="../brand/key%20visual/haechi_1x1.png" alt="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치" fetchpriority="high" width="1080" height="1080"><figcaption>적은 것은 아무도 읽지 않소</figcaption></figure></section>
+<p class="belief">모든 마음을<br>기록해 둘 필요는 없으니까.</p>
+<section class="block"><div><p class="label">말 못 하는 이유</p><h2>말하면 속좁아 보일까 봐,<br>어디서 말이 돌까 봐.</h2><p class="lead muted">그래서 결국 아무한테도 못 털어놔요.</p></div><ul class="items"><li><b>친구에게</b><span>속좁아 보일까 봐 못 해요.</span></li><li><b>단톡방에</b><span>말이 돌까 봐 못 해요.</span></li><li><b>메모장에</b><span>써 두면 계속 남아요.</span></li></ul></section>
+<section class="block"><div><p class="label">해칫에서는</p><h2>한지에 적으면<br>해치가 먹어요.</h2><p class="lead muted">기록 대신, 끝맺음.<br>세 번이면 끝나요.</p></div><div><ol class="steps"><li><span class="number">01</span>한지에 쓰기</li><li><span class="number">02</span>해치에게 주기</li><li><span class="number">03</span>끝</li></ol><p class="bubble">잘 먹었소. 읽지는 않았소</p></div></section>
+<section class="block"><div><p class="label">만드는 사람</p><h2>숭실대 학생 다섯이<br>만들어요.</h2></div><div><p class="team-copy">“누구에게도 말 못 하는<br>말이 있어서요.”</p><p class="names">김서영, 정민규, 정연화, 조재영, 홍석민</p></div></section>
+<section class="block"><div><p class="label">조금 더 머물고 싶다면</p><h2>마음이 남으면<br>먹을 갈아요.</h2><p class="lead muted">더 쓰지 않아도 괜찮아요.<br>천천히 손을 움직이며 머물러요.</p></div><div><div class="detail-note"><p>100번 갈면 해치가<br>고전 한 구절을 필사해 줘요.</p><small>먹 갈기와 필사첩은 서비스에 담을 기능이에요.<br>이 랜딩 체험에는 아직 포함되지 않았어요.</small></div><ul class="items"><li><b>가입 없음</b><span>열자마자 바로 써요.</span></li><li><b>글자 수 제한 없음</b><span>한 줄도, 긴 글도 괜찮아요.</span></li><li><b>약 5초</b><span>해치에게 건네는 짧은 시간이에요.</span></li></ul></div></section>
+<section class="block"><div><p class="label">망설여진다면</p><h2>가격은 <span class="em">무료</span>예요.</h2><p class="lead muted">결제할 곳이 없어요.</p></div><div><details><summary>정말 아무도 못 봐요?</summary><p>이 페이지의 체험에서 적은 글은 서버로 보내거나 저장하지 않아요. 건네기를 마치거나 체험 창을 닫으면 입력한 원문을 지워요.</p></details><details><summary>매일 써야 해요?</summary><p>필요할 때만 오면 돼요. 연속 기록도, 재촉 알림도 두지 않는 방향으로 만들고 있어요.</p></details><details><summary>다시 볼 수 있어요?</summary><p>체험에서 건넨 글은 다시 볼 수 없어요. 다시 봐야 하는 내용은 건네지 말아 주세요.</p></details></div></section>
+<section class="end"><p class="label">말을 남기지 않고, 마음만 건네요</p><h2>말 못 한 한 줄,<br>해치에게 건네 보세요.</h2><p class="bubble">적은 것은 아무도 읽지 않소</p><button class="btn launch" id="end-btn">해치에게만 털어놓기</button><p class="cond">가입 없이, 무료</p></section>
+</main><footer class="footer wrap"><span>해칫 / hatch eat</span><span>모든 마음을 기록해 둘 필요는 없다.</span></footer>
+<div class="sticky" id="sticky" hidden><button class="btn launch">해치에게만 털어놓기</button></div>
+<dialog id="demo" aria-labelledby="demo-title"><div class="dialog-top"><h2 id="demo-title">한지에 적어 보세요</h2><button class="close" aria-label="체험 닫기" type="button">×</button></div><p class="demo-note">랜딩페이지 체험이에요. 적은 글은 전송하거나 저장하지 않아요. 창을 닫아도 입력한 글은 지워져요.</p><label for="writing" class="label">남겨두기 싫은 말</label><textarea class="paper" id="writing" placeholder="남겨두기 싫은 말을 여기에 적어 보세요." autocomplete="off" spellcheck="false"></textarea><button id="give" class="btn demo-button" disabled>해치에게 건네기</button><p class="status" role="status" aria-live="polite" id="status">한 글자라도 적으면 건넬 수 있어요.</p></dialog>
 <script>
-  // 첫 화면 버튼이나 끝 버튼이 보이는 동안에는 고정 버튼을 숨겨 한 화면에 primary 버튼이 하나만 보이게 한다
-  (function () {
-    var sticky = document.getElementById('sticky');
-    var targets = [document.getElementById('hero-btn'), document.getElementById('end-btn')];
-    if (!('IntersectionObserver' in window)) { sticky.classList.remove('hidden'); return; }
-    var visible = new Set();
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { e.isIntersecting ? visible.add(e.target) : visible.delete(e.target); });
-      sticky.classList.toggle('hidden', visible.size > 0);
-    });
-    targets.forEach(function (t) { io.observe(t); });
-  })();
+const dialog=document.querySelector('#demo'),writing=document.querySelector('#writing'),give=document.querySelector('#give'),status=document.querySelector('#status');let timer=null;let busy=false;
+function reset(){clearTimeout(timer);timer=null;busy=false;writing.value='';writing.disabled=false;writing.classList.remove('eating');give.disabled=true;give.textContent='해치에게 건네기';status.textContent='한 글자라도 적으면 건넬 수 있어요.';}
+document.querySelectorAll('.launch').forEach(button=>button.addEventListener('click',()=>{reset();dialog.showModal();writing.focus();}));
+document.querySelector('.close').addEventListener('click',()=>{reset();dialog.close();});dialog.addEventListener('cancel',reset);dialog.addEventListener('close',reset);window.addEventListener('pagehide',reset);
+writing.addEventListener('input',()=>{give.disabled=!writing.value.trim();status.textContent=writing.value.trim()?'준비되면 해치에게 건네 주세요.':'한 글자라도 적으면 건넬 수 있어요.';});
+give.addEventListener('click',()=>{if(busy||!writing.value.trim())return;busy=true;give.disabled=true;writing.disabled=true;give.textContent='해치에게 건네는 중';status.textContent='한지를 접어 건네고 있어요.';writing.classList.add('eating');timer=setTimeout(()=>{writing.value='';writing.disabled=false;writing.classList.remove('eating');busy=false;give.disabled=true;give.textContent='해치에게 건네기';status.textContent='잘 먹었소. 읽지는 않았소';},matchMedia('(prefers-reduced-motion:reduce)').matches?0:5000);});
+const sticky=document.querySelector('#sticky');if('IntersectionObserver'in window){const visible=new Set();const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?visible.add(entry.target):visible.delete(entry.target));sticky.hidden=visible.size>0;});observer.observe(document.querySelector('#hero-btn'));observer.observe(document.querySelector('#end-btn'));}
 </script>
-</body>
-</html>
+</body></html>

@@ -68,6 +68,24 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 | 2026-09-29 | 미래편지 | 시공편지 — Google Play | https://play.google.com/store/apps/details?id=com.flutter.tsuji.hitoshi.spacetimeletter | 2026-09-07 (업데이트) | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
 | 2026-09-29 | 미래편지 | 느린우체통 전국 운영 현황 — 디지털투데이 | https://www.digitaltoday.co.kr/news/articleView.html?idxno=513323 | 2024-04-11 | 2차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
 | 2026-09-29 | 미래편지 | 미래 편지와 미래 자기 연속성 — Rutchick et al. (2018) | https://anderson-review.ucla.edu/wp-content/uploads/2021/03/2018_Rutchick-Slepian-Reyes-Pleskus-Hershfield_JEPA.pdf | 2018 | 1차 | [slow-mailbox-concept-synthesis.md](../outputs/slow-mailbox-concept-synthesis.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 연기 한 가닥 (흰 배경) | https://www.pinterest.com/pin/703756182372182/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 다 탄 성냥 네 개 | https://www.pinterest.com/pin/493566440428947241/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 가장자리만 그을린 흰 종이 | https://www.pinterest.com/pin/637329784756238806/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 김 서린 차창의 손글씨 | https://www.pinterest.com/pin/455496949793268575/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 한 줄로 그린 책상 스탠드 | https://www.pinterest.com/pin/746542075720675975/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 지우개와 지우개 가루 | https://www.pinterest.com/pin/571183165535648402/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 막 끈 초에서 오르는 연기 (밝은 배경) | https://www.pinterest.com/pin/825073594230337201/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 막 끈 흰 초와 연기 (검은 배경) | https://www.pinterest.com/pin/714031715898338797/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 책과 스탠드 한 줄 드로잉 | https://www.pinterest.com/pin/746542075720675993/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 한 줄 선 아이콘 세트 | https://www.pinterest.com/pin/748090188087459403/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 재활용 쓰레기통 앱 아이콘 | https://www.pinterest.com/pin/463448617904592291/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 그라데이션 불꽃 로고 | https://www.pinterest.com/pin/1137440449632400364/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 분홍 배경 연꽃 명상 아이콘 | https://www.pinterest.com/pin/406801778858958234/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 무지개색 소용돌이 로고 | https://www.pinterest.com/pin/1133218324976363844/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 돌탑과 연꽃 셀프케어 아이콘 | https://www.pinterest.com/pin/833517843533090492/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — SMOKE 워드마크 (담배 로고로 분류됨) | https://www.pinterest.com/pin/365002744798798257/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 누렇게 탄 옛 종이 | https://www.pinterest.com/pin/797348309013297807/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
+| 2026-09-29 | 시각 레퍼런스 | Pinterest — 그라데이션 불꽃 + FLAME | https://www.pinterest.com/pin/346355027594889516/ | `[미확인]` | 참고 | [시각방향_김서영.md](../../기획/시각방향_김서영.md) |
 
 ### 입력 메모 (2026-09-29, 조재영)
 

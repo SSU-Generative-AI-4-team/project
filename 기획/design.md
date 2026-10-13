@@ -49,15 +49,16 @@ success: **#F0B237** (골드, 아이콘 · 칩 배경, 글자는 먹)   danger: 
 
 ## 글자 (2개)
 
-heading: **영남일보체 YNAMNEWS, Bold**   body: **Pretendard, 400/600**   해치 말풍선: **영남일보체 YNAMNEWS, Medium**
+전부 **영남일보체 YNAMNEWS** 한 가족으로 통일 — 제목 · 본문 · 버튼 · 말풍선 Medium(400), 강조만 Bold(700)   대체: **고운돋움 Gowun Dodum** (Google Fonts, OFL)
 
 크기 5단계만: 13 · 15 · 17 · 22 · 28   본문 15, 줄 간격 1.5
 
 - 파일: `Design/brand/font/YNAMNEWS(B).otf` · `YNAMNEWS(M).otf` (다온폰트 제작, 2024)
-- 근거(heading): 손으로 쓴 듯 둥근 획의 고딕이라 점토 인형 해치와 결이 맞고, 제목과 말풍선이 해치의 목소리처럼 읽힌다
-- 근거(body): Pretendard(OFL 상업용 무료)는 꾸밈이 없어 안내 문구가 **담백하고** 작은 크기에서도 또렷하다. 본문까지 손글씨 결이면 읽느라 느려진다
-- `[확인 필요]` 영남일보체 라이선스: 폰트 파일에는 "Copyright 2024 DAONFONT. All right reserved."만 적혀 있고 사용 범위가 없다. 상업 이용 · 웹폰트 임베딩 · 공개 저장소 재배포가 되는지 배포처에서 확인하기 전까지 폰트 파일을 공개 저장소에 올리지 않는다
-- 변경: 10/13 초안의 고운바탕(heading)은 영남일보체로 바꿨다
+- 근거: 손으로 쓴 듯 둥근 획의 고딕이라 점토 인형 해치와 결이 맞는다. 2026-10-13 팀 결정으로 본문까지 한 글꼴로 통일했다 (`Design/decisions/landing-font-decision.md`)
+- 불러오는 순서: 설치된 영남일보체(`local()`) → `Design/brand/font/`의 파일 → 고운돋움. 폰트를 받은 팀원은 설치만 하면 어느 경로에서 열어도 보인다
+- 라이선스: 같은 영남일보 무료 서체(1945체 · 구상시인체) 안내는 "지정된 배포처 외 재배포 금지", "웹 · 앱 임베딩은 비용 없이 가능하나 영남일보사와 사전 협의 필수"다 ([영남일보 폰트 안내](https://www.yeongnam.com/80special/font.html)). 영남일보체(YNAMNEWS)도 같은 조건으로 보고 `[확인 필요]`, 폰트 파일은 공개 저장소에 올리지 않는다
+- 배포 전 할 일: 영남일보사와 웹 임베딩 협의. 협의되면 배포 사이트에 woff2를 함께 올리고, 그 전에는 폰트가 없는 방문자에게 고운돋움이 보인다
+- 변경: 10/13 초안의 고운바탕(heading) · Pretendard(body)는 영남일보체로 바꿨다
 
 ## 간격 — 8의 배수
 
@@ -127,8 +128,8 @@ primary: primary 채움, 아이보리(surface) 글자, 높이 48, 가로 꽉   s
   --color-danger: var(--haechi-red);
   --color-info: var(--color-muted);
 
-  --font-heading: "YNAMNEWS", "Pretendard", "Apple SD Gothic Neo", sans-serif;
-  --font-body: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-heading: Yeongnam, "Gowun Dodum", sans-serif;  /* @font-face Yeongnam = local(YNAMNEWS) → ../brand/font/*.otf */
+  --font-body: Yeongnam, "Gowun Dodum", sans-serif;
   --fs-xs: 13px; --fs-s: 15px; --fs-m: 17px; --fs-l: 22px; --fs-xl: 28px;
   --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
   --radius: 8px;
