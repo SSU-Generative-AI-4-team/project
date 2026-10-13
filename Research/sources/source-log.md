@@ -119,3 +119,9 @@ Research 폴더의 모든 조사에서 참고한 출처를 여기에 누적한�
 - 2026-10-06 · 우리 같은 것: [국립고궁박물관](https://www.gogung.go.kr/main.do). 조선 왕실 문화 전문 박물관 공식 사이트, 슬로건 "조선왕실 500년, 그 삶과 마주하다". 무채색 바탕·여백·유물 사진 위주.
 - 2026-10-06 · 우리 아닌 것: [템플스테이 (대한불교조계종)](https://www.templestay.com/). 사찰·스님·참선·108배·연등·염주 중심의 불교 수행 체험 사이트, 슬로건 "나를 위한 행복 여행".
 - 2026-10-06 · 해치와 관악산 화기 속설 [단일 출처, 풍수 속설]: [관악구청 — 관악산](https://www.gwanak.go.kr/site/gwanak/05/10503020100002016051205.jsp). 관악산의 화기를 누르려 광화문 양쪽에 해태를 두었다고 "한다"는 전승. 반론·변천은 [경향신문 — 광화문 해치의 기구한 팔자](https://www.khan.co.kr/article/202310300600001) 참고.
+
+## 2026-10-13 brand 시각 방향 레퍼런스 교체 (귀여운 3D 인터랙티브 웹)
+
+- 2026-10-13 · 우리 같은 것: [Messenger — abeto](https://messenger.abeto.co/). 작은 행성의 우편배달부 Three.js 브라우저 작품, 2025-09-25 공개. [Awwwards Site of the Day 2025-11-10, 7.92/10](https://www.awwwards.com/sites/messenger), 등록 색 `#81BFBC` · `#C9D5C3`. 공개일·제작 기술 교차 확인: [Wikipedia — Messenger (video game)](https://en.wikipedia.org/wiki/Messenger_(video_game)), [Korben](https://korben.info/ja/messenger-abeto-postman-mini-planet.html), [Gigazine](https://gigazine.net/gsc_news/en/20250929-messenger-browser-game).
+- 2026-10-13 · 우리 아닌 것: [Bruno Simon 포트폴리오](https://bruno-simon.com/). 자동차를 몰고 다니는 Three.js 물리 포트폴리오. [Creative Bloq](https://www.creativebloq.com/news/3d-car-portfolio), [Pastel 블로그](https://usepastel.com/blog/how-a-design-portfolio-got-the-attention-of-400-000-visitors). Awwwards 수상 등급은 출처마다 다름(Site of the Month / Site of the Year) → 문서에는 "수상작"으로만 적음.
+- 2026-10-13 · 교체 전 레퍼런스(국립고궁박물관 · 템플스테이)는 위 2026-10-06 항목에 그대로 둔다.
