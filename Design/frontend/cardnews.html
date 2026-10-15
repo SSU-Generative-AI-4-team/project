@@ -33,17 +33,19 @@ button{cursor:pointer}
 .btn:hover{filter:brightness(.93)}
 .help{margin-top:16px;font-size:13px;color:var(--color-muted)}
 .help b{color:var(--color-text);font-weight:400}
+/* 작업용 흐름 표시 — 카드에는 나오지 않는다 */
 .structure{display:flex;gap:4px;margin-top:24px;font-size:13px}
 .structure span{flex:1;text-align:center;padding:6px 4px;border-radius:6px;background:var(--color-surface);border:1px solid var(--color-line)}
-.structure span[data-role=story]{flex:3;border-color:var(--haechi-gold)}
-.structure span[data-role=problem]{flex:2;border-color:var(--haechi-red)}
-.structure span[data-role=solution]{flex:3;border-color:var(--haechi-blue)}
+.structure span[data-role=hesitate]{flex:3}
+.structure span[data-role=write]{flex:2}
+.structure span[data-role=give]{flex:2;border-color:var(--haechi-blue)}
+.structure span[data-role=end]{border-color:var(--haechi-gold)}
 .status{min-height:22px;margin-top:12px;font-size:13px;color:var(--color-primary)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:32px 24px;margin-top:24px}
 .slot{display:flex;flex-direction:column;gap:12px;container-type:inline-size}
 .tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .chip{font-size:13px;padding:2px 10px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-line)}
-.chip[data-role=story]{border-color:var(--haechi-gold)}.chip[data-role=problem]{border-color:var(--haechi-red)}.chip[data-role=solution]{border-color:var(--haechi-blue)}
+.chip[data-role=give]{border-color:var(--haechi-blue)}.chip[data-role=end]{border-color:var(--haechi-gold)}
 .tool{min-height:32px;border:1px solid var(--color-line);border-radius:6px;padding:2px 10px;background:var(--color-surface);font-size:13px}
 .tool:hover{border-color:var(--color-primary);color:var(--color-primary)}
 .tools input[type=range]{width:80px;accent-color:var(--color-primary)}
@@ -51,63 +53,67 @@ button{cursor:pointer}
 .role{font-size:13px;color:var(--color-muted);line-height:1.6}
 .role b{color:var(--color-text);font-weight:400}
 
-/* 카드 — 1080×1350 기준을 cqw로 축소. 기준 폭은 .slot(=카드 폭). 1cqw = 10.8px(내보내기 기준) */
-.card{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;color:var(--color-text);display:flex;flex-direction:column;padding:7.4cqw 7.4cqw 5.6cqw;box-shadow:0 1px 2px rgba(42,40,38,.12),0 8px 24px rgba(42,40,38,.10)}
-.c-top{display:flex;align-items:center;gap:2cqw;height:5.6cqw}
-.c-top img{height:5.6cqw;width:auto}
-.c-top span{font-size:3.4cqw;line-height:1}
-.c-head{margin-top:5cqw;font-size:6.6cqw;line-height:1.38;letter-spacing:-.02em;min-height:18.2cqw}
-.c-sub{margin-top:2cqw;font-size:3.4cqw;line-height:1.5;color:var(--color-muted)}
+/* 카드 — 1080×1350 기준을 cqw로 축소. 기준 폭은 .slot(=카드 폭). 1cqw = 10.8px(내보내기 기준)
+   한 장 = 한 문장 + 사물 하나 + 여백. 글은 위 1/3, 사물은 아래쪽 */
+.card{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;color:var(--color-text);display:flex;flex-direction:column;padding:7.4cqw 8.4cqw 5.6cqw;box-shadow:0 1px 2px rgba(42,40,38,.12),0 8px 24px rgba(42,40,38,.10)}
+.c-top{display:flex;align-items:center;gap:2cqw;height:4.6cqw;opacity:.85}
+.c-top img{height:4.6cqw;width:auto}
+.c-top span{font-size:3cqw;line-height:1}
+.c-head{margin-top:9cqw;font-size:6cqw;line-height:1.5;letter-spacing:-.02em}
+.c-sub{margin-top:2.6cqw;font-size:3.4cqw;line-height:1.6;color:var(--color-muted)}
 .em{color:var(--color-primary)}
-.c-media{position:relative;flex:1;min-height:0;margin-top:4.6cqw;border-radius:3cqw;overflow:hidden;background:var(--color-surface)}
+.c-media{position:relative;flex:1;min-height:0;margin-top:4cqw;overflow:hidden}
 .c-media>img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% var(--pos,50%)}
 .c-media.contain>img{object-fit:contain}
-.c-foot{display:flex;justify-content:space-between;align-items:center;margin-top:3.4cqw;font-size:2.8cqw;line-height:1;color:var(--color-muted)}
+/* 해치 사진: 바닥에 놓인 정사각 한 장 */
+.c-media.photo{flex:none;width:68%;aspect-ratio:1;margin:auto auto 0;border-radius:2cqw;background:var(--color-surface)}
+.c-media.photo.small{width:50%}
+.c-foot{display:flex;justify-content:space-between;align-items:center;margin-top:4cqw;font-size:2.6cqw;line-height:1;color:var(--color-muted)}
 [contenteditable]{outline:none;border-radius:4px}
 [contenteditable]:hover{box-shadow:0 0 0 1px rgba(42,96,144,.35)}
 [contenteditable]:focus{box-shadow:0 0 0 2px var(--color-primary)}
 .exporting [contenteditable]{box-shadow:none!important}
 
-/* 해치 말풍선 (하오체) */
-.bubble{position:absolute;left:5cqw;top:5cqw;max-width:60%;padding:2.2cqw 3.4cqw;border-radius:3cqw;background:var(--color-surface);border:.3cqw solid var(--color-primary);color:var(--color-primary);font-size:3.6cqw;line-height:1.4;box-shadow:0 1cqw 2.4cqw rgba(42,40,38,.10)}
-.bubble::after{content:'';position:absolute;left:6cqw;bottom:-1.9cqw;width:3cqw;height:3cqw;background:var(--color-surface);border-right:.3cqw solid var(--color-primary);border-bottom:.3cqw solid var(--color-primary);transform:rotate(45deg)}
-.bubble.right{left:auto;right:5cqw}
-.bubble.right::after{left:auto;right:6cqw}
+/* 해치 말풍선 (하오체) — 8장에만 */
+.bubble{position:absolute;right:3cqw;top:2.4cqw;max-width:46%;padding:1.6cqw 2.6cqw;border-radius:3cqw;background:var(--color-surface);border:.25cqw solid var(--color-primary);color:var(--color-primary);font-size:2.8cqw;line-height:1.4}
+.bubble::after{content:'';position:absolute;left:4cqw;bottom:-1.7cqw;width:2.6cqw;height:2.6cqw;background:var(--color-surface);border-right:.25cqw solid var(--color-primary);border-bottom:.25cqw solid var(--color-primary);transform:rotate(45deg)}
 
-/* 폰 화면 (2~5장) — 실제 앱 이름·로고 없이 */
-.ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--hanji-cream)}
-.screen{width:62%;height:88%;background:var(--color-surface);border:1.2cqw solid var(--warm-black);border-radius:6cqw;padding:5cqw 3.6cqw 3.6cqw;display:flex;flex-direction:column;gap:2.2cqw;box-shadow:0 2cqw 4cqw rgba(42,40,38,.18);font-size:3cqw;line-height:1.45;overflow:hidden}
-.ui-bar{display:flex;justify-content:space-between;align-items:center;padding-bottom:2cqw;border-bottom:.2cqw solid var(--color-line);font-size:3cqw}
-.ui-bar small{font-size:2.4cqw;color:var(--color-muted)}
-.msgs{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:1.6cqw}
-.msg{max-width:82%;padding:1.6cqw 2.6cqw;border-radius:2.6cqw;background:var(--hanji-cream);font-size:2.8cqw}
-.msg.me{align-self:flex-end;background:var(--color-primary);color:var(--color-surface)}
-.msg small{display:block;font-size:2.2cqw;color:var(--color-muted)}
-.draft{display:flex;align-items:center;gap:1.6cqw;padding:1.6cqw 2.4cqw;border:.25cqw solid var(--color-line);border-radius:3cqw;font-size:2.8cqw}
-.draft .txt{flex:1}
-.draft .txt s{color:var(--color-muted)}
-.caret{display:inline-block;width:.35cqw;height:3.2cqw;margin-left:.3cqw;vertical-align:-.5cqw;background:var(--color-primary)}
-.send{width:5cqw;height:5cqw;border-radius:50%;background:var(--color-line);flex:none}
-.tag{align-self:flex-end;font-size:2.2cqw;color:var(--haechi-red)}
-.notes{display:flex;flex-direction:column;gap:1.6cqw}
-.note{padding:2cqw 2.4cqw;border-radius:2cqw;background:var(--hanji-cream)}
-.note b{display:block;font-weight:400;font-size:2.9cqw}
-.note small{display:block;font-size:2.2cqw;color:var(--color-muted)}
-.note.pin{border:.3cqw solid var(--color-primary);background:var(--color-surface)}
-.note.pin small::before{content:'고정됨 · ';color:var(--color-primary)}
-.note.fade{opacity:.55}
+/* 그린 장면 (2~5 · 9 · 10장). 이미지를 바꾸면 .ui째로 사라진다 */
+.ui{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2cqw}
+.ln{display:block;height:1.1cqw;border-radius:1cqw;background:rgba(42,40,38,.16)}
+.ln+.ln{margin-top:2cqw}
+.caret{display:inline-block;width:.3cqw;height:3cqw;background:var(--color-primary)}
 
-/* 9장 메이커 */
-.ask{font-size:2.8cqw}
-.chips{display:flex;flex-wrap:wrap;gap:1.2cqw}
-.chips span{padding:.8cqw 2cqw;border-radius:99px;border:.25cqw solid var(--color-line);font-size:2.4cqw}
-.chips span.on{border-color:var(--color-primary);color:var(--color-primary)}
-.hanji{flex:1;padding:2.4cqw;border-radius:2cqw;background:var(--haechi-ivory) var(--hanji-texture) center/cover;border:.25cqw solid var(--color-line);font-size:2.8cqw}
-.give{padding:2cqw;border-radius:2cqw;background:var(--color-primary);color:var(--color-surface);text-align:center;font-size:3cqw}
+/* 폰 (2 · 3장만) — 앱 이름 · 글자 없이 흔적만 */
+.phone{width:36%;aspect-ratio:9/17;display:flex;flex-direction:column;gap:2cqw;padding:5cqw 3cqw 3cqw;background:var(--color-surface);border:.9cqw solid var(--warm-black);border-radius:5cqw;box-shadow:0 1.6cqw 3cqw rgba(42,40,38,.12)}
+.phone .bar-top{width:40%;height:1cqw;margin:0 auto 1cqw;border-radius:1cqw;background:var(--color-line)}
+.msg{width:62%;padding:2cqw;border-radius:2cqw;background:var(--hanji-cream)}
+.msg .ln{background:rgba(42,40,38,.12)}
+.draft{display:flex;align-items:center;gap:1.4cqw;margin-top:auto;padding:1.6cqw 2cqw;border:.25cqw solid var(--color-line);border-radius:3cqw}
+.draft .ln{flex:1;height:.9cqw;background:rgba(42,40,38,.10)}
+.draft .send{width:3.6cqw;height:3.6cqw;border-radius:50%;background:var(--color-line);flex:none}
+.note{padding:2cqw;border-radius:1.6cqw;background:var(--hanji-cream)}
+.note .ln{height:.9cqw}
+.note.pin{position:relative;background:var(--color-surface);border:.25cqw solid var(--color-line)}
+.note.pin::after{content:'';position:absolute;right:1.6cqw;top:1.6cqw;width:1.4cqw;height:1.4cqw;border-radius:50%;background:var(--color-primary)}
+.note.fade{opacity:.5}
 
-/* 10장 버튼 */
-.cta{position:absolute;left:50%;top:4cqw;transform:translateX(-50%);white-space:nowrap;padding:2.6cqw 6cqw;border-radius:2.4cqw;background:var(--color-primary);color:var(--color-surface);font-size:3.8cqw;line-height:1.3;box-shadow:0 1cqw 3cqw rgba(42,40,38,.25)}
-.cta small{display:block;text-align:center;font-size:2.3cqw;opacity:.85}
+/* 한지 한 장 (4 · 5장) */
+.sheet{width:48%;aspect-ratio:3/4;margin-bottom:3cqw;padding:7cqw 5.4cqw;background:var(--haechi-ivory) var(--hanji-texture) center/cover;border-radius:.6cqw;border:.2cqw solid rgba(42,40,38,.08);box-shadow:0 .4cqw .8cqw rgba(42,40,38,.10),0 2.4cqw 4.4cqw rgba(42,40,38,.12);transform:rotate(-2.5deg)}
+.sheet .ln{height:.9cqw;background:rgba(42,40,38,.13)}
+.sheet .ln+.ln{margin-top:3.4cqw}
+
+/* 벼루와 먹 (9장) */
+.inkstone{position:relative;width:34%;aspect-ratio:3/4;margin:0 8% 3cqw 0;border-radius:3.4cqw;background:var(--warm-black);box-shadow:inset 0 0 0 .5cqw rgba(253,245,233,.10),0 2cqw 3.6cqw rgba(42,40,38,.18)}
+.inkstone::before{content:'';position:absolute;left:14%;right:14%;top:9%;height:24%;border-radius:50%;background:var(--ink-black);box-shadow:inset 0 .8cqw 0 rgba(253,245,233,.10)}
+.inkstone::after{content:'';position:absolute;left:14%;right:14%;top:40%;bottom:10%;border-radius:2.4cqw;background:rgba(253,245,233,.07)}
+.inkstick{position:absolute;left:108%;bottom:-1cqw;width:4.6cqw;height:19cqw;border-radius:.8cqw;background:var(--ink-black);box-shadow:inset .5cqw 0 0 rgba(253,245,233,.10),0 1cqw 2cqw rgba(42,40,38,.18);transform:rotate(-10deg);transform-origin:50% 100%}
+
+/* 10장 마무리 */
+.close{flex-direction:column;align-items:center;gap:2.4cqw;padding-bottom:4cqw}
+.close img{width:20cqw;height:auto}
+.close .name{font-size:4.6cqw;line-height:1}
+.cta{position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;padding:1.4cqw 4cqw;border:.25cqw solid var(--color-primary);border-radius:.8cqw;color:var(--color-primary);font-size:3cqw;line-height:1.3}
 
 @media(max-width:600px){.wrap{width:calc(100% - 32px);padding-top:16px}.bar input[type=text]{width:120px}.structure{font-size:12px}}
 @media print{body::before,.top,.help,.structure,.status,.tools,.role{display:none!important}.grid{display:block}.slot{break-after:page}.card{box-shadow:none;width:108mm}}
@@ -118,7 +124,7 @@ button{cursor:pointer}
   <header class="top">
     <div class="title">
       <img src="../brand/logo/haechi_yellow.png" alt="">
-      <div><h1>해칫 카드뉴스 10장</h1><p>4:5 · 1080×1350 · 한 장 한 문장 · 열 장이 한 사람의 이야기</p></div>
+      <div><h1>해칫 카드뉴스 10장 — 남겨두지 않아도 되는 말</h1><p>4:5 · 1080×1350 · 한 장 한 문장 · 열 장을 이으면 한 편의 짧은 글</p></div>
     </div>
     <div class="bar">
       <label>계정명 <input type="text" id="handle" value="@hatch_eat" aria-label="카드에 들어갈 계정명"></label>
@@ -127,171 +133,155 @@ button{cursor:pointer}
     </div>
   </header>
 
-  <p class="help"><b>글자</b>는 카드 위를 눌러 바로 고칩니다. 단어를 드래그하고 <b>강조</b>를 누르면 해치 블루로 바뀝니다. <b>이미지</b>는 카드마다 바꿀 수 있습니다. 고친 내용은 이 브라우저에 자동 저장됩니다. PNG 저장은 로컬 서버로 열어야 동작합니다 (프로젝트 루트에서 <code>python3 -m http.server</code> → <code>localhost:8000/Design/frontend/cardnews.html</code>).</p>
-  <div class="structure" aria-label="10장 구조">
-    <span data-role="story">스토리 1–3</span><span data-role="problem">문제 4–5</span><span data-role="solution">해결 6–8</span><span>증거 9</span><span>행동 10</span>
+  <p class="help"><b>글자</b>는 카드 위를 눌러 바로 고칩니다. 단어를 드래그하고 <b>강조</b>를 누르면 해치 블루로 바뀝니다 (한 장에 한 곳까지). <b>이미지</b>는 카드마다 바꿀 수 있습니다. 고친 내용은 이 브라우저에 자동 저장됩니다. PNG 저장은 로컬 서버로 열어야 동작합니다 (프로젝트 루트에서 <code>python3 -m http.server</code> → <code>localhost:8000/Design/frontend/cardnews.html</code>).</p>
+  <div class="structure" aria-label="10장 흐름">
+    <span data-role="hesitate">머뭇거림 1–3</span><span data-role="write">적기 4–5</span><span data-role="give">건네기 6–7</span><span data-role="end">끝내기 8</span><span>머물기 9</span><span>맺음 10</span>
   </div>
   <p class="status" id="status" role="status"></p>
 
   <section class="grid" id="grid">
 
-    <!-- 1 스토리 · 장면 -->
+    <!-- 1 머뭇거림 -->
     <article class="slot" data-n="1">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">불합격 문자 받은 날 밤,<br>인스타엔 <span class="em">친구 합격</span> 소식.</h2>
-        <div class="c-media"><img src="../brand/key%20visual/haechi_1x1.png" alt="궁궐 처마 아래 접힌 한지 곁에서 기다리는 해치"></div>
+        <h2 class="c-head" contenteditable data-key="head">누군가에게 보내지 않아도<br>되는 말이 있는 날.</h2>
+        <div class="c-media photo small"><img src="../brand/key%20visual/구름%20머리의%20귀여운%20수호견%20묘사.png" alt="받침 위에서 기다리는 작은 해치와 곁에 놓인 접힌 한지" style="--pos:55%"></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>스토리 · 장면 한 줄</b> — 누가 · 언제 · 어떤 상황. 이 한 장에서 넘기느냐가 갈린다. 랜딩 첫 화면과 같은 사람.</p>
+      <p class="role"><b>머뭇거림 ①</b> — 상황을 조용히 꺼낸다. 누구의 이야기인지 정하지 않는다. 작은 해치 · 접힌 한지 · 넓은 여백. 폰 화면은 아직 보여 주지 않는다.</p>
     </article>
 
-    <!-- 2 스토리 · 해본 것 -->
+    <!-- 2 머뭇거림 · 앱 화면 ① -->
     <article class="slot" data-n="2">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">단톡방에 털어놓으려다<br>결국 다 <span class="em">지웠어요</span>.</h2>
-        <div class="c-media"><div class="ui"><div class="screen">
-          <div class="ui-bar"><span contenteditable data-key="ui1">스터디 단톡방</span><small contenteditable data-key="ui2">5명</small></div>
-          <div class="msgs">
-            <div class="msg" contenteditable data-key="ui3"><small>밤 11:02</small>오늘 발표 다들 어땠어?</div>
-            <div class="msg" contenteditable data-key="ui4"><small>밤 11:05</small>나 붙었어!! 다음 주 출근 🎉</div>
+        <h2 class="c-head" contenteditable data-key="head">친구에게 말하기엔<br>조금 그렇고,</h2>
+        <p class="c-sub" contenteditable data-key="sub">설명하기도 조금 귀찮은 날.</p>
+        <div class="c-media"><div class="ui">
+          <div class="phone">
+            <span class="bar-top"></span>
+            <div class="msg"><span class="ln" style="width:90%"></span><span class="ln" style="width:55%"></span></div>
+            <div class="draft"><span class="ln"></span><span class="caret"></span><span class="send"></span></div>
           </div>
-          <div class="draft"><span class="txt" contenteditable data-key="ui5"><s>나 이번에도 떨어졌어…</s></span><span class="caret"></span><span class="send"></span></div>
-        </div></div></div>
+        </div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>스토리 · 그 상황에서 해본 것 ①</b> — 말하려다 멈춘 순간. 7블록 ② "어디서 말이 돌까 봐".</p>
+      <p class="role"><b>머뭇거림 ②</b> — 말하지 않는 것. 사람 없이, 보내지 않은 입력창 하나로만 암시한다. 글자는 읽히지 않게 줄로만 그렸다 (앱 화면 1/2).</p>
     </article>
 
-    <!-- 3 스토리 · 해본 것 -->
+    <!-- 3 머뭇거림 · 앱 화면 ② -->
     <article class="slot" data-n="3">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">그래서 메모장에 적었는데,<br>다음 날 보니 <span class="em">그대로</span>였어요.</h2>
-        <div class="c-media"><div class="ui"><div class="screen">
-          <div class="ui-bar"><span contenteditable data-key="ui1">메모</span><small contenteditable data-key="ui2">편집</small></div>
-          <div class="notes">
-            <div class="note pin" contenteditable data-key="ui3"><b>오늘은 그냥 다 싫다</b><small>어젯밤 11:48</small></div>
-            <div class="note" contenteditable data-key="ui4"><b>장보기 — 우유, 계란</b><small>3일 전</small></div>
-            <div class="note" contenteditable data-key="ui5"><b>자소서 마감 일정</b><small>지난주</small></div>
+        <h2 class="c-head" contenteditable data-key="head">메모해 두기엔<br>다시 보고 싶지 않고.</h2>
+        <div class="c-media"><div class="ui">
+          <div class="phone">
+            <span class="bar-top"></span>
+            <div class="note pin"><span class="ln" style="width:70%"></span><span class="ln" style="width:40%"></span></div>
+            <div class="note"><span class="ln" style="width:60%"></span></div>
+            <div class="note fade"><span class="ln" style="width:75%"></span></div>
           </div>
-        </div></div></div>
+        </div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>스토리 · 해본 것 ②</b> — 브랜드 스토리의 실제 계기(민규님, 9월 29일): 메모에 쓰면 기록으로 남아 계속 존재한다.</p>
+      <p class="role"><b>머뭇거림 ③</b> — 남겨두지 않는 것. 해칫의 핵심 문제가 처음 나온다. 맨 위에 고정된 채 남아 있는 메모 한 장 (앱 화면 2/2, 브랜드 스토리의 실제 계기).</p>
     </article>
 
-    <!-- 4 문제 -->
+    <!-- 4 적기 -->
     <article class="slot" data-n="4">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">축하한다고는 했는데,<br><span class="em">내 얘기</span>는 못 꺼냈어요.</h2>
-        <div class="c-media"><div class="ui"><div class="screen">
-          <div class="ui-bar"><span contenteditable data-key="ui1">친구</span><small contenteditable data-key="ui2">대화</small></div>
-          <div class="msgs">
-            <div class="msg" contenteditable data-key="ui3">나 최종 합격했어!</div>
-            <div class="msg me" contenteditable data-key="ui4">축하해!! 진짜 잘됐다</div>
-          </div>
-          <div class="draft"><span class="txt" contenteditable data-key="ui5">근데 나는 사실…</span><span class="caret"></span><span class="send"></span></div>
-          <div class="tag" contenteditable data-key="ui6">보내지 않음</div>
-        </div></div></div>
+        <h2 class="c-head" contenteditable data-key="head">그럴 땐 그냥<br><span class="em">한 장</span>에 적어도 돼요.</h2>
+        <div class="c-media"><div class="ui"><div class="sheet"></div></div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>문제 ①</b> — 그래서 뭐가 안 됐는지. 축하는 보냈는데 내 마음은 못 보냈다. 7블록 ② 페인포인트.</p>
+      <p class="role"><b>적기 ①</b> — 깨끗한 빈 한지 한 장. 앱 화면이 아니라 바닥에 놓인 종이처럼.</p>
     </article>
 
-    <!-- 5 문제 -->
+    <!-- 5 적기 -->
     <article class="slot" data-n="5">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">잊으려고 쓴 건데,<br>볼 때마다 <span class="em">또</span> 생각나요.</h2>
-        <div class="c-media"><div class="ui"><div class="screen">
-          <div class="ui-bar"><span contenteditable data-key="ui1">메모</span><small contenteditable data-key="ui2">검색</small></div>
-          <div class="notes">
-            <div class="note pin" contenteditable data-key="ui3"><b>오늘은 그냥 다 싫다</b><small>어젯밤 11:48</small></div>
-            <div class="note" contenteditable data-key="ui4"><b>왜 나만 안 될까</b><small>2주 전</small></div>
-            <div class="note fade" contenteditable data-key="ui5"><b>아무한테도 말 못 하겠다</b><small>지난달</small></div>
-            <div class="note fade" contenteditable data-key="ui6"><b>그냥 쓰고 잊자</b><small>석 달 전</small></div>
-          </div>
+        <h2 class="c-head" contenteditable data-key="head">잘 쓸 필요도,<br>정리할 필요도 없어요.</h2>
+        <div class="c-media"><div class="ui"><div class="sheet">
+          <span class="ln" style="width:82%"></span><span class="ln" style="width:64%"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:38%"></span>
         </div></div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>문제 ②</b> — 브랜드 스토리 "버리려고 쓴 말이 오히려 또 하나의 기록이 된다"를 사용자의 경험으로 바꿔 씀. 4장(말 못 함)과 겹치지 않게 '남아서 다시 떠오름'에 집중.</p>
+      <p class="role"><b>적기 ②</b> — 같은 한지에 몇 줄. 내용은 읽히지 않게 둔다. 사용자의 고민을 카드가 대신 지어내지 않는다.</p>
     </article>
 
-    <!-- 6 해결 -->
+    <!-- 6 건네기 -->
     <article class="slot" data-n="6">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">이번엔 해칫에서<br><span class="em">한지</span>에 적어 봤어요.</h2>
-        <div class="c-media"><img src="../brand/key%20visual/귀여운%20사자%20강아지와%20접힌%20편지.png" alt="접힌 한지 앞에 앉은 해치" style="--pos:58%">
-          <div class="bubble right" contenteditable data-key="bubble">천천히 적으시오</div></div>
+        <h2 class="c-head" contenteditable data-key="head">다 적었다면<br>해치에게 건네주세요.</h2>
+        <div class="c-media photo"><img src="../brand/key%20visual/귀여운%20사자%20강아지와%20접힌%20편지.png" alt="접힌 한지 앞에서 기다리는 해치" style="--pos:55%"></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>해결 ①</b> — 같은 사람이 해칫을 처음 써 보는 장. 설명이 아니라 경험으로 등장한다 (유저플로우 S1~S2). 말풍선은 시안 쓰기 화면(S2)과 같은 문구.</p>
+      <p class="role"><b>건네기 ①</b> — 핵심 행동이 처음 나온다. 접힌 한지와 기다리는 해치.</p>
     </article>
 
-    <!-- 7 해결 -->
+    <!-- 7 건네기 -->
     <article class="slot" data-n="7">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">해치한테 건넸더니<br><span class="em">5초</span>쯤 만에 다 먹더라고요.</h2>
-        <div class="c-media"><img src="../brand/key%20visual/구름%20머리의%20귀여운%20수호견%20묘사.png" alt="받침 위의 해치와 곁에 놓인 접힌 한지" style="--pos:60%"></div>
+        <h2 class="c-head" contenteditable data-key="head">해치가 말없이<br>받아먹습니다.</h2>
+        <div class="c-media photo"><img src="../brand/key%20visual/크림빛%20배경의%20귀여운%20수호사자%20캐릭터.png" alt="눈을 감고 한지를 먹는 해치" style="--pos:55%"></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>해결 ②</b> — 해치가 한지를 먹는다는 특징. "약 5초"는 PRD_1006 84행 기획값이고 `기획/index.html` 시안 연출은 5.2초. 실제 구현 값이 바뀌면 고친다.</p>
+      <p class="role"><b>건네기 ②</b> — 먹는 장면. 과장 없이 차분하게. 해치는 위로 · 조언 · 분석을 하지 않고 받아먹기만 한다.</p>
     </article>
 
-    <!-- 8 해결 -->
+    <!-- 8 끝내기 — 가장 중요한 장 -->
     <article class="slot" data-n="8">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">먹고 나면 그걸로 끝.<br>쓴 글은 어디에도 <span class="em">안 남아요</span>.</h2>
-        <div class="c-media"><img src="../brand/key%20visual/크림빛%20배경의%20귀여운%20수호사자%20캐릭터.png" alt="한지를 물고 눈을 감은 해치" style="--pos:60%">
-          <div class="bubble" contenteditable data-key="bubble">잘 먹었소. 읽지는 않았소</div></div>
+        <h2 class="c-head" contenteditable data-key="head">그리고 적었던 말은<br><span class="em">남지 않아요</span>.</h2>
+        <div class="c-media photo"><img src="../brand/key%20visual/haechi_empty.png" alt="한지 없이 혼자 앉아 있는 해치" style="--pos:55%">
+          <div class="bubble" contenteditable data-key="bubble">잘 먹었소.<br>읽지는 않았소.</div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>해결 ③</b> — 써야 하는 핵심 이유. "쓴 글은 어디에도 안 남아"는 실제 제품에서 원문이 서버 · 로그 · DB에 남지 않을 때만 쓴다. 아직 미확정. 말풍선은 시안 결과 화면(S4)과 같은 문구.</p>
+      <p class="role"><b>끝내기</b> — 열 장 중 가장 중요한 장면. 먹고 난 뒤의 해치, 곁에 한지가 없다. 해치 말풍선은 이 장에만. "남지 않아요"는 원문 기준이다. 먹 진행 · 필사첩은 기기에 남으므로 전부 사라진다고 쓰지 않는다.</p>
     </article>
 
-    <!-- 9 증거 -->
+    <!-- 9 머물기 -->
     <article class="slot" data-n="9">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">가입하라는 말도,<br>매일 오라는 알림도 <span class="em">없었어요</span>.</h2>
-        <div class="c-media"><div class="ui"><div class="screen">
-          <div class="ui-bar"><span contenteditable data-key="ui1">한지</span><small contenteditable data-key="ui2">가입 없이 바로</small></div>
-          <p class="ask" contenteditable data-key="ui3">오늘 마음에 걸린 일은 어느 쪽이었나요?</p>
-          <div class="chips" contenteditable data-key="ui4"><span>회사 일</span><span>사람 사이</span><span class="on">시험·취업</span><span>그냥 지친 날</span></div>
-          <div class="hanji" contenteditable data-key="ui5">불합격 문자 받고 인스타 켰는데<span class="caret"></span></div>
-          <div class="give" contenteditable data-key="ui6">해치에게 건네기</div>
-        </div></div></div>
+        <h2 class="c-head" contenteditable data-key="head">조금 더 있고 싶으면<br>먹을 갈아도 되고,<br>그냥 나가도 돼요.</h2>
+        <p class="c-sub" contenteditable data-key="sub">천천히 먹을 갈다 보면<br>해치가 한 구절을 건넵니다.</p>
+        <div class="c-media"><div class="ui"><div class="inkstone"><span class="inkstick"></span></div></div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>증거 하나</b> — 후기 · 사용자 수 대신 실제 화면을 보여 준다. 화면은 시안 `기획/index.html` S2(쓰기) 그대로. "가입 없음 · 연속 기록 · 알림 없음"은 PRD_1006(82 · 98 · 165행) 정책.</p>
+      <p class="role"><b>머물기</b> — 먹 갈기는 고를 때만. 보상 · 횟수 · 매일을 말하지 않는다. 벼루와 먹 하나, 여백.</p>
     </article>
 
-    <!-- 10 행동 -->
+    <!-- 10 맺음 -->
     <article class="slot" data-n="10">
       <div class="tools"></div>
       <div class="card">
         <div class="c-top"><img src="../brand/logo/haechi_yellow.png" alt=""><span>해칫</span></div>
-        <h2 class="c-head" contenteditable data-key="head">또 그런 밤이 오면<br>꺼내 볼 수 있게 <span class="em">저장</span>해 두세요.</h2>
-        <div class="c-media"><img src="../brand/key%20visual/haechi_9x16.png" alt="궁궐 처마 아래의 해치" style="--pos:84%">
-          <div class="cta" contenteditable data-key="cta">해치에게 털어놓기<small>프로필 링크 · 가입 없이 · 무료</small></div></div>
+        <h2 class="c-head" contenteditable data-key="head">모든 마음을<br>기록해 둘 필요는 없으니까.</h2>
+        <div class="c-media"><div class="ui close">
+          <img src="../brand/logo/haechi_yellow.png" alt="해칫 로고">
+          <span class="name">해칫</span>
+        </div>
+          <!-- [확인 필요] CTA 문구 미확정: "해치에게 건네기"(앱 버튼) / "해칫 열어보기" -->
+          <div class="cta" contenteditable data-key="cta">해치에게 건네기</div></div>
         <div class="c-foot"><span class="c-page"></span><span class="c-handle"></span></div>
       </div>
-      <p class="role"><b>행동</b> — "저장해 두세요" + 버튼 + 계정명. 보조 문구(가입 없이 · 무료)는 실제 서비스 조건과 같을 때만 남긴다.</p>
+      <p class="role"><b>맺음</b> — 브랜드가 믿는 문장 하나로 끝낸다. 버튼은 작게, 강조 없이. 버튼 문구는 아직 확정 전 <code>[확인 필요]</code>.</p>
     </article>
 
   </section>
@@ -299,12 +289,12 @@ button{cursor:pointer}
 
 <script>
 (function(){
-  const KEY='hatcheat-cardnews-v4';
+  const KEY='hatcheat-cardnews-v5'; // v5: 남겨두지 않아도 되는 말 (10/15 전면 수정). 이전 저장값이 새 문구를 덮지 않게 키를 바꿨다
   const grid=document.getElementById('grid');
   const statusEl=document.getElementById('status');
   const handleInput=document.getElementById('handle');
   const slots=[...grid.querySelectorAll('.slot')];
-  const ROLES={1:['story','스토리'],2:['story','스토리'],3:['story','스토리'],4:['problem','문제'],5:['problem','문제'],6:['solution','해결'],7:['solution','해결'],8:['solution','해결'],9:['proof','증거'],10:['action','행동']};
+  const ROLES={1:['hesitate','머뭇거림'],2:['hesitate','머뭇거림'],3:['hesitate','머뭇거림'],4:['write','적기'],5:['write','적기'],6:['give','건네기'],7:['give','건네기'],8:['end','끝내기'],9:['stay','머물기'],10:['close','맺음']};
   const defaults={};
   let state={};
   try{state=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){state={}}
