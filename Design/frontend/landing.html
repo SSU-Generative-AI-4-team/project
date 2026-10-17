@@ -1,44 +1,1168 @@
 <!doctype html>
+<!--
+================================================================
+ 해칫 (hatch eat) 랜딩 페이지 — 수정 가이드
+================================================================
+ ■ 색 바꾸기 ............ <style> 맨 위 ":root" (기준: 기획/design.md, Design/brand/color/)
+     --haechi-blue   메인(버튼·링크·수치)    --hanji-cream  배경
+     --haechi-ivory  카드·모달 바탕         --ink-black    본문 글씨
+     --haechi-gold / --haechi-red  밑줄·반짝이·도장 같은 아주 작은 강조에만
+     --tint-blue / --tint-gold     카드 그림 칸의 옅은 바탕 (기존 색에 투명도만 준 것)
+ ■ 글꼴 ................. :root --font-heading / --font-body
+     영남일보체(설치된 경우) → ../brand/font/*.otf → 고운돋움(Google Fonts CDN)
+ ■ 웹 크기 .............. :root --container(1280) --section-pad(120) --fs-body(18)
+ ■ 문구 위치 (HTML 주석 "[문구]"로 검색)
+     ① 첫 화면(장면·제목·대상·이미지·말풍선·버튼)  #top
+     ② 문제(말 못 하는 이유) + 메모장 비교          #why , .compare
+     ③ 해결(3단계 카드)                             #how
+     ③-1 예시 한 줄 먹여 보기                       #try (예시 문장 — 실제 사용자 글처럼 쓰지 않는다.
+                                                    카드마다 .eaten 에 해치 반응 한 줄)
+     ③-2 해치 소개 프로필                           #haechi
+     ⑦ 끝의 링크 보내기                            #share (폰: 공유 창 / 컴퓨터: 링크 복사)     ④ 먹 갈기                                      #stay
+     ⑤ 안심(가격·약속·자주 묻는 질문)               #trust
+     ⑥ 만드는 사람                                  #team
+     ⑦ 끝 버튼                                      #start
+ ■ 해치 머리 위 말풍선 위치 .. .hero-bubble / .stay-bubble 의 left / top (이미지 기준 %)
+ ■ 3D 기울기 세기 ....... <script>의 "이미지 3D 기울기" (y * 8, x * 10 = 최대 각도)
+ ■ 카드 팝업 내용 ....... 아래쪽 <template id="m-..."> (카드의 data-modal 값과 같은 id)
+ ■ 버튼 문구 ............ "해치에게만 털어놓기" — 첫 화면·헤더·아래 고정·끝, 네 곳을 같이 바꾼다
+ ■ 공유 미리보기 ........ <head>의 og:* / twitter:* (배포 주소가 정해지면 og:url·og:image를 절대 주소로)
+ ■ 금지어 ............... 기획/brand_1013.md 12개 (힐링·치유·태우다·소각·스트릭·아무것도 남지 않아요 …)
+================================================================
+-->
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>해칫 — 한지에 적으면 해치가 먹어요</title>
-<meta name="description" content="모든 마음을 기록해 둘 필요는 없으니까. 남겨두기 싫은 말을 한지에 적어 해치에게 건네 보세요.">
+<meta name="description" content="말 못 한 한 줄을 한지에 적어 해치에게 건네세요. 가입 없이, 무료. 적은 글은 서버로 보내지 않고 저장하지 않아요.">
+<meta name="keywords" content="해칫, hatch eat, 해치, 감정, 털어놓기, 한지, 취준생, 사회초년생">
 <meta name="theme-color" content="#F2EBDD">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+<meta name="robots" content="index, follow">
+<!-- 공유 미리보기 (배포 후 og:url · og:image는 https:// 절대 주소로 바꾼다) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="해칫 hatch eat">
+<meta property="og:title" content="해칫 — 한지에 적으면 해치가 먹어요">
+<meta property="og:description" content="말하면 속좁아 보일까 봐, 어디서 말이 돌까 봐. 그 한 줄은 해치에게만. 가입 없이, 무료.">
+<meta property="og:image" content="../brand/key%20visual/haechi_16x9.png">
+<meta property="og:image:alt" content="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="해칫 — 한지에 적으면 해치가 먹어요">
+<meta name="twitter:description" content="말 못 한 한 줄을 한지에 적어 해치에게 건네세요. 가입 없이, 무료.">
+<meta name="twitter:image" content="../brand/key%20visual/haechi_16x9.png">
 <link rel="icon" href="../brand/logo/haechi_yellow.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+<link rel="preload" as="image" href="../brand/key%20visual/haechi_16x9.png">
 <style>
-/* 영남일보체: 설치된 폰트(local) → 같은 폴더 구조의 파일 순서로 찾는다. 파일은 라이선스(재배포 금지 · 웹 임베딩은 영남일보 사전 협의) 때문에 저장소에 없다.
-   둘 다 없는 사람에게는 Google Fonts의 고운돋움(OFL)이 대신 보인다. 근거: Design/decisions/landing-font-decision.md */
+/* 영남일보체: 설치된 폰트 → 같은 저장소 구조의 파일 → 고운돋움 (라이선스 때문에 폰트 파일은 저장소에 없다) */
 @font-face{font-family:Yeongnam;src:local('YNAMNEWS Medium'),local('YNAMNEWS'),local('영남일보체(M)'),url('../brand/font/YNAMNEWS(M).otf') format('opentype');font-weight:400;font-display:swap}
 @font-face{font-family:Yeongnam;src:local('YNAMNEWS(B) Bold'),local('YNAMNEWS(B)'),local('영남일보체(B)'),url('../brand/font/YNAMNEWS(B).otf') format('opentype');font-weight:700;font-display:swap}
-:root{--haechi-gold:#F0B237;--haechi-red:#EB4531;--haechi-blue:#2A6090;--haechi-ivory:#FDF5E9;--hanji-cream:#F2EBDD;--ink-black:#2A2826;--warm-black:#38322B;--color-primary:var(--haechi-blue);--color-text:var(--ink-black);--color-muted:rgba(42,40,38,.72);--color-line:rgba(42,40,38,.15);--hanji-texture:url('../asset/hanji%20texture%20background.jpg');--hanji-texture-tone:#F4F3F0;--color-bg:var(--hanji-texture-tone);--color-surface:var(--haechi-ivory);--color-accent-warm:var(--haechi-gold);--font-heading:Yeongnam,'Gowun Dodum',sans-serif;--font-body:Yeongnam,'Gowun Dodum',sans-serif;--fs-xs:13px;--fs-s:15px;--fs-m:17px;--fs-l:22px;--fs-xl:28px;--radius:8px;--btn-h:48px}
-*{box-sizing:border-box}body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;pointer-events:none}html{scroll-behavior:smooth}body{margin:0;background:var(--color-bg);color:var(--color-text);font:400 var(--fs-s)/1.7 var(--font-body);word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--font-heading);font-weight:400;line-height:1.45}a{color:inherit}button,textarea{font:inherit}button{cursor:pointer}.wrap{width:min(1080px,calc(100% - 64px));margin:auto}.top{height:88px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-line)}.brand{display:flex;align-items:center;gap:12px;font-size:22px;text-decoration:none}.brand img{width:40px;height:40px;border-radius:8px}.top-note{font-size:13px;color:var(--color-muted)}.hero{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:64px 0 72px}.scene{font-size:15px;color:var(--color-muted);padding-left:16px;border-left:1px solid var(--color-primary);margin-bottom:24px}h1{font-size:48px;letter-spacing:-.03em;line-height:1.3}.em{color:var(--color-primary)}.for{margin-top:24px;color:var(--color-muted);font-size:17px}.hero-action{margin-top:32px;max-width:320px}.btn{display:flex;align-items:center;justify-content:center;min-height:48px;width:100%;border:0;border-radius:8px;padding:12px 16px;background:var(--color-primary);color:var(--color-surface);font-size:17px;text-decoration:none;line-height:1.4}.btn:hover{filter:brightness(.93)}.btn:disabled{opacity:.45;cursor:default}.cond{font-size:13px;color:var(--color-muted);margin-top:8px;text-align:center}.visual{margin:0}.visual img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;border-radius:8px}.visual figcaption{font-size:13px;text-align:right;color:var(--color-muted);margin-top:12px}.belief{border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);padding:40px 0;text-align:center;font-size:28px;color:var(--color-primary)}.block{padding:64px 0;border-bottom:1px solid var(--color-line);display:grid;grid-template-columns:1fr 1.35fr;gap:64px}.label{font-size:13px;color:var(--color-muted);margin-bottom:16px}.block h2{font-size:28px;letter-spacing:-.02em}.lead{font-size:17px;margin-top:16px}.muted{color:var(--color-muted)}.items{list-style:none;margin:0;padding:0;display:grid;gap:0}.items li{padding:20px 0;border-bottom:1px solid var(--color-line);display:grid;grid-template-columns:100px 1fr;gap:16px}.items li:first-child{padding-top:0}.items li:last-child{border:0;padding-bottom:0}.items b{color:var(--color-primary);font-weight:400}.steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0;padding:0}.steps li{padding:24px 8px;border:1px solid var(--color-line);border-radius:8px;text-align:center}.number{display:block;font-size:28px;color:var(--color-primary);margin-bottom:16px}.bubble{display:inline-block;border:1px solid var(--color-primary);color:var(--color-primary);padding:12px 16px;border-radius:8px;margin-top:24px;font-size:17px}.team-copy{font-size:22px;line-height:1.7}.names{font-size:13px;color:var(--color-muted);margin-top:24px}.detail-note{padding:24px;background:var(--color-surface);border:1px solid var(--color-line);border-radius:8px;margin-bottom:24px}.detail-note p{font-size:17px}.detail-note small{display:block;margin-top:12px;color:var(--color-muted);font-size:13px}details{border-bottom:1px solid var(--color-line);padding:20px 0}details:first-child{padding-top:0}details:last-child{border:0}summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-size:17px}summary::-webkit-details-marker{display:none}summary::after{content:'+';color:var(--color-primary)}details[open] summary::after{content:'−'}details p{padding-top:16px;color:var(--color-muted);font-size:15px}.end{text-align:center;padding:72px 0}.end h2{font-size:28px}.end .btn{max-width:320px;margin:32px auto 0}.end .bubble{border:0;padding:0;font-size:15px}.footer{border-top:1px solid var(--color-line);padding:24px 0 32px;font-size:13px;color:var(--color-muted);display:flex;justify-content:space-between;gap:16px}.skip{position:absolute;top:-100px;left:16px}.skip:focus{top:16px;background:var(--color-surface);z-index:20}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--color-primary);outline-offset:5px}.sticky{position:fixed;bottom:0;left:0;right:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--color-bg) 25%);z-index:5;display:none}.sticky .btn{max-width:398px;margin:auto}.sticky[hidden]{display:none}dialog{width:min(430px,calc(100% - 32px));border:1px solid var(--color-line);border-radius:8px;padding:24px;background:var(--color-bg);color:var(--color-text)}dialog::backdrop{background:rgba(42,40,38,.45)}.dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.dialog-top h2{font-size:22px}.close{border:0;background:transparent;font-size:22px;color:var(--color-muted);min-width:44px;min-height:44px}.demo-note{font-size:13px;color:var(--color-muted);margin-bottom:16px}.paper{display:block;width:100%;min-height:200px;resize:vertical;border:1px solid var(--color-line);background:var(--color-surface);padding:16px;line-height:1.7;border-radius:8px;font-size:17px;color:var(--color-text);transition:opacity .7s,transform .7s}.paper:focus{outline:2px solid var(--color-primary)}.paper.eating{opacity:0;transform:translateY(-16px) scale(.9)}.demo-button{margin-top:16px}.status{margin-top:16px;font-size:15px;min-height:26px;color:var(--color-primary)}
-@media(max-width:760px){.wrap{width:min(430px,calc(100% - 32px))}.top{height:64px}.brand{font-size:17px;gap:8px}.brand img{width:32px;height:32px}.top-note{font-size:13px}.hero{display:flex;flex-direction:column;gap:24px;padding:24px 0 32px;align-items:stretch}.scene{margin-bottom:16px}h1{font-size:28px;line-height:1.35;letter-spacing:0}.for{font-size:15px;margin-top:16px}.hero-action{margin-top:24px;max-width:none}.visual figcaption{display:none}.belief{font-size:22px;padding:32px 0}.block{grid-template-columns:1fr;gap:24px;padding:32px 0}.block h2{font-size:22px}.label{margin-bottom:8px}.lead{margin-top:8px}.items li{padding:16px 0;grid-template-columns:96px 1fr;gap:8px}.steps{gap:8px}.steps li{padding:16px 8px}.number{font-size:22px;margin-bottom:8px}.bubble{font-size:15px;margin-top:16px}.team-copy{font-size:17px}.names{margin-top:16px}.detail-note{padding:16px;margin-bottom:16px}.detail-note p{font-size:15px}.end{padding:40px 0}.end h2{font-size:28px}.end .btn{max-width:none;margin-top:24px}.footer{padding-bottom:104px;flex-direction:column;gap:8px}.sticky{display:block}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.paper{transition:none}}
+
+:root{
+  /* ── 색 (기획/design.md) ── */
+  --haechi-blue:#2A6090;
+  --haechi-blue-press:#22507A;
+  --haechi-gold:#F0B237;
+  --haechi-red:#EB4531;
+  --haechi-ivory:#FDF5E9;
+  --hanji-cream:#F2EBDD;
+  --ink-black:#2A2826;
+  --color-primary:var(--haechi-blue);
+  --color-bg:var(--hanji-cream);
+  --color-surface:var(--haechi-ivory);
+  --color-text:var(--ink-black);
+  --color-muted:rgba(42,40,38,.72);
+  --color-line:rgba(42,40,38,.15);
+  --tint-blue:rgba(42,96,144,.08);
+  --tint-gold:rgba(240,178,55,.18);
+  --hanji-texture:url('../asset/hanji%20texture%20background.jpg');
+
+  /* ── 글꼴 ── */
+  --font-heading:Yeongnam,'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-body:Yeongnam,'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+
+  /* ── 웹 크기 ── */
+  --container:1280px;
+  --gutter:40px;
+  --section-pad:120px;
+  --fs-body:18px;
+  --lh-body:1.65;
+  --fs-small:15px;
+  --fs-xs:13px;
+  --fs-h3:22px;
+  --fs-h2:42px;
+  --fs-h1:68px;
+
+  /* ── 모양 · 움직임 ── */
+  --radius:8px;
+  --radius-lg:20px;
+  --btn-h:56px;
+  --header-h:80px;
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+/* ── 기본 ── */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 16px);overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{max-width:100%;overflow-x:clip}
+main,section,footer{max-width:100vw}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;pointer-events:none}
+h1,h2,h3,p,figure,ul,ol{margin:0;padding:0}
+h1,h2,h3{font-family:var(--font-heading);font-weight:700;line-height:1.3;letter-spacing:-.02em}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+svg{flex:none}
+.container{width:min(var(--container),100% - var(--gutter)*2);margin-inline:auto}
+.section{padding-block:var(--section-pad)}
+.rule{border:0;border-top:1px solid var(--color-line);margin:0}
+.skip{position:absolute;left:16px;top:-100px;z-index:100;background:var(--color-surface);padding:12px 16px;border-radius:var(--radius)}
+.skip:focus{top:16px}
+:focus-visible{outline:3px solid var(--color-primary);outline-offset:3px}
+
+/* 영문 소제목 (점 + 대문자) */
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:'Gowun Dodum',var(--font-body);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-muted);margin-bottom:20px}
+.kicker::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--color-primary)}
+.kicker.gold::before{background:var(--haechi-gold)}
+.h2{font-size:var(--fs-h2)}
+.em{color:var(--color-primary)}
+.lead{font-size:19px;color:var(--color-muted);margin-top:18px}
+/* 섹션 머리: 왼쪽 제목 + 오른쪽 작은 글 */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.sec-head .side{max-width:320px;text-align:right;font-size:var(--fs-small);color:var(--color-muted)}
+
+/* 손으로 그은 밑줄 */
+.swash{position:relative;display:inline-block;white-space:nowrap}
+.swash svg{position:absolute;left:-2%;bottom:-.18em;width:104%;height:.36em;color:var(--haechi-gold);z-index:-1;overflow:visible}
+.swash svg path{stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1.2s var(--ease-out) .5s}
+.is-in .swash svg path,.no-anim .swash svg path{stroke-dashoffset:0}
+
+/* 반짝이 장식 */
+.spark{position:absolute;color:var(--haechi-red);pointer-events:none}
+.spark.gold{color:var(--haechi-gold)}
+.spark.blue{color:var(--color-primary)}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:var(--btn-h);padding:0 30px;border:0;border-radius:var(--radius);background:var(--color-primary);color:var(--color-surface);font-size:18px;font-weight:700;text-decoration:none;white-space:nowrap;transition:transform .45s var(--spring),background-color .2s}
+.btn svg{transition:transform .45s var(--spring)}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+.btn:hover svg{transform:translate(3px,-3px) rotate(8deg)}
+.btn:active{transform:scale(.97);background:var(--haechi-blue-press)}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.btn-block{width:100%}
+.cond{font-size:var(--fs-small);color:var(--color-muted);margin-top:14px}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-small);color:var(--color-primary)}
+.link-arrow svg{transition:transform .45s var(--spring)}
+
+/* ── 헤더 ── */
+.header{position:sticky;top:0;z-index:40;background:var(--color-bg)}
+.header-in{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--color-line)}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-heading);font-weight:700;font-size:24px;text-decoration:none;min-height:48px}
+.brand img{width:40px;height:40px;object-fit:contain;transition:transform .5s var(--spring)}
+.brand:hover img{transform:rotate(-10deg) scale(1.12)}
+.brand .dot{color:var(--color-primary)}
+.nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav a{position:relative;padding:12px 16px;text-decoration:none;font-size:16px;transition:color .2s}
+.nav a::after{content:'';position:absolute;left:16px;right:16px;bottom:6px;height:2px;background:var(--color-primary);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--spring)}
+.nav a:hover{color:var(--color-primary)}
+.nav a:hover::after{transform:scaleX(1)}
+.header-cta{min-height:48px;padding:0 22px;font-size:16px;width:0;padding-inline:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s,transform .45s var(--spring),background-color .2s}
+.header-cta.show{width:auto;padding-inline:22px;opacity:1;visibility:visible}
+.menu-btn{display:none;width:48px;height:48px;border:1px solid var(--color-line);border-radius:var(--radius);background:var(--color-surface);align-items:center;justify-content:center}
+.mnav{display:none}
+
+/* ── ① 첫 화면 ── */
+.hero{position:relative;padding-block:88px 0;text-align:center}
+.hero-copy{position:relative;max-width:860px;margin-inline:auto}
+.scene{display:inline-block;font-size:17px;color:var(--color-muted);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);padding:12px 20px;margin-bottom:36px;transform:rotate(-1.2deg)}
+.scene b{color:var(--color-text);font-weight:400}
+.hero h1{font-size:var(--fs-h1);line-height:1.18;letter-spacing:-.035em}
+.hero h1 .em{position:relative;z-index:0}
+.for{font-size:21px;margin-top:28px;color:var(--color-muted)}
+.hero-action{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.hero .s1{top:8px;left:4%}
+.hero .s2{top:150px;right:2%}
+.hero .s3{top:300px;left:9%}
+
+.hero-stage{position:relative;margin-top:56px}
+.hero .hero-action{margin-top:48px}
+.hero-visual{position:relative;border-radius:var(--radius-lg);overflow:visible}
+.hero-visual img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-lg);border:1px solid var(--color-line)}
+/* 해치 머리 위 말풍선 (이미지 기준 위치) */
+.hero-bubble{position:absolute;left:69.5%;top:28%;transform:translate(-50%,-100%);background:var(--color-surface);color:var(--color-text);border:1.5px solid var(--ink-black);border-radius:16px;padding:12px 20px;font-family:var(--font-heading);font-size:19px;white-space:nowrap;animation:float 4.5s ease-in-out infinite}
+.hero-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+@keyframes float{0%,100%{transform:translate(-50%,-100%) translateZ(60px)}50%{transform:translate(-50%,calc(-100% - 6px)) translateZ(60px)}}
+/* 이미지 둘레 쪽지 */
+
+.belief{text-align:center;font-family:var(--font-heading);font-size:38px;line-height:1.5;padding-block:var(--section-pad) 0}
+.belief .q{font-size:1.5em;line-height:0;color:var(--haechi-gold);margin-inline:6px;vertical-align:-.12em}
+
+/* ── ② 문제 ── */
+.reasons{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.reason{position:relative;padding:32px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:transform .55s var(--spring)}
+.reason:hover{transform:translateY(-6px) rotate(-.8deg)}
+.reason .no{font-size:12px;letter-spacing:.2em;color:var(--color-muted)}
+.reason .ic{width:56px;height:56px;margin:20px 0 24px;border-radius:50%;display:grid;place-items:center;background:var(--tint-blue);color:var(--color-primary)}
+.reason b{display:block;font-family:var(--font-heading);font-size:24px}
+.reason span{display:block;margin-top:8px;color:var(--color-muted)}
+
+/* ── 클릭 카드 (팝업) ── */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{display:flex;flex-direction:column;align-items:stretch;width:100%;padding:0;text-align:left;border:0;background:transparent;transition:transform .55s var(--spring)}
+.card .tag{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted);margin-bottom:12px}
+.card .thumb{position:relative;height:180px;border-radius:var(--radius-lg);display:grid;place-items:center;overflow:hidden;border:1px solid var(--color-line);background:var(--color-surface);transition:border-color .2s}
+.card .thumb.t-blue{background:var(--tint-blue)}
+.card .thumb.t-gold{background:var(--tint-gold)}
+.card .thumb svg{transition:transform .6s var(--spring)}
+.card .row{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+.card h3{font-size:var(--fs-h3)}
+.card .row svg{color:var(--color-primary);transition:transform .45s var(--spring)}
+.card p{color:var(--color-muted);font-size:16px;margin-top:8px}
+.card:hover{transform:translateY(-8px)}
+.card:hover .thumb{border-color:var(--color-primary)}
+.card:hover .thumb svg{transform:scale(1.12) rotate(-6deg)}
+.card:hover .row svg{transform:translate(4px,-4px)}
+.card:active{transform:translateY(-2px) scale(.99)}
+
+/* ── ④ 먹 갈기 ── */
+.stay-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:32px;align-items:stretch}
+.stay-visual{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-line);background:#fff}
+.stay-side{display:grid;gap:24px;align-content:stretch}
+.ink{padding:32px;border-radius:var(--radius-lg);background:var(--ink-black);color:var(--color-surface)}
+.ink .kicker{color:rgba(253,245,233,.7);margin-bottom:12px}
+.ink .kicker::before{background:var(--haechi-gold)}
+.ink .ink-num{margin-top:0;font-family:var(--font-heading);font-size:64px;line-height:1;color:var(--color-surface)}
+.ink-num small{font-size:24px;margin-left:4px}
+.ink-bar{height:8px;border-radius:4px;background:rgba(253,245,233,.18);margin-top:24px;overflow:hidden}
+.ink-bar i{display:block;height:100%;width:0;background:var(--color-surface);transition:width 1.8s var(--ease-out) .2s}
+.is-in .ink-bar i,.no-anim .ink-bar i{width:100%}
+.ink p{margin-top:16px;font-size:15px;color:rgba(253,245,233,.75)}
+.stay-side .card{padding:28px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface)}
+.stay-side .card .row{margin-top:0}
+.stay-side .card:hover{border-color:var(--color-primary)}
+
+/* ── ⑤ 안심 ── */
+.trust-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}
+.price{margin-top:32px;font-family:var(--font-heading);font-size:96px;line-height:1;color:var(--color-primary);letter-spacing:-.04em}
+.price small{font-size:36px;margin-left:4px}
+.trust-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pcard{display:flex;align-items:center;gap:16px;width:100%;padding:22px;text-align:left;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:transform .55s var(--spring),border-color .2s}
+.pcard .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--tint-blue);color:var(--color-primary);transition:transform .55s var(--spring),background-color .2s,color .2s}
+.pcard b{display:block;font-family:var(--font-heading);font-size:19px}
+.pcard small{display:block;color:var(--color-muted);font-size:14px;margin-top:2px}
+.pcard .go{margin-left:auto;color:var(--color-primary);transition:transform .45s var(--spring)}
+.pcard:hover{transform:translateY(-5px);border-color:var(--color-primary)}
+.pcard:hover .ic{transform:rotate(-10deg) scale(1.1);background:var(--color-primary);color:var(--color-surface)}
+.pcard:hover .go{transform:translate(4px,-4px)}
+.faq{margin-top:24px;display:grid;gap:12px}
+.faq details{border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:border-color .2s}
+.faq details[open]{border-color:var(--color-primary)}
+.faq summary{list-style:none;display:flex;align-items:center;gap:16px;min-height:72px;padding:12px 22px;cursor:pointer;font-size:18px}
+.faq summary::-webkit-details-marker{display:none}
+.faq .qmark{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--tint-gold);font-family:var(--font-heading);font-size:16px}
+.faq .pm{margin-left:auto;color:var(--color-primary);transition:transform .45s var(--spring)}
+.faq summary:hover .pm{transform:scale(1.25)}
+.faq details[open] .pm{transform:rotate(45deg)}
+.faq details p{padding:0 22px 22px 74px;color:var(--color-muted)}
+.contact{margin-top:20px;font-size:var(--fs-small);color:var(--color-muted)}
+
+/* ── ⑥ 만드는 사람 (띠 박스) ── */
+.band{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;padding:64px;border-radius:var(--radius-lg);background:var(--tint-blue);border:1px solid var(--color-line);overflow:hidden}
+.band .team-quote{font-family:var(--font-heading);font-size:36px;line-height:1.45;margin-top:8px}
+.band .names{margin-top:20px;color:var(--color-muted);font-size:var(--fs-small)}
+
+/* ── ⑦ 끝 ── */
+.end{position:relative;text-align:center;padding-block:var(--section-pad)}
+.end h2{font-size:60px;line-height:1.2;letter-spacing:-.035em}
+.end .btn{margin-top:44px;min-width:340px}
+.end .s4{top:80px;left:18%}
+.end .s5{bottom:120px;right:16%}
+
+.footer{border-top:1px solid var(--color-line);padding-block:40px;font-size:var(--fs-small);color:var(--color-muted)}
+.footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer b{font-family:var(--font-heading);color:var(--color-text);font-size:20px}
+
+/* ── 모바일 아래 고정 버튼 ── */
+.mbar{display:none}
+
+/* ── 팝업 모달 ── */
+/* 팝업: dialog가 화면 폭을 넘지 않게 dialog 자체에 너비를 준다 */
+dialog{position:fixed;inset:0;margin:auto;border:0;padding:0;background:transparent;color:var(--color-text);width:min(760px,calc(100% - 32px));max-width:calc(100% - 32px);height:fit-content;max-height:calc(100% - 48px);overflow:visible}
+dialog::backdrop{background:rgba(42,40,38,.55)}
+dialog:focus,dialog:focus-visible{outline:none}
+body:has(dialog[open]){overflow:hidden}
+.modal-box{width:100%;max-height:calc(100dvh - 48px);overflow-y:auto;overflow-x:hidden;background:var(--color-bg);border:1px solid var(--color-line);border-radius:var(--radius-lg);overscroll-behavior:contain}
+dialog[open] .modal-box{animation:pop .5s var(--spring)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.modal-head{position:sticky;top:0;display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--color-bg);border-bottom:1px solid var(--color-line);z-index:1}
+.modal-head .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--color-primary);color:var(--color-surface)}
+.modal-head h2{font-size:24px;flex:1}
+.x{width:48px;height:48px;border:1px solid var(--color-line);border-radius:50%;background:var(--color-surface);display:grid;place-items:center;transition:transform .45s var(--spring)}
+.x:hover{transform:rotate(90deg)}
+.modal-body{padding:32px 32px 40px;display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.modal-body>*{min-width:0}
+.modal-head h2{min-width:0}
+.summary{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:16px 20px;border-left:3px solid var(--color-primary);background:var(--color-surface);border-radius:0 var(--radius) var(--radius) 0}
+.summary b{font-size:12px;letter-spacing:.15em;color:var(--color-primary);padding-top:4px;white-space:nowrap}
+.modal-body figure{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-line);background:var(--color-surface)}
+.modal-body figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.modal-body figcaption{padding:10px 16px;font-size:var(--fs-xs);color:var(--color-muted)}
+.tbl{width:100%;table-layout:fixed;overflow-wrap:anywhere;border-collapse:separate;border-spacing:0;font-size:16px;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);overflow:hidden}
+.tbl th,.tbl td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-line);vertical-align:top}
+.tbl th{width:36%;font-weight:400;color:var(--color-muted)}
+.tbl thead th{color:var(--color-text);font-weight:700;background:var(--color-bg)}
+.tbl tr:last-child>*{border-bottom:0}
+.mnote{font-size:var(--fs-small);color:var(--color-muted)}
+
+/* 체험 창 */
+.paper{display:block;width:100%;min-height:200px;resize:vertical;border:1px solid var(--color-line);background:var(--color-surface);padding:20px;border-radius:var(--radius);font:inherit;font-size:18px;line-height:1.7;color:var(--color-text);transition:opacity .7s,transform .7s var(--ease-out)}
+.paper:focus{outline:2px solid var(--color-primary);outline-offset:0}
+.paper.eating{opacity:0;transform:translateY(-20px) scale(.9) rotate(-2deg)}
+.status{min-height:28px;font-size:16px;color:var(--color-primary)}
+
+/* ── 스크롤 등장 (FADE-UP) ── */
+.js .reveal{opacity:0;transform:translateY(44px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);transition-delay:calc(var(--d,0) * 110ms)}
+.js .reveal.is-in{opacity:1;transform:none}
+.js .scene.reveal.is-in{transform:rotate(-1.2deg)}
+
+/* ── 스크롤 진행 막대 ── */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none}
+.progress i{display:block;height:100%;background:var(--color-primary);transform:scaleX(0);transform-origin:left}
+
+/* ── 이미지 3D 기울기 ── */
+.hero-stage,.stay-stage{perspective:1400px}
+.tilt{position:relative;transform-style:preserve-3d;transition:transform .7s var(--spring);will-change:transform}
+.tilt.moving{transition:transform .12s ease-out}
+.tilt .hero-visual,.tilt .stay-visual{transform-style:preserve-3d}
+/* 터치 기기: 3D 기울기 대신 이미지가 천천히 숨 쉬듯 확대 (화면 밖으로 튀어나가지 않게 틀 안에서만) */
+@media (hover:none){
+  .hero-stage,.stay-stage{perspective:none}
+  .tilt,.tilt .hero-visual,.tilt .stay-visual{transform-style:flat}
+  .hero-visual,.stay-visual{overflow:hidden;border-radius:var(--radius-lg)}
+  .hero-visual img,.stay-visual img{animation:breathe 9s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  .hero-bubble{animation:float-flat 4.5s ease-in-out infinite}
+  .stay-bubble{animation:float-flat 4.5s ease-in-out infinite}
+  @keyframes float-flat{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,calc(-100% - 5px))}}
+}
+
+
+/* ── 메모장 vs 해칫 ── */
+.compare{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.cmp-col{padding:36px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface)}
+.cmp-col.on{border:2px solid var(--color-primary);background:var(--tint-blue)}
+.cmp-label{display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:22px;margin-bottom:20px;color:var(--color-muted)}
+.cmp-col.on .cmp-label{color:var(--color-primary)}
+.cmp-label img{width:28px;height:28px;object-fit:contain}
+.cmp-col ul{list-style:none;display:grid;gap:0}
+.cmp-col li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--color-line)}
+.cmp-col li b{font-weight:400;font-size:var(--fs-small);color:var(--color-muted)}
+.cmp-col:not(.on) li span{color:var(--color-muted);text-decoration:line-through;text-decoration-color:rgba(42,40,38,.35)}
+.cmp-vs{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--ink-black);color:var(--color-surface);font-family:'Gowun Dodum',sans-serif;font-size:15px;letter-spacing:.1em}
+
+/* ── 예시 한 줄 먹여 보기 ── */
+.lines{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.line{position:relative;display:block;width:100%;min-height:168px;padding:28px 32px;text-align:left;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);overflow:hidden;transition:transform .55s var(--spring),border-color .2s}
+.line:nth-child(odd){transform:rotate(-.8deg)}
+.line:nth-child(even){transform:rotate(.8deg)}
+.line:hover{transform:translateY(-6px) rotate(0);border-color:var(--color-primary)}
+.line .when{display:block;font-size:var(--fs-xs);letter-spacing:.08em;color:var(--color-primary);margin-bottom:12px}
+.line .txt{display:block;font-family:var(--font-heading);font-size:24px;line-height:1.45;transition:transform .7s var(--ease-out),opacity .5s}
+.line .when{transition:opacity .4s}
+.line::after{content:'눌러서 건네기';position:absolute;right:24px;bottom:18px;font-size:var(--fs-xs);color:var(--color-muted)}
+.line .eaten{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-heading);font-size:22px;color:var(--color-primary);opacity:0;transform:scale(.9);transition:opacity .5s .45s,transform .6s var(--spring) .45s;border:2px dashed rgba(42,96,144,.35);border-radius:var(--radius-lg);margin:10px}
+.line.is-eaten .txt{transform:translateY(-30px) scaleY(.2);opacity:0}
+.line.is-eaten .when{opacity:0}
+.line.is-eaten::after{content:'다시 놓기'}
+.line.is-eaten .eaten{opacity:1;transform:none}
+
+/* ── 해치 소개 ── */
+.meet{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center}
+.meet-visual{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.orbit{position:absolute;border-radius:50%;pointer-events:none}
+.orbit.o1{inset:4%;border:1px solid var(--color-line)}
+.orbit.o2{inset:16%;border:1px dashed rgba(42,96,144,.35);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meet-visual .m1{top:10%;right:8%}
+.meet-visual .m2{bottom:16%;left:6%}
+.meet-char{position:relative;width:72%;margin-top:10%}
+.meet-char img{width:100%;height:auto;transition:transform .8s var(--spring)}
+.meet-visual:hover .meet-char img{transform:translateY(-10px) rotate(-3deg) scale(1.04)}
+.tag-note{position:absolute;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);padding:8px 14px;font-size:15px;transition:transform .5s var(--spring)}
+.tag-note.t1{left:2%;top:30%;transform:rotate(-6deg)}
+.tag-note.t2{right:0;bottom:26%;transform:rotate(5deg)}
+.meet-visual:hover .tag-note.t1{transform:rotate(-10deg) translateY(-6px)}
+.meet-visual:hover .tag-note.t2{transform:rotate(9deg) translateY(-6px)}
+.meet-bubble{position:absolute;left:52%;top:-4%;transform:translate(-50%,-100%);background:var(--color-surface);border:1.5px solid var(--ink-black);border-radius:16px;padding:10px 18px;font-family:var(--font-heading);font-size:18px;white-space:nowrap}
+.meet-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+.profile{margin:32px 0 0;border-top:1px solid var(--color-line)}
+.profile div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--color-line)}
+.profile dt{font-size:var(--fs-small);color:var(--color-muted)}
+.profile dd{margin:0}
+
+/* ── 링크 보내기 · 알림 ── */
+.share{margin-top:48px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:var(--fs-small);color:var(--color-muted)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border:1px solid var(--color-primary);border-radius:var(--radius);background:var(--color-surface);color:var(--color-primary);font-size:16px;transition:transform .45s var(--spring)}
+.btn-ghost:hover{transform:translateY(-2px) scale(1.04)}
+.btn-ghost:active{transform:scale(.97)}
+.toast{position:fixed;left:50%;bottom:32px;z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink-black);color:var(--color-surface);padding:12px 20px;border-radius:var(--radius);font-size:15px;transition:opacity .25s,transform .45s var(--spring);max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ── 먹 갈기 이미지 · 말풍선 ── */
+.stay-grid{align-items:start}
+.stay-visual{overflow:visible;border:0;background:transparent}
+/* 카드뉴스와 같은 장면: 아이보리 판 + 아래 40% 옅은 바닥, 해치는 틀 없이 앉는다 */
+.stay-scene{position:relative;transform-style:preserve-3d;display:flex;align-items:flex-end;justify-content:center;gap:4%;aspect-ratio:4/3;padding:12% 6% 7%;border-radius:var(--radius-lg);border:1px solid var(--color-line);background:var(--color-surface)}
+.stay-scene::before{content:'';position:absolute;left:0;right:0;bottom:0;height:40%;background:rgba(42,40,38,.05);border-radius:0 0 var(--radius-lg) var(--radius-lg);pointer-events:none}
+.stay-char{position:relative;width:52%;transform-style:preserve-3d}
+.stay-char img{width:100%;height:auto;min-height:0;aspect-ratio:auto;border:0;background:transparent;border-radius:0}
+.inkstone{width:34%;height:auto;margin-bottom:2%;transition:transform .6s var(--spring)}
+.stay-scene:hover .inkstone{transform:rotate(-4deg) translateY(-4px)}
+.stay-bubble{position:absolute;left:55%;top:2%;transform:translate(-50%,-100%) translateZ(60px);background:var(--color-surface);border:1.5px solid var(--ink-black);border-radius:16px;padding:12px 20px;font-family:var(--font-heading);font-size:19px;white-space:nowrap;animation:float2 4.5s ease-in-out infinite}
+.stay-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+@keyframes float2{0%,100%{transform:translate(-50%,-100%) translateZ(60px)}50%{transform:translate(-50%,calc(-100% - 6px)) translateZ(60px)}}
+
+/* ── 태블릿 ── */
+@media (max-width:1100px){
+  :root{--fs-h1:54px;--fs-h2:36px;--section-pad:96px}
+  .reasons,.cards{grid-template-columns:1fr 1fr}
+  .nav a{padding:12px 9px;font-size:15px}
+  .nav a::after{left:9px;right:9px}
+  .meet{gap:48px}
+  .trust-grid{gap:48px}
+  .stay-grid{grid-template-columns:1fr}
+}
+
+/* ── 모바일 ── */
+@media (max-width:900px){
+  :root{--gutter:20px;--section-pad:72px;--fs-body:17px;--fs-h1:38px;--fs-h2:28px;--fs-h3:20px;--header-h:64px;--radius-lg:16px}
+  .nav,.header-cta{display:none}
+  .menu-btn{display:inline-flex}
+  .brand{font-size:20px}
+  .brand img{width:32px;height:32px}
+  .mnav{display:block;position:fixed;top:var(--header-h);left:0;right:0;bottom:0;z-index:39;background:var(--color-bg);padding:16px var(--gutter) 32px;opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .25s,visibility .25s,transform .4s var(--ease-out)}
+  .mnav.open{opacity:1;visibility:visible;transform:none}
+  .mnav a{display:flex;align-items:center;justify-content:space-between;min-height:64px;font-size:20px;text-decoration:none;border-bottom:1px solid var(--color-line)}
+  .mnav a svg{color:var(--color-primary)}
+  .hero{padding-top:36px}
+  .scene{font-size:15px;padding:10px 14px;margin-bottom:24px}
+  .for{font-size:17px;margin-top:18px}
+  .hero-action{margin-top:28px}
+  .hero-action .btn{width:100%}
+  .spark{display:none}
+  .hero-stage{margin-top:40px}
+  .hero-bubble{font-size:13px;padding:7px 11px;border-radius:12px}
+  .hero-bubble::after{width:10px;height:10px;bottom:-6px}
+  .belief{font-size:23px}
+  .hero-stage{margin-top:32px}
+  .hero .hero-action{margin-top:28px}
+  .compare{grid-template-columns:1fr;gap:12px}
+  .cmp-col{padding:24px}
+  .cmp-col li{grid-template-columns:80px 1fr;gap:12px}
+  .cmp-vs{width:48px;height:48px;margin:auto;font-size:13px}
+  .lines{grid-template-columns:1fr;gap:16px}
+  .line{min-height:150px;padding:24px}
+  .line .txt{font-size:20px}
+  .meet{grid-template-columns:1fr;gap:32px}
+  .meet-bubble{font-size:14px;padding:7px 12px}
+  .meet-visual{width:100%;max-width:360px;margin-inline:auto}
+  .tag-note{font-size:13px;padding:6px 10px}
+  .stay-scene{padding-top:22%}
+  .profile div{grid-template-columns:88px 1fr;gap:12px}
+  .share{flex-direction:column;gap:12px;margin-top:32px}
+  .toast{bottom:100px}
+  .stay-bubble{font-size:13px;padding:7px 11px;border-radius:12px}
+  .stay-bubble::after{width:10px;height:10px;bottom:-6px}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:32px}
+  .sec-head .side{text-align:left;max-width:none}
+  .lead{font-size:17px}
+  .reasons,.cards,.trust-cards{grid-template-columns:1fr;gap:16px}
+  .reason{padding:24px;display:grid;grid-template-columns:56px 1fr;column-gap:16px;align-items:center}
+  .reason .no{grid-column:1/-1;margin-bottom:12px}
+  .reason .ic{margin:0;grid-row:span 2}
+  .reason b{font-size:20px}
+  .reason span{margin-top:2px}
+  .cards{gap:32px}
+  .card .thumb{height:150px}
+  .ink{padding:24px}
+  .ink .ink-num{font-size:48px}
+  .trust-grid{grid-template-columns:1fr;gap:32px}
+  .price{font-size:72px;margin-top:20px}
+  .faq summary{font-size:16px;padding:12px 16px;min-height:64px}
+  .faq details p{padding:0 16px 18px 16px}
+  .band{grid-template-columns:1fr;padding:32px 24px;gap:24px}
+  .band .team-quote{font-size:25px}
+  .end h2{font-size:34px}
+  .end .btn{min-width:0;width:100%}
+  .footer{padding-bottom:calc(40px + 88px)}
+  .mbar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));background:var(--color-bg);border-top:1px solid var(--color-line);transform:translateY(110%);transition:transform .45s var(--spring)}
+  .mbar.show{transform:none}
+  .mbar .btn{width:100%}
+  dialog{width:calc(100% - 24px);max-width:calc(100% - 24px);max-height:calc(100% - 24px)}
+  .modal-box{max-height:calc(100dvh - 24px)}
+  .paper{font-size:16px;min-height:160px}
+  .x{width:44px;height:44px;flex:none}
+  .modal-head .ic{width:40px;height:40px;flex:none}
+  .modal-head{padding:16px}
+  .modal-head h2{font-size:20px}
+  .modal-body{padding:20px 16px 32px}
+  .summary{grid-template-columns:1fr;gap:4px}
+  .tbl th,.tbl td{padding:12px}
+  .tbl th{width:40%}
+}
+
+/* 움직임 줄이기 설정 존중 */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important;transition-delay:0s!important}
+  .js .reveal{opacity:1}
+}
 </style>
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body><a class="skip" href="#main">본문으로 건너뛰기</a>
-<header class="top wrap"><a class="brand" href="#main"><img src="../brand/logo/haechi_yellow.png" alt="">해칫</a><span class="top-note">말 못 하는 밤을 위해</span></header>
-<main id="main" class="wrap">
-<section class="hero"><div class="hero-copy"><p class="scene">취준 2년 차, 불합격 문자를 받은 밤.<br>인스타에 친구 합격 소식이 떴다.</p><h1>한지에 적으면<br><span class="em">해치가 먹어요</span></h1><p class="for">취준생과 사회초년생의,<br>말 못 하는 밤을 위해</p><div class="hero-action"><button class="btn launch" id="hero-btn">해치에게만 털어놓기</button><p class="cond">가입 없이, 무료</p></div></div><figure class="visual"><img src="../brand/key%20visual/haechi_1x1.png" alt="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치" fetchpriority="high" width="1080" height="1080"><figcaption>적은 것은 아무도 읽지 않소</figcaption></figure></section>
-<p class="belief">모든 마음을<br>기록해 둘 필요는 없으니까.</p>
-<section class="block"><div><p class="label">말 못 하는 이유</p><h2>말하면 속좁아 보일까 봐,<br>어디서 말이 돌까 봐.</h2><p class="lead muted">그래서 결국 아무한테도 못 털어놔요.</p></div><ul class="items"><li><b>친구에게</b><span>속좁아 보일까 봐 못 해요.</span></li><li><b>단톡방에</b><span>말이 돌까 봐 못 해요.</span></li><li><b>메모장에</b><span>써 두면 계속 남아요.</span></li></ul></section>
-<section class="block"><div><p class="label">해칫에서는</p><h2>한지에 적으면<br>해치가 먹어요.</h2><p class="lead muted">기록 대신, 끝맺음.<br>세 번이면 끝나요.</p></div><div><ol class="steps"><li><span class="number">01</span>한지에 쓰기</li><li><span class="number">02</span>해치에게 주기</li><li><span class="number">03</span>끝</li></ol><p class="bubble">잘 먹었소. 읽지는 않았소</p></div></section>
-<section class="block"><div><p class="label">만드는 사람</p><h2>숭실대 학생 다섯이<br>만들어요.</h2></div><div><p class="team-copy">“누구에게도 말 못 하는<br>말이 있어서요.”</p><p class="names">김서영, 정민규, 정연화, 조재영, 홍석민</p></div></section>
-<section class="block"><div><p class="label">조금 더 머물고 싶다면</p><h2>마음이 남으면<br>먹을 갈아요.</h2><p class="lead muted">더 쓰지 않아도 괜찮아요.<br>천천히 손을 움직이며 머물러요.</p></div><div><div class="detail-note"><p>100번 갈면 해치가<br>고전 한 구절을 필사해 줘요.</p><small>먹 갈기와 필사첩은 서비스에 담을 기능이에요.<br>이 랜딩 체험에는 아직 포함되지 않았어요.</small></div><ul class="items"><li><b>가입 없음</b><span>열자마자 바로 써요.</span></li><li><b>글자 수 제한 없음</b><span>한 줄도, 긴 글도 괜찮아요.</span></li><li><b>약 5초</b><span>해치에게 건네는 짧은 시간이에요.</span></li></ul></div></section>
-<section class="block"><div><p class="label">망설여진다면</p><h2>가격은 <span class="em">무료</span>예요.</h2><p class="lead muted">결제할 곳이 없어요.</p></div><div><details><summary>정말 아무도 못 봐요?</summary><p>이 페이지의 체험에서 적은 글은 서버로 보내거나 저장하지 않아요. 건네기를 마치거나 체험 창을 닫으면 입력한 원문을 지워요.</p></details><details><summary>매일 써야 해요?</summary><p>필요할 때만 오면 돼요. 연속 기록도, 재촉 알림도 두지 않는 방향으로 만들고 있어요.</p></details><details><summary>다시 볼 수 있어요?</summary><p>체험에서 건넨 글은 다시 볼 수 없어요. 다시 봐야 하는 내용은 건네지 말아 주세요.</p></details></div></section>
-<section class="end"><p class="label">말을 남기지 않고, 마음만 건네요</p><h2>말 못 한 한 줄,<br>해치에게 건네 보세요.</h2><p class="bubble">적은 것은 아무도 읽지 않소</p><button class="btn launch" id="end-btn">해치에게만 털어놓기</button><p class="cond">가입 없이, 무료</p></section>
-</main><footer class="footer wrap"><span>해칫 / hatch eat</span><span>모든 마음을 기록해 둘 필요는 없다.</span></footer>
-<div class="sticky" id="sticky" hidden><button class="btn launch">해치에게만 털어놓기</button></div>
-<dialog id="demo" aria-labelledby="demo-title"><div class="dialog-top"><h2 id="demo-title">한지에 적어 보세요</h2><button class="close" aria-label="체험 닫기" type="button">×</button></div><p class="demo-note">랜딩페이지 체험이에요. 적은 글은 전송하거나 저장하지 않아요. 창을 닫아도 입력한 글은 지워져요.</p><label for="writing" class="label">남겨두기 싫은 말</label><textarea class="paper" id="writing" placeholder="남겨두기 싫은 말을 여기에 적어 보세요." autocomplete="off" spellcheck="false"></textarea><button id="give" class="btn demo-button" disabled>해치에게 건네기</button><p class="status" role="status" aria-live="polite" id="status">한 글자라도 적으면 건넬 수 있어요.</p></dialog>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<!-- 아이콘 모음 (인라인 SVG, <use href="#i-..."/>로 씀) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2c.6 5 2 7.4 10 10-8 2.6-9.4 5-10 10-.6-5-2-7.4-10-10 8-2.6 9.4-5 10-10z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-asterisk" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z M13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-give" viewBox="0 0 24 24"><path d="M3 13h4l3 2h4a2 2 0 0 1 0 4H9 M14 17l5-2a2 2 0 0 1 2 3l-6 3H3 M9 3h9v7H9z M9 3l4.5 4L18 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-ink" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><ellipse cx="12" cy="12" rx="5" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.6 5.6l12.8 12.8" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-friend" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0 M16 4.5a3.5 3.5 0 0 1 0 7 M18 14a5.5 5.5 0 0 1 3.5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-feed" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 17h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 6.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-memo" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 12h7M9 16h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-user-off" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 13-6.2 M16 17l5 5M21 17l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="container header-in">
+    <a class="brand" href="#top" aria-label="해칫 처음으로"><img src="../brand/logo/haechi_yellow.png" alt="" width="40" height="40"><span>해칫</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#why">말 못 하는 이유</a>
+      <a href="#how">해칫에서는</a>
+      <a href="#try">먹여 보기</a>
+      <a href="#haechi">해치 소개</a>
+      <a href="#stay">먹 갈기</a>
+      <a href="#trust">안심</a>
+      <a href="#team">만드는 사람</a>
+    </nav>
+    <button class="btn header-cta launch" type="button" tabindex="-1">해치에게만 털어놓기</button>
+    <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mnav"><svg width="24" height="24"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="모바일 메뉴">
+  <a href="#why">말 못 하는 이유<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#how">해칫에서는<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#try">먹여 보기<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#haechi">해치 소개<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#stay">먹 갈기<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#trust">안심<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#team">만드는 사람<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+</nav>
+
+<main id="main">
+
+  <!-- [문구] ① 첫 화면: 장면 → 제목 → 대상 → 이미지(해치 머리 위 말풍선) → 버튼 -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-copy">
+        <svg class="spark s1" width="34" height="34" aria-hidden="true"><use href="#i-asterisk"/></svg>
+        <svg class="spark gold s2" width="28" height="28" aria-hidden="true"><use href="#i-spark"/></svg>
+        <svg class="spark blue s3" width="18" height="18" aria-hidden="true"><use href="#i-spark"/></svg>
+        <p class="scene reveal" style="--d:1">취준 2년 차, <b>불합격 문자를 받은 밤.</b> 인스타에 친구 합격 소식이 떴다.</p>
+        <h1 class="reveal" style="--d:2">한지에 적으면<br><span class="em swash">해치가 먹어요<svg viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 90 6, 200 4, 396 12" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg></span></h1>
+        <p class="for reveal" style="--d:3">취준생과 사회초년생의 말 못 하는 밤을 위해</p>
+      </div>
+
+      <!-- 이미지: 마우스를 따라 기울어지는 3D 효과 (.tilt, 말풍선·쪽지는 data-depth만큼 떠 보인다) -->
+      <div class="hero-stage reveal" style="--d:4">
+        <div class="tilt" data-tilt>
+          <figure class="hero-visual">
+            <img src="../brand/key%20visual/haechi_16x9.png" alt="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치" width="1600" height="900" fetchpriority="high">
+            <figcaption class="hero-bubble" data-depth="60">적은 것은 아무도 읽지 않소</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="hero-action reveal" style="--d:5">
+        <button class="btn launch" id="hero-cta" type="button">해치에게만 털어놓기<svg width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg></button>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="belief container reveal"><span class="q">“</span>모든 마음을<br>기록해 둘 필요는 없으니까.<span class="q">”</span></p>
+
+  <!-- [문구] ② 문제 -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker">Why we keep it in</p>
+          <h2 class="h2">말하면 속좁아 보일까 봐,<br>어디서 말이 돌까 봐.</h2>
+        </div>
+        <p class="side">그래서 결국<br>아무한테도 못 털어놔요.</p>
+      </div>
+      <ul class="reasons">
+        <li class="reason reveal"><span class="no">01 / FRIENDS</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-friend"/></svg></span><b>친구에게</b><span>속좁아 보일까 봐 못 해요.</span></li>
+        <li class="reason reveal" style="--d:1"><span class="no">02 / GROUP CHAT</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-chat"/></svg></span><b>단톡방에</b><span>말이 돌까 봐 못 해요.</span></li>
+        <li class="reason reveal" style="--d:2"><span class="no">03 / SNS</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-feed"/></svg></span><b>SNS에</b><span>아는 사람이 볼까 봐 못 올려요.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- [문구] ②-1 메모장과 비교 -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="compare reveal">
+        <div class="cmp-col">
+          <p class="cmp-label"><svg width="20" height="20" aria-hidden="true"><use href="#i-memo"/></svg>메모장에 쓰면</p>
+          <ul>
+            <li><b>쓴 다음</b><span>목록 맨 위에 그대로 남아요</span></li>
+            <li><b>다시 열면</b><span>그 말을 또 마주쳐요</span></li>
+            <li><b>마무리</b><span>저장 버튼</span></li>
+          </ul>
+        </div>
+        <div class="cmp-vs" aria-hidden="true">VS</div>
+        <div class="cmp-col on">
+          <p class="cmp-label"><img src="../brand/logo/haechi_yellow.png" alt="" width="24" height="24">해칫에 쓰면</p>
+          <ul>
+            <li><b>쓴 다음</b><span>해치가 먹어요</span></li>
+            <li><b>다시 열면</b><span>빈 한지가 기다려요</span></li>
+            <li><b>마무리</b><span>배부른 해치와 함께 끝</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule container">
+
+  <!-- [문구] ③ 해결: 카드를 누르면 팝업 (template id = data-modal) -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker">How it works</p>
+          <h2 class="h2">한지에 적으면 해치가 먹어요.</h2>
+        </div>
+        <p class="side">잘 쓸 필요도,<br>정리할 필요도 없어요.</p>
+      </div>
+      <div class="cards">
+        <button class="card reveal" type="button" data-modal="m-write">
+          <span class="tag">01 / Write</span>
+          <span class="thumb t-blue">
+            <svg width="150" height="110" viewBox="0 0 150 110" aria-hidden="true"><rect x="28" y="12" width="94" height="86" rx="6" fill="#FDF5E9" stroke="#2A2826" stroke-width="2"/><path d="M44 36h62M44 50h62M44 64h40" stroke="#2A2826" stroke-width="2" stroke-linecap="round" opacity=".35"/><path d="M96 86l26-40 8 6-26 40-10 4z" fill="#2A6090"/><path d="M120 46l8 6" stroke="#2A2826" stroke-width="2"/></svg>
+          </span>
+          <span class="row"><h3>한지에 쓰기</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>가입 없이 열자마자 한지가 보여요.<br>칸은 한지 하나뿐이에요.</p>
+        </button>
+        <button class="card reveal" type="button" data-modal="m-give" style="--d:1">
+          <span class="tag">02 / Give</span>
+          <span class="thumb t-gold">
+            <!-- 로고와 같은 해치: 노란 소용돌이 갈기 · 빨간 옆 갈기 · 파란 눈썹 · 빨간 코 · 막대에 올린 앞발 -->
+            <svg width="210" height="140" viewBox="0 0 210 140" aria-hidden="true">
+              <g transform="rotate(-10 40 92)"><path d="M14 80h50v28H14z" fill="#FDF5E9" stroke="#2A2826" stroke-width="2" stroke-linejoin="round"/><path d="M14 80l25 14 25-14" fill="none" stroke="#2A2826" stroke-width="2" stroke-linejoin="round"/></g>
+              <path d="M72 84c10-10 20-14 30-14" fill="none" stroke="#2A2826" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"/>
+              <g stroke="#2A2826" stroke-width="2">
+                <circle cx="113" cy="66" r="11" fill="#EB4531"/><circle cx="113" cy="87" r="10" fill="#EB4531"/>
+                <circle cx="187" cy="66" r="11" fill="#EB4531"/><circle cx="187" cy="87" r="10" fill="#EB4531"/>
+                <rect x="112" y="46" width="76" height="62" rx="24" fill="#FFFDF8"/>
+                <circle cx="128" cy="46" r="11" fill="#F0B237"/><circle cx="172" cy="46" r="11" fill="#F0B237"/>
+                <circle cx="150" cy="38" r="17" fill="#F0B237"/>
+              </g>
+              <path d="M150 38m-8 0a8 8 0 1 1 8 8a4 4 0 1 1 4-4" fill="none" stroke="#2A2826" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+              <path d="M127 70q7-7 14 0M159 70q7-7 14 0" fill="none" stroke="#2A6090" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="135" cy="80" r="4" fill="#2A2826"/><circle cx="165" cy="80" r="4" fill="#2A2826"/>
+              <ellipse cx="150" cy="90" rx="7.5" ry="5.5" fill="#EB4531"/>
+              <rect x="104" y="108" width="92" height="7" rx="3.5" fill="#2A2826"/>
+              <g fill="#FFFDF8" stroke="#2A2826" stroke-width="2"><rect x="122" y="99" width="20" height="15" rx="7"/><rect x="158" y="99" width="20" height="15" rx="7"/></g>
+            </svg>
+          </span>
+          <span class="row"><h3>해치에게 주기</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>버튼을 한 번 누르면 한지가 접히고<br>해치가 받아먹어요.</p>
+        </button>
+        <button class="card reveal" type="button" data-modal="m-end" style="--d:2">
+          <span class="tag">03 / Done</span>
+          <span class="thumb">
+            <!-- 먹과 벼루 -->
+            <svg width="190" height="130" viewBox="0 0 190 130" aria-hidden="true">
+              <rect x="24" y="58" width="142" height="56" rx="18" fill="#38322B" stroke="#2A2826" stroke-width="2"/>
+              <rect x="34" y="66" width="122" height="40" rx="12" fill="#4A433B"/>
+              <ellipse cx="80" cy="86" rx="34" ry="13" fill="#2A2826"/>
+              <path d="M120 72q14 2 24 14q-10 12-24 14z" fill="#2A2826"/>
+              <ellipse cx="72" cy="83" rx="9" ry="2.5" fill="#FDF5E9" opacity=".25"/>
+              <g transform="rotate(28 120 46)"><rect x="110" y="6" width="22" height="62" rx="4" fill="#2A2826"/><rect x="110" y="18" width="22" height="18" fill="#F0B237"/><path d="M114 24h14M114 30h10" stroke="#2A2826" stroke-width="2" stroke-linecap="round"/></g>
+              <circle cx="58" cy="44" r="3.5" fill="#2A2826"/><circle cx="46" cy="34" r="2.2" fill="#2A2826"/>
+            </svg>
+          </span>
+          <span class="row"><h3>끝</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>원문은 남지 않아요. 닫거나,<br>마음이 남으면 먹을 갈러 가요.</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ③-1 먹여 보기: 예시 한 줄을 누르면 해치가 먹는다 (예시 문장, 실제 사용자 글 아님) -->
+  <section class="section" id="try" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker gold">Try a line</p>
+          <h2 class="h2">이런 한 줄, 해치에게 먹여 보세요.</h2>
+        </div>
+        <p class="side">눌러 보면 해치가 먹어요.<br>예시 문장이에요. 실제 사용자의 글이 아니에요.</p>
+      </div>
+      <div class="lines">
+        <button class="line reveal" type="button"><span class="when">불합격 문자를 받은 밤</span><span class="txt">축하한다고 보냈는데, 사실은 좀 질투 났어.</span><span class="eaten">잘 먹었소. 읽지는 않았소</span></button>
+        <button class="line reveal" type="button" style="--d:1"><span class="when">면접에서 돌아오는 길</span><span class="txt">또 떨어졌다는 말을 아무한테도 못 했어.</span><span class="eaten">꿀꺽. 아무에게도 옮기지 않겠소</span></button>
+        <button class="line reveal" type="button" style="--d:2"><span class="when">집에서 온 전화를 끊고</span><span class="txt">다 괜찮다고 했는데, 하나도 안 괜찮아.</span><span class="eaten">한 글자도 남김없이 먹었소</span></button>
+        <button class="line reveal" type="button" style="--d:3"><span class="when">인스타를 넘기다 멈춘 밤</span><span class="txt">나만 빼고 다 잘 지내는 것 같아.</span><span class="eaten">배부르오. 오늘 밤은 편히 쉬시오</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ③-2 해치 소개 (캐릭터 프로필) -->
+  <section class="section" id="haechi" style="padding-top:0">
+    <div class="container meet">
+      <!-- 해치를 사진 틀 없이 궤도 원 위에 앉힌다 (배경을 뗀 그림: key visual/cutout/) -->
+      <figure class="meet-visual reveal">
+        <span class="orbit o1" aria-hidden="true"></span><span class="orbit o2" aria-hidden="true"></span>
+        <svg class="spark m1" width="30" height="30" aria-hidden="true"><use href="#i-asterisk"/></svg>
+        <svg class="spark gold m2" width="26" height="26" aria-hidden="true"><use href="#i-spark"/></svg>
+        <div class="meet-char">
+          <img src="../brand/key%20visual/cutout/haechi_eat.png" alt="한지를 물고 눈을 감은 채 웃는 해치" width="760" height="587" loading="lazy" decoding="async">
+          <figcaption class="meet-bubble">반갑소. 나는 해치요</figcaption>
+        </div>
+        <span class="tag-note t1">#글은 못 읽음</span>
+        <span class="tag-note t2">#먹는 건 잘함</span>
+      </figure>
+      <div class="reveal" style="--d:1">
+        <p class="kicker">Meet Haechi</p>
+        <h2 class="h2">글은 못 읽고,<br>먹기만 잘하는 해치예요.</h2>
+        <p class="lead">옛 궁궐 앞을 지키던 수호 동물 해치가 이번엔 당신의 한 줄을 지켜요.</p>
+        <dl class="profile">
+          <div><dt>사는 곳</dt><dd>궁궐 처마 아래 돌 받침 위</dd></div>
+          <div><dt>하는 일</dt><dd>한지에 적은 말을 받아먹기</dd></div>
+          <div><dt>못 하는 것</dt><dd>글 읽기. 그래서 아무도 읽지 않아요</dd></div>
+          <div><dt>좋아하는 것</dt><dd>갓 간 먹 냄새, 조용한 밤</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ④ 먹 갈기: 글 먼저, 그 아래 이미지 + 진행 카드 -->
+  <section class="section" id="stay" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker gold">Stay a little longer</p>
+          <h2 class="h2">마음이 남으면 먹을 갈아요.</h2>
+          <p class="lead">100번 갈면 해치가 고전 한 구절을 필사해 줘요.</p>
+        </div>
+        <p class="side">조금 더 있고 싶으면 먹을 갈아도 되고,<br>그냥 나가도 돼요.</p>
+      </div>
+      <div class="stay-grid">
+        <div class="stay-stage reveal">
+          <div class="tilt" data-tilt>
+            <!-- 벼루 곁에 앉은 해치 (카드뉴스 9장과 같은 장면, 아래 40%는 옅은 바닥) -->
+            <figure class="stay-visual">
+              <div class="stay-scene">
+                <div class="stay-char">
+                  <img src="../brand/key%20visual/cutout/haechi_sit.png" alt="벼루 곁 돌 받침에 앉은 해치" width="760" height="668" loading="lazy" decoding="async">
+                  <figcaption class="stay-bubble" data-depth="60">마음이 남으면, 조금 더 머물다 가오</figcaption>
+                </div>
+                <svg class="inkstone" viewBox="0 0 190 130" aria-hidden="true">
+                  <rect x="24" y="58" width="142" height="56" rx="18" fill="#38322B" stroke="#2A2826" stroke-width="2"/>
+                  <rect x="34" y="66" width="122" height="40" rx="12" fill="#4A433B"/>
+                  <ellipse cx="80" cy="86" rx="34" ry="13" fill="#2A2826"/>
+                  <path d="M120 72q14 2 24 14q-10 12-24 14z" fill="#2A2826"/>
+                  <ellipse cx="72" cy="83" rx="9" ry="2.5" fill="#FDF5E9" opacity=".25"/>
+                  <g transform="rotate(28 120 46)"><rect x="110" y="6" width="22" height="62" rx="4" fill="#2A2826"/><rect x="110" y="18" width="22" height="18" fill="#F0B237"/><path d="M114 24h14M114 30h10" stroke="#2A2826" stroke-width="2" stroke-linecap="round"/></g>
+                </svg>
+              </div>
+            </figure>
+          </div>
+        </div>
+        <div class="stay-side">
+          <div class="ink reveal" style="--d:1">
+            <p class="kicker">Until copying</p>
+            <p class="ink-num">100<small>번</small></p>
+            <div class="ink-bar" aria-hidden="true"><i></i></div>
+            <p>먹이 진해지는 만큼 필사에 가까워져요.<br>중간에 나가도 숫자는 줄지 않아요.</p>
+          </div>
+          <button class="card reveal" type="button" data-modal="m-ink" style="--d:2">
+            <span class="row"><h3>먹 갈기와 필사첩</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+            <p>책 고르기, 필사 카드, 필사첩이 어떻게 남는지 볼 수 있어요.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule container">
+
+  <!-- [문구] ⑤ 안심: 가격 · 약속 카드 · 자주 묻는 질문 · 문의 -->
+  <section class="section" id="trust">
+    <div class="container trust-grid">
+      <div class="reveal">
+        <p class="kicker">Before you start</p>
+        <h2 class="h2">가격은 무료예요.</h2>
+        <p class="price">0<small>원</small></p>
+      </div>
+      <div>
+        <div class="trust-cards">
+          <button class="pcard reveal" type="button" data-modal="m-data">
+            <span class="ic"><svg width="24" height="24" aria-hidden="true"><use href="#i-lock"/></svg></span>
+            <span><b>적은 글은 어디로 가나요?</b><small>원문은 보내지도, 저장하지도 않아요</small></span>
+            <svg class="go" width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg>
+          </button>
+          <button class="pcard reveal" type="button" data-modal="m-not" style="--d:1">
+            <span class="ic"><svg width="24" height="24" aria-hidden="true"><use href="#i-ban"/></svg></span>
+            <span><b>해칫이 하지 않는 것</b><small>가입, 연속 기록, 재촉 알림</small></span>
+            <svg class="go" width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg>
+          </button>
+        </div>
+        <div class="faq">
+          <details class="reveal"><summary><span class="qmark">Q</span>정말 아무도 못 봐요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>이 페이지의 체험에서 적은 글은 서버로 보내거나 저장하지 않아요. 건네기를 마치거나 체험 창을 닫으면 입력한 원문을 지워요.</p></details>
+          <details class="reveal" style="--d:1"><summary><span class="qmark">Q</span>매일 써야 해요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>필요할 때만 오면 돼요. 연속 기록도, 재촉 알림도 두지 않는 방향으로 만들고 있어요.</p></details>
+          <details class="reveal" style="--d:2"><summary><span class="qmark">Q</span>다시 볼 수 있어요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>건넨 글은 다시 볼 수 없어요. 다시 봐야 하는 내용은 건네지 말아 주세요.</p></details>        </div>
+        <p class="contact reveal">무료라 결제도 환불도 없어요 · 문의 〔팀 메일 주소〕</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ⑥ 만드는 사람 -->
+  <section class="section" id="team" style="padding-top:0">
+    <div class="container">
+      <div class="band reveal">
+        <div>
+          <p class="kicker">Made by five</p>
+          <h2 class="h2" style="font-size:24px">숭실대 학생 다섯이 만들어요.</h2>
+          <p class="team-quote">“누구에게도 말 못 하는 말이 있어서요.”</p>
+          <p class="names">김서영 · 정민규 · 정연화 · 조재영 · 홍석민</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ⑦ 끝 버튼 -->
+  <section class="end" id="start">
+    <svg class="spark s4" width="30" height="30" aria-hidden="true"><use href="#i-asterisk"/></svg>
+    <svg class="spark gold s5" width="34" height="34" aria-hidden="true"><use href="#i-spark"/></svg>
+    <div class="container reveal">
+      <p class="kicker">Say it only to Haechi</p><br>
+      <h2><span class="em">말 못 한 한 줄,</span><br>해치에게 건네 보세요.</h2>
+      <button class="btn launch" id="end-cta" type="button">해치에게만 털어놓기<svg width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg></button>
+      <p class="cond">가입 없이 · 무료</p>
+      <!-- 추천: 링크 복사 (보조 버튼) -->
+      <div class="share">
+        <p>말 못 하는 밤을 보내는 친구가 있다면</p>
+        <button class="btn-ghost" id="share" type="button"><svg width="18" height="18" aria-hidden="true"><use href="#i-link"/></svg>링크 보내기</button>
+      </div>
+    </div>
+  </section>
+</main>
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<footer class="footer">
+  <div class="container"><span><b>해칫</b>&nbsp; hatch eat</span><span>모든 마음을 기록해 둘 필요는 없다.</span></div>
+</footer>
+
+<!-- 모바일: 스크롤 따라오는 버튼 -->
+<div class="mbar" id="mbar"><button class="btn launch" type="button" tabindex="-1">해치에게만 털어놓기</button></div>
+
+<!-- 카드 팝업 (내용은 아래 template에서 채운다) -->
+<dialog id="modal" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-head"><span class="ic" id="modal-ic"></span><h2 id="modal-title"></h2><button class="x" type="button" data-close aria-label="닫기"><svg width="20" height="20"><use href="#i-close"/></svg></button></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</dialog>
+
+<!-- 체험 창 (버튼 "해치에게만 털어놓기") — 적은 글은 전송·저장하지 않는다 -->
+<dialog id="demo" aria-labelledby="demo-title">
+  <div class="modal-box">
+    <div class="modal-head"><span class="ic"><svg width="24" height="24"><use href="#i-pen"/></svg></span><h2 id="demo-title">한지에 적어 보세요</h2><button class="x" type="button" data-close aria-label="체험 닫기"><svg width="20" height="20"><use href="#i-close"/></svg></button></div>
+    <div class="modal-body">
+      <p class="summary"><b>체험</b><span>랜딩 페이지 체험이에요. 적은 글은 전송하거나 저장하지 않아요. 창을 닫아도 입력한 글은 지워져요.</span></p>
+      <label for="writing" style="position:absolute;left:-9999px">남겨두기 싫은 말</label>
+      <textarea class="paper" id="writing" placeholder="남겨두기 싫은 말을 여기에 적어 보세요." autocomplete="off" spellcheck="false"></textarea>
+      <button id="give" class="btn btn-block" type="button" disabled>해치에게 건네기</button>
+      <p class="status" role="status" aria-live="polite" id="status">한 글자라도 적으면 건넬 수 있어요.</p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ================= 팝업 내용: 요약 + 서술 + 표 + 이미지 ================= -->
+<template id="m-write" data-title="한지에 쓰기" data-icon="i-pen">
+  <p class="summary"><b>요약</b><span>입력 칸은 한지 하나. 반드시 채울 칸이 없어요.</span></p>
+  <p>앱을 열면 가입이나 소개 화면 없이 바로 한지가 보여요. 적기 전에 해치가 먼저 "적은 것은 아무도 읽지 않소"라고 알려 줘요. 제목, 날짜, 감정을 고르는 칸은 없어요. 한 줄도, 긴 글도 괜찮아요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>글자 수</th><td>제한 없음 (1자 이상)</td></tr>
+    <tr><th>반드시 채울 칸</th><td>없음</td></tr>
+    <tr><th>제목 · 날짜 · 감정 태그</th><td>없음</td></tr>
+    <tr><th>한지 안 안내</th><td>남겨두기 싫은 말을 여기에 적어 보세요. 적은 글은 어디에도 저장되지 않아요.</td></tr>
+  </tbody></table>
+  <figure><img src="../brand/key%20visual/귀여운%20사자%20강아지와%20접힌%20편지.png" alt="접힌 한지 앞에서 기다리는 해치" loading="lazy"><figcaption>해치는 한지를 받을 때까지 기다려요.</figcaption></figure>
+</template>
+
+<template id="m-give" data-title="해치에게 주기" data-icon="i-give">
+  <p class="summary"><b>요약</b><span>버튼 한 번, 약 5초. 확인 창은 없어요.</span></p>
+  <p>한 글자라도 적으면 [해치에게 건네기] 버튼이 켜져요. 누르면 한지가 접히고 해치가 받아먹어요. 건네기가 안 되면 적은 글은 그대로 두니까, 한 번 더 건네면 돼요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>버튼이 켜지는 때</th><td>한 글자 이상 적었을 때</td></tr>
+    <tr><th>먹는 시간</th><td>약 5초, 약한 진동</td></tr>
+    <tr><th>"정말 건넬까요?" 창</th><td>없음</td></tr>
+    <tr><th>건네기가 안 될 때</th><td>해치가 아직 받지 못했어요. 적은 글은 그대로 있으니 한 번 더 건네 주세요.</td></tr>
+  </tbody></table>
+  <figure><img src="../brand/key%20visual/haechi_16x9.png" alt="궁궐 마당에서 접힌 한지를 기다리는 해치" loading="lazy"><figcaption>한지를 접어 건네면 해치가 받아요.</figcaption></figure>
+</template>
+
+<template id="m-end" data-title="끝" data-icon="i-check">
+  <p class="summary"><b>요약</b><span>원문은 남지 않고, 해치만 배불러요.</span></p>
+  <p>해치가 다 먹으면 "잘 먹었소. 읽지는 않았소" 한 줄과 함께 끝나요. 여기서 닫아도 되고, 마음이 남으면 먹을 갈러 갈 수 있어요. 끝 화면에 가입이나 평가 요청을 붙이지 않아요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>해치의 말</th><td>잘 먹었소. 읽지는 않았소</td></tr>
+    <tr><th>고를 수 있는 것</th><td>닫기 · 먹 갈러 가기</td></tr>
+    <tr><th>붙이지 않는 것</th><td>가입 요청 · 평가 요청</td></tr>
+    <tr><th>원문</th><td>남지 않아요</td></tr>
+  </tbody></table>
+  <figure><img src="../brand/key%20visual/크림빛%20배경의%20귀여운%20수호사자%20캐릭터.png" alt="한지를 물고 눈을 감은 채 웃는 해치" loading="lazy"><figcaption>잘 먹었소. 읽지는 않았소</figcaption></figure>
+</template>
+
+<template id="m-ink" data-title="먹 갈기와 필사첩" data-icon="i-ink">
+  <p class="summary"><b>요약</b><span>100번 갈면 고전 한 구절. 필사첩은 이 기기에만 있어요.</span></p>
+  <p>벼루 위에 손가락으로 원을 그리면 먹이 조금씩 진해져요. 100번을 채우면 해치가 고전 한 구절을 원문과 쉬운 풀이로 필사해 필사첩에 모아 줘요. 해치에게 건넨 횟수와는 연결하지 않아요. 많이 쓸수록 보상받는 구조를 만들지 않기 위해서예요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>필사까지</th><td>먹 100번</td></tr>
+    <tr><th>책</th><td>기본은 무작위, 설정에서 한 권 고정</td></tr>
+    <tr><th>중간에 나가면</th><td>숫자가 줄지 않아요</td></tr>
+    <tr><th>필사첩</th><td>이 기기에만 있어요</td></tr>
+  </tbody></table>
+  <p class="mnote">먹 갈기와 필사첩은 서비스에 담을 기능이에요. 이 랜딩 체험에는 아직 포함되지 않았어요.</p>
+  <figure><img src="../brand/key%20visual/haechi_9x16.png" alt="궁궐 처마 아래 해치" loading="lazy"><figcaption>서안 앞의 고요처럼, 천천히 머물러요.</figcaption></figure>
+</template>
+
+<template id="m-data" data-title="적은 글은 어디로 가나요?" data-icon="i-lock">
+  <p class="summary"><b>요약</b><span>원문은 서버로 보내지 않고, 어디에도 저장하지 않아요.</span></p>
+  <p>해칫은 적은 글을 읽거나 모으지 않아요. 기기에 남는 것은 먹을 간 횟수와 필사첩처럼 원문이 아닌 것뿐이에요. 앱을 지우면 필사첩도 함께 사라져요.</p>
+  <table class="tbl">
+    <thead><tr><th>무엇</th><th>어디에</th></tr></thead>
+    <tbody>
+      <tr><th>적은 글 (원문)</th><td>저장하지 않아요</td></tr>
+      <tr><th>먹 간 횟수</th><td>이 기기에만</td></tr>
+      <tr><th>필사첩 구절</th><td>이 기기에만</td></tr>
+      <tr><th>고른 책</th><td>이 기기에만</td></tr>
+      <tr><th>서버</th><td>쓰지 않아요</td></tr>
+    </tbody>
+  </table>
+  <figure><img src="../brand/key%20visual/haechi_1x1.png" alt="궁궐 처마 아래 돌 받침에 앉은 해치" loading="lazy"><figcaption>적은 것은 아무도 읽지 않소</figcaption></figure>
+</template>
+
+<template id="m-not" data-title="해칫이 하지 않는 것" data-icon="i-ban">
+  <p class="summary"><b>요약</b><span>세지 않고, 재촉하지 않고, 묻지 않아요.</span></p>
+  <p>한동안 오지 않아도 잃는 것이 없어요. 필요할 때만 와서 적고, 건네고, 닫으면 돼요.</p>
+  <table class="tbl">
+    <thead><tr><th>하지 않는 것</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><th>가입 · 로그인</th><td>원문을 저장하지 않으니 계정이 필요 없어요</td></tr>
+      <tr><th>연속 기록</th><td>오지 않은 날을 세지 않아요</td></tr>
+      <tr><th>재촉 알림</th><td>필요할 때만 오면 돼요</td></tr>
+      <tr><th>건넨 횟수 세기</th><td>많이 쓸수록 보상받는 구조를 만들지 않아요</td></tr>
+      <tr><th>공개 게시판 · AI 대화</th><td>아무도 읽지 않는다는 약속을 지키기 위해서예요</td></tr>
+    </tbody>
+  </table>
+  <figure><img src="../brand/key%20visual/귀여운%20사자%20강아지와%20접힌%20편지.png" alt="접힌 한지 앞에 앉은 해치" loading="lazy"><figcaption>한동안 오지 않아도 괜찮소</figcaption></figure>
+</template>
+
 <script>
-const dialog=document.querySelector('#demo'),writing=document.querySelector('#writing'),give=document.querySelector('#give'),status=document.querySelector('#status');let timer=null;let busy=false;
-function reset(){clearTimeout(timer);timer=null;busy=false;writing.value='';writing.disabled=false;writing.classList.remove('eating');give.disabled=true;give.textContent='해치에게 건네기';status.textContent='한 글자라도 적으면 건넬 수 있어요.';}
-document.querySelectorAll('.launch').forEach(button=>button.addEventListener('click',()=>{reset();dialog.showModal();writing.focus();}));
-document.querySelector('.close').addEventListener('click',()=>{reset();dialog.close();});dialog.addEventListener('cancel',reset);dialog.addEventListener('close',reset);window.addEventListener('pagehide',reset);
-writing.addEventListener('input',()=>{give.disabled=!writing.value.trim();status.textContent=writing.value.trim()?'준비되면 해치에게 건네 주세요.':'한 글자라도 적으면 건넬 수 있어요.';});
-give.addEventListener('click',()=>{if(busy||!writing.value.trim())return;busy=true;give.disabled=true;writing.disabled=true;give.textContent='해치에게 건네는 중';status.textContent='한지를 접어 건네고 있어요.';writing.classList.add('eating');timer=setTimeout(()=>{writing.value='';writing.disabled=false;writing.classList.remove('eating');busy=false;give.disabled=true;give.textContent='해치에게 건네기';status.textContent='잘 먹었소. 읽지는 않았소';},matchMedia('(prefers-reduced-motion:reduce)').matches?0:5000);});
-const sticky=document.querySelector('#sticky');if('IntersectionObserver'in window){const visible=new Set();const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?visible.add(entry.target):visible.delete(entry.target));sticky.hidden=visible.size>0;});observer.observe(document.querySelector('#hero-btn'));observer.observe(document.querySelector('#end-btn'));}
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── 스크롤 등장 (FADE-UP) ── */
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, {threshold: .12, rootMargin: '0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-anim');
+    items.forEach(function(el){ el.classList.add('is-in'); });
+  }
+
+  /* ── 스크롤 따라오는 버튼: 첫 화면·끝 버튼이 보이는 동안 숨김 (한 화면에 primary 하나) ── */
+  var headerCta = document.querySelector('.header-cta');
+  var mbar = document.getElementById('mbar');
+  var anchors = [document.getElementById('hero-cta'), document.getElementById('end-cta')];
+  function setFollow(show){
+    headerCta.classList.toggle('show', show); headerCta.tabIndex = show ? 0 : -1;
+    mbar.classList.toggle('show', show); mbar.querySelector('button').tabIndex = show ? 0 : -1;
+  }
+  if ('IntersectionObserver' in window) {
+    var seen = new Set();
+    var fo = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
+      setFollow(seen.size === 0);
+    });
+    anchors.forEach(function(a){ fo.observe(a); });
+  } else { setFollow(true); }
+
+  /* ── 스크롤 진행 막대 ── */
+  var bar = document.getElementById('progress'), ticking = false;
+  function paintProgress(){
+    var max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(scrollY / max, 1) : 0) + ')';
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(paintProgress); } }, {passive: true});
+  paintProgress();
+
+  /* ── 이미지 3D 기울기: 마우스 위치를 따라 기울고, 말풍선·쪽지는 앞으로 떠 보인다 ── */
+  if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach(function(el){
+      var raf = null;
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function(){
+          el.classList.add('moving');
+          el.style.transform = 'rotateX(' + (-y * 8).toFixed(2) + 'deg) rotateY(' + (x * 10).toFixed(2) + 'deg)';
+        });
+      });
+      el.addEventListener('pointerleave', function(){
+        if (raf) cancelAnimationFrame(raf);
+        el.classList.remove('moving');
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* ── 예시 한 줄 먹여 보기 (예시 문장, 저장·전송 없음) ── */
+  document.querySelectorAll('.line').forEach(function(l){
+    l.setAttribute('aria-pressed', 'false');
+    l.addEventListener('click', function(){
+      var on = l.classList.toggle('is-eaten');
+      l.setAttribute('aria-pressed', on);
+    });
+  });
+
+  /* ── 링크 보내기: 폰은 공유 창, 컴퓨터는 링크 복사 ── */
+  var toast = document.getElementById('toast'), toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+  document.getElementById('share').addEventListener('click', function(){
+    var data = {title: '해칫', text: '한지에 적으면 해치가 먹어요. 가입 없이, 무료.', url: location.href};
+    if (navigator.share) { navigator.share(data).catch(function(){}); return; }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(location.href).then(function(){ showToast('링크를 복사했어요'); }, function(){ showToast('주소창의 링크를 복사해 주세요'); });
+    } else { showToast('주소창의 링크를 복사해 주세요'); }
+  });
+
+  /* ── 햄버거 메뉴 ── */
+  var menuBtn = document.querySelector('.menu-btn'), mnav = document.getElementById('mnav');
+  function setMenu(open){
+    mnav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    menuBtn.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', function(){ setMenu(!mnav.classList.contains('open')); });
+  mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  addEventListener('keydown', function(e){ if (e.key === 'Escape' && mnav.classList.contains('open')) setMenu(false); });
+  matchMedia('(min-width: 901px)').addEventListener('change', function(m){ if (m.matches) setMenu(false); });
+
+  /* ── 카드 팝업 ── */
+  var modal = document.getElementById('modal'), mBody = document.getElementById('modal-body'),
+      mTitle = document.getElementById('modal-title'), mIc = document.getElementById('modal-ic');
+  var lastFocus = null;
+  document.querySelectorAll('[data-modal]').forEach(function(card){
+    card.addEventListener('click', function(){
+      var t = document.getElementById(card.dataset.modal);
+      if (!t) return;
+      lastFocus = card;
+      mTitle.textContent = t.dataset.title;
+      mIc.innerHTML = '<svg width="24" height="24" aria-hidden="true"><use href="#' + t.dataset.icon + '"/></svg>';
+      mBody.replaceChildren(t.content.cloneNode(true));
+      modal.showModal();
+      modal.querySelector('.modal-box').scrollTop = 0;
+    });
+  });
+
+  /* 닫기: X 버튼 · 바깥 클릭 · Esc */
+  document.querySelectorAll('dialog').forEach(function(d){
+    d.addEventListener('click', function(e){
+      if (e.target === d || e.target.closest('[data-close]')) d.close();
+    });
+    d.addEventListener('close', function(){
+      if (d.id === 'demo') resetDemo();
+      if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+    });
+  });
+
+  /* ── 체험: 적은 글은 전송·저장하지 않고, 끝나거나 닫으면 지운다 ── */
+  var demo = document.getElementById('demo'), writing = document.getElementById('writing'),
+      give = document.getElementById('give'), status = document.getElementById('status');
+  var timer = null, busy = false;
+  function resetDemo(){
+    clearTimeout(timer); timer = null; busy = false;
+    writing.value = ''; writing.disabled = false; writing.classList.remove('eating');
+    give.disabled = true; give.textContent = '해치에게 건네기';
+    status.textContent = '한 글자라도 적으면 건넬 수 있어요.';
+  }
+  document.querySelectorAll('.launch').forEach(function(b){
+    b.addEventListener('click', function(){
+      lastFocus = b; resetDemo(); demo.showModal(); writing.focus();
+    });
+  });
+  writing.addEventListener('input', function(){
+    var has = !!writing.value.trim();
+    give.disabled = !has;
+    status.textContent = has ? '준비되면 해치에게 건네 주세요.' : '한 글자라도 적으면 건넬 수 있어요.';
+  });
+  give.addEventListener('click', function(){
+    if (busy || !writing.value.trim()) return;
+    busy = true; give.disabled = true; writing.disabled = true;
+    give.textContent = '해치에게 건네는 중';
+    status.textContent = '한지를 접어 건네고 있어요.';
+    writing.classList.add('eating');
+    timer = setTimeout(function(){
+      writing.value = ''; writing.disabled = false; writing.classList.remove('eating');
+      busy = false; give.disabled = true; give.textContent = '해치에게 건네기';
+      status.textContent = '잘 먹었소. 읽지는 않았소';
+    }, reduce ? 0 : 5000);
+  });
+  addEventListener('pagehide', resetDemo);
+})();
 </script>
-</body></html>
+</body>
+</html>
