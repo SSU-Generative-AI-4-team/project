@@ -39,11 +39,10 @@ async function observeSound(page) {
 try {
   for(let i=0;i<50;i++) { try { if((await fetch(base)).ok) break; } catch {} await delay(100); }
   browser=await chromium.launch({headless:true,...((process.env.BROWSER_PATH || existsSync(macChrome))?{executablePath:process.env.BROWSER_PATH || macChrome}:{})});
-  await check('effects are opt-in, use real quiet PCM, and follow the giving phases',async page=>{
+  await check('effects start on, use real quiet PCM, and follow the giving phases',async page=>{
     await observeSound(page); await page.goto(base); await tab(page,'ink'); await page.locator('#grind-once').click();
-    assert.equal(await page.evaluate(()=>Boolean(window.testAudioContext)),false);
-    await page.locator('#settings-open').click(); await page.locator('#sound-toggle').check();
-    await page.waitForFunction(()=>window.playedSounds.length>0);
+    await page.waitForFunction(()=>window.playedSounds.some(sound=>sound.loop));
+    await page.locator('#settings-open').click(); assert.ok(await page.locator('#sound-toggle').isChecked());
     await page.locator('#settings-dialog .button.close-dialog').click(); await tab(page,'write');
     await page.locator('#draft').fill('효과음 검증용 가상 문장');
     await page.evaluate(()=>{window.playedSounds=[];}); await page.locator('#give').click(); await visible(page,'#done-view');
@@ -55,13 +54,13 @@ try {
     assert.equal(await page.locator('#draft').inputValue(),'');
   });
   await check('backgrounding cancels pending cues; disabling effects stops active playback',async page=>{
-    await observeSound(page); await page.goto(base);
-    await page.locator('#settings-open').click(); await page.locator('#sound-toggle').check();
+    await observeSound(page); await page.goto(base); await tab(page,'ink'); await page.locator('#grind-once').click();
     await page.waitForFunction(()=>window.playedSounds.length>0);
+    await page.locator('#settings-open').click(); assert.ok(await page.locator('#sound-toggle').isChecked());
     await page.locator('#sound-toggle').uncheck();
     await page.waitForFunction(()=>window.testAudioContext.state==='suspended');
     assert.ok(await page.evaluate(()=>window.stoppedSounds>0));
-    await page.locator('#sound-toggle').check(); await page.locator('#settings-dialog .button.close-dialog').click();
+    await page.locator('#sound-toggle').check(); await page.locator('#settings-dialog .button.close-dialog').click(); await tab(page,'write');
     await page.locator('#draft').fill('배경 전환 중 멈출 가상 문장');
     await page.evaluate(()=>{window.playedSounds=[];}); await page.locator('#give').click();
     await page.waitForFunction(()=>window.playedSounds.length>0);
@@ -112,9 +111,12 @@ try {
       assert.match(await page.locator('#ink-haechi').getAttribute('src'),new RegExp(`grind_${stage}`));
       assert.ok((await page.locator('#ink-reaction').textContent()).length>5);
     }
+    const message=await page.locator('#ink-reaction').textContent();
+    await page.locator('#grind-once').click();
+    assert.equal(await page.locator('#ink-reaction').textContent(),message,'A message stays put within its milestone');
     await page.reload(); await tab(page,'ink');
     assert.match(await page.locator('#ink-haechi').getAttribute('src'),/grind_60/);
-    await page.evaluate(()=>{for(let i=0;i<20;i++) document.getElementById('grind-once').click();});
+    await page.evaluate(()=>{for(let i=0;i<19;i++) document.getElementById('grind-once').click();});
     assert.match(await page.locator('#ink-reaction').textContent(),/거의 다 왔어요/);
   });
   await check('new cards unfold and stamp; reduced motion cancels every decorative effect',async page=>{
@@ -382,8 +384,8 @@ try {
     await context.setOffline(true); await page.reload(); await visible(page,'#write-view'); await page.locator('#draft').fill('오프라인에서도');
     await page.locator('#give').click(); await visible(page,'#done-view'); await tab(page,'ink'); await page.locator('#grind-once').click();
     assert.equal(await page.locator('#turn-count').textContent(),'1'); assert.ok(await page.locator('#eating-haechi').evaluate(img=>img.complete&&img.naturalWidth>0));
-    await page.locator('#settings-open').click(); await page.locator('#sound-toggle').check();
     await page.waitForFunction(()=>window.playedSounds.length>0);
+    await page.locator('#settings-open').click(); assert.ok(await page.locator('#sound-toggle').isChecked());
     assert.ok(await page.evaluate(()=>window.playedSounds[0].peak>0.1));
   },{serviceWorkers:'allow'});
   await check('failed offline installation is reported and can recover without a reload',async(page,context)=>{

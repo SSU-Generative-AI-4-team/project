@@ -39,6 +39,11 @@ export function createUIMotion(preference) {
         {opacity:0,transform:'scale(.25)'}, {opacity:.6,transform:'scale(.4)',offset:.16}, {opacity:0,transform:'scale(1.3)'}
       ],{duration:720,delay:index*120,easing:'ease-out'}));
     },
+    reaction(haechi, speech) {
+      cancel('reaction');
+      animate('reaction',haechi,[{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:380});
+      animate('reaction',speech,[{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:320});
+    },
     dialog(dialog, isNew = false) {
       cancel('dialog');
       animate('dialog',dialog,[{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:260});

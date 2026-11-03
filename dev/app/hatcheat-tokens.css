@@ -14,12 +14,15 @@
   --color-reflection:rgba(253,245,233,.12); --color-overlay:rgba(42,40,38,.4); --color-focus:#2A6090;
   --color-seal:#EB4531; --color-fold:#E5E2DC; --color-empty:#E9E6DF;
   --color-paper-glaze:rgba(253,245,233,.32);
+  --color-paper-panel:oklch(97% .012 82); --color-blue-wash:oklch(89% .04 245);
+  --color-gold-wash:oklch(93% .075 83); --color-blue-line:oklch(78% .065 244);
   --paper-texture:url('./assets/hanji.jpg');
   --font-body:Yeongnam,'Gowun Dodum',-apple-system,'Apple SD Gothic Neo',sans-serif;
   --font-heading:var(--font-body); --font-classic:'Songti SC','Noto Serif CJK TC','AppleMyungjo',serif;
   --text-xs:13px; --text-sm:15px; --text-md:17px; --text-lg:22px; --text-xl:27px;
   --space-xs:8px; --space-sm:16px; --space-md:24px; --space-lg:32px; --space-xl:48px;
   --radius:4px; --button-height:48px;
+  --radius-action:16px 16px 16px 5px; --radius-panel:24px 8px 24px 24px;
   --ease-out:cubic-bezier(.16,1,.3,1); --ease-in:cubic-bezier(.7,0,.84,0); --ease-in-out:cubic-bezier(.65,0,.35,1);
   --dur-fast:160ms; --dur-normal:280ms;
 }

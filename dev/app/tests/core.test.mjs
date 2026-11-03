@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialState, normalizeState, readState, saveState, STORAGE_KEY, canGive, grindOnce, inkReaction, pickQuote, CircularGesture, GivingRitual } from '../core.js';
+import { initialState, normalizeState, readState, saveState, STORAGE_KEY, canGive, grindOnce, inkMilestone, inkReaction, pickQuote, CircularGesture, GivingRitual } from '../core.js';
 import { BOOKS, QUOTES, quoteById } from '../quotes.js';
 const storageMock = () => { const map = new Map(); return { getItem:k=>map.get(k)??null, setItem:(k,v)=>map.set(k,v), map }; };
 
@@ -24,7 +24,14 @@ test('backgrounding invalidates callbacks and clears text, including during an a
 test('only non-sensitive progress and preferences may be persisted', () => {
   const storage = storageMock();
   saveState(storage,{ ...initialState(), turns:37, draft:'비밀 원문', count:50, date:'today', letter:'편지' });
-  assert.deepEqual(JSON.parse(storage.map.get(STORAGE_KEY)),{ version:1, turns:37, collection:[], book:'random', sound:false });
+  assert.deepEqual(JSON.parse(storage.map.get(STORAGE_KEY)),{ version:1, turns:37, collection:[], book:'random', sound:true });
+});
+test('sound starts on and preserves a saved mute', () => {
+  const storage = storageMock();
+  assert.equal(readState(storage).state.sound,true);
+  assert.equal(normalizeState({version:1,turns:5}).sound,true);
+  storage.setItem(STORAGE_KEY,JSON.stringify({...initialState(),sound:false}));
+  assert.equal(readState(storage).state.sound,false);
 });
 test('invalid storage is bounded and unknown cards/books are discarded', () => {
   assert.deepEqual(normalizeState({version:2,turns:90}),initialState());
@@ -45,10 +52,15 @@ test('99 turns give no card; the 100th awards exactly one and resets progress', 
   assert.equal(grindOnce(result.state).state.turns,1);
 });
 test('haechi reactions follow saved progress and reset after a card', () => {
-  for (const [turns,stage] of [[0,0],[19,0],[20,20],[39,20],[40,40],[59,40],[60,60],[80,60],[99,60]]) {
+  for (const [turns,milestone,stage] of [[0,0,0],[19,0,0],[20,20,20],[39,20,20],[40,40,40],[59,40,40],[60,60,60],[80,80,60],[99,80,60]]) {
+    assert.equal(inkMilestone(turns),milestone);
     assert.equal(inkReaction(turns).stage,stage);
   }
-  assert.match(inkReaction(80).message,/거의 다 왔어요/);
+  for (const turns of [20,40,60,80]) {
+    const messages = [0,.25,.5,.999].map(value=>inkReaction(turns,()=>value).message);
+    assert.equal(new Set(messages).size,4);
+  }
+  assert.match(inkReaction(80,()=>.999).message,/거의 다 왔어요/);
   assert.equal(inkReaction(grindOnce({...initialState(),turns:99}).state.turns).stage,0);
 });
 test('progress and collection survive a reload without dates or visit counters', () => {

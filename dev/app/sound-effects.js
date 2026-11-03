@@ -1,7 +1,7 @@
 const CUES = new Set(['paper-fold','paper-glide','haechi-bite','settle','ink-grind','page-open','card-reveal']);
 
 // Only fixed cue names cross this boundary. Neither audio backend receives user text.
-export function createSoundEffects({ enabled = false, native = window.hatcheatNativeFeedback } = {}) {
+export function createSoundEffects({ enabled = true, native = window.hatcheatNativeFeedback } = {}) {
   let context, ready = Promise.resolve(), blocked = true, generation = 0;
   let grinding = false, grindToken = 0, grindTimer = 0, grindSource = null, grindGain = null;
   const buffers = new Map(), active = new Set(), lastPlayed = new Map();

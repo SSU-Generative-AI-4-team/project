@@ -77,7 +77,9 @@ final class HatcheatTests: XCTestCase {
 
     func testStoreRejectsInvalidProgressAndStripsPrivateFields() {
         let store = ProgressStore(defaults: defaults)
+        XCTAssertTrue(store.soundEnabled)
         XCTAssertTrue(store.save(#"{"version":1,"turns":5,"book":"random","sound":false,"collection":[],"draft":"never persist"}"#))
+        XCTAssertFalse(store.soundEnabled)
         XCTAssertFalse(store.json.contains("draft"))
         XCTAssertFalse(store.json.contains("never persist"))
         XCTAssertFalse(store.save(#"{"version":1,"turns":100,"book":"random","sound":false,"collection":[]}"#))
@@ -91,9 +93,13 @@ final class HatcheatTests: XCTestCase {
         }
         _ = try await js("window.hatcheatNativeFeedback.prepare(); window.hatcheatNativeFeedback.play('paper-fold'); null")
         try await Task.sleep(for: .milliseconds(100))
-        XCTAssertTrue(controller.soundEffects.playingCues.isEmpty, "Default sound-off must be enforced natively")
+        XCTAssertTrue(controller.soundEffects.playingCues.contains("paper-fold"), "Sound starts on in the native app")
 
-        _ = try await js("document.getElementById('settings-open').click(); const toggle=document.getElementById('sound-toggle'); toggle.checked=true; toggle.dispatchEvent(new Event('change')); null")
+        _ = try await js("document.getElementById('settings-open').click(); const toggle=document.getElementById('sound-toggle'); toggle.checked=false; toggle.dispatchEvent(new Event('change')); null")
+        try await until("!JSON.parse(window.hatcheatNativeStorage.getItem('hatcheat.progress.v1')).sound")
+        XCTAssertTrue(controller.soundEffects.playingCues.isEmpty)
+        XCTAssertFalse(controller.soundEffects.isPrepared)
+        _ = try await js("document.getElementById('sound-toggle').checked=true; document.getElementById('sound-toggle').dispatchEvent(new Event('change')); null")
         try await until("JSON.parse(window.hatcheatNativeStorage.getItem('hatcheat.progress.v1')).sound")
         try await Task.sleep(for: .milliseconds(100))
         XCTAssertEqual(AVAudioSession.sharedInstance().category, .ambient)

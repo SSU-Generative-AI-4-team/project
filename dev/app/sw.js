@@ -1,5 +1,5 @@
 // Cache an immutable app shell, never user input or arbitrary runtime requests.
-const CACHE = 'hatcheat-v10-grind-reactions-20261103';
+const CACHE = 'hatcheat-v11-sound-on-random-reactions-20261103';
 const ASSETS = ['./', './index.html', './app.js', './core.js', './quotes.js', './giving-animation.js', './ink-motion.js', './sound-effects.js', './ui-motion.js', './styles.css', './hatcheat-tokens.css',
   ...['paper-fold','paper-glide','haechi-bite','settle','ink-grind','page-open','card-reveal'].map(name => `./assets/audio/${name}.wav`),
   './manifest.webmanifest', './assets/GowunDodum-Regular.woff2', './assets/haechi-logo.png', './assets/hanji.jpg', './assets/hatcheat-192.png', './assets/hatcheat-512.png',

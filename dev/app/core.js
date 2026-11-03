@@ -1,7 +1,7 @@
 import { BOOKS, QUOTES, quoteById } from './quotes.js';
 export const STORAGE_KEY = 'hatcheat.progress.v1';
 export const TURNS_PER_CARD = 100;
-export const initialState = () => ({ version:1, turns:0, collection:[], book:'random', sound:false });
+export const initialState = () => ({ version:1, turns:0, collection:[], book:'random', sound:true });
 export const canGive = text => typeof text === 'string' && text.trim().length > 0;
 
 // Reconstruct a whitelist instead of spreading unknown persisted keys. Drafts never enter this model.
@@ -11,7 +11,7 @@ export function normalizeState(value) {
   if (Number.isInteger(value.turns) && value.turns >= 0 && value.turns < TURNS_PER_CARD) clean.turns = value.turns;
   if (Array.isArray(value.collection)) clean.collection = value.collection.filter(id => typeof id === 'string' && quoteById(id));
   if (BOOKS.some(book => book.id === value.book)) clean.book = value.book;
-  clean.sound = value.sound === true;
+  if (typeof value.sound === 'boolean') clean.sound = value.sound;
   return clean;
 }
 export function readState(storage) {
@@ -50,12 +50,22 @@ export function grindOnce(value, random = Math.random) {
   return { state:{ ...state, turns:0, collection:[...state.collection, quote.id] }, quote };
 }
 
-export function inkReaction(turns) {
-  if (turns >= 80) return { stage:60, message:'거의 다 왔어요. 조금만 더 갈아 봐요.' };
-  if (turns >= 60) return { stage:60, message:'절반을 훌쩍 넘었어요. 곧 한 구절을 만나요.' };
-  if (turns >= 40) return { stage:40, message:'벌써 마흔 바퀴예요. 먹빛이 짙어졌어요.' };
-  if (turns >= 20) return { stage:20, message:'좋아요. 해치가 곁에서 응원하고 있어요.' };
-  return { stage:0, message:'' };
+const INK_MESSAGES = {
+  20: ['좋아요. 첫 스무 바퀴를 갈았어요.', '먹빛이 조금씩 짙어지고 있어요.', '해치가 곁에서 응원하고 있어요.', '천천히, 지금처럼 갈아 주세요.'],
+  40: ['벌써 마흔 바퀴예요. 잘하고 있어요.', '먹빛이 한층 더 깊어졌어요.', '해치가 반가운 눈으로 보고 있어요.', '차분히 이어 가고 있네요.'],
+  60: ['절반을 훌쩍 넘었어요.', '해치가 곧 한 구절을 가져올 거예요.', '먹빛이 충분히 깊어졌어요.', '좋은 속도예요. 함께 이어 가요.'],
+  80: ['거의 다 왔어요. 조금만 더요.', '거의 다 왔어요. 해치가 기다려요.', '거의 다 왔어요. 한 구절이 가까워요.', '거의 다 왔어요. 마지막 스무 바퀴예요.']
+};
+export function inkMilestone(turns) {
+  return turns >= 80 ? 80 : turns >= 60 ? 60 : turns >= 40 ? 40 : turns >= 20 ? 20 : 0;
+}
+export function inkReaction(turns, random = Math.random) {
+  const milestone = inkMilestone(turns);
+  if (!milestone) return { stage:0, message:'' };
+  const messages = INK_MESSAGES[milestone];
+  const sample = random();
+  const index = Number.isFinite(sample) ? Math.max(0, Math.min(messages.length - 1, Math.floor(sample * messages.length))) : 0;
+  return { stage:Math.min(milestone, 60), message:messages[index] };
 }
 
 // Net angular travel rejects back-and-forth scrubbing; allow a small hand-drawn closing gap.

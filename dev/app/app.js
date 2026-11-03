@@ -1,4 +1,4 @@
-import { STORAGE_KEY, readState, saveState, normalizeState, canGive, grindOnce, inkReaction, CircularGesture, GivingRitual } from './core.js';
+import { STORAGE_KEY, readState, saveState, normalizeState, canGive, grindOnce, inkMilestone, inkReaction, CircularGesture, GivingRitual } from './core.js';
 import { BOOKS, quoteById, bookName } from './quotes.js';
 import { playGiving } from './giving-animation.js';
 import { createInkMotion } from './ink-motion.js';
@@ -126,16 +126,22 @@ document.querySelectorAll('[data-view]').forEach(button => button.addEventListen
 function updateProgress() {
   $('turn-count').textContent = state.turns; $('turn-progress').value = state.turns;
   $('ink-pool').style.setProperty('--ink-darkness', String(.35 + state.turns / 100 * .62));
-  const reaction = inkReaction(state.turns);
-  const haechi = $('ink-haechi');
-  if (haechi.dataset.stage !== String(reaction.stage)) {
-    haechi.src = reaction.stage ? `./assets/haechi/haechi_grind_${reaction.stage}.png` : './assets/haechi/haechi_sit.png';
-    haechi.alt = reaction.stage ? '먹을 가는 동안 응원하며 웃는 해치' : '벼루 곁에서 함께 쉬는 해치';
-    haechi.dataset.stage = String(reaction.stage);
-  }
   const speech = $('ink-reaction');
-  speech.hidden = !reaction.message;
-  if (speech.textContent !== reaction.message) speech.textContent = reaction.message;
+  const milestone = inkMilestone(state.turns);
+  if (speech.dataset.milestone !== String(milestone)) {
+    const previousMilestone = speech.dataset.milestone;
+    const reaction = inkReaction(state.turns);
+    const haechi = $('ink-haechi');
+    if (haechi.dataset.stage !== String(reaction.stage)) {
+      haechi.src = reaction.stage ? `./assets/haechi/haechi_grind_${reaction.stage}.png` : './assets/haechi/haechi_sit.png';
+      haechi.alt = reaction.stage ? '먹을 가는 동안 응원하며 웃는 해치' : '벼루 곁에서 함께 쉬는 해치';
+      haechi.dataset.stage = String(reaction.stage);
+    }
+    speech.hidden = !reaction.message;
+    speech.textContent = reaction.message;
+    speech.dataset.milestone = String(milestone);
+    if (previousMilestone !== undefined && milestone) uiMotion.reaction(haechi, speech);
+  }
   $('current-book').textContent = bookName(state.book);
   $('card-count').textContent = `${state.collection.length}장`;
 }

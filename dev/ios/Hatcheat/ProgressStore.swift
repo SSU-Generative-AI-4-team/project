@@ -6,7 +6,7 @@ struct Progress: Codable, Equatable {
     var collection: [String]
     var book: String
     var sound: Bool
-    static let empty = Progress(version: 1, turns: 0, collection: [], book: "random", sound: false)
+    static let empty = Progress(version: 1, turns: 0, collection: [], book: "random", sound: true)
 }
 
 final class ProgressStore {
@@ -36,7 +36,7 @@ final class ProgressStore {
     }
 
     var soundEnabled: Bool {
-        defaults.data(forKey: Self.key).flatMap(validated)?.sound ?? false
+        defaults.data(forKey: Self.key).flatMap(validated)?.sound ?? true
     }
 
     @discardableResult
