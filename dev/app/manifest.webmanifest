@@ -1,0 +1,10 @@
+{
+  "id":"./", "name":"해칫 — 마음을 건네는 곳", "short_name":"해칫",
+  "description":"한지에 적으면 해치가 먹어요. 조금 더 머물고 싶다면 먹을 갈아요.",
+  "lang":"ko", "start_url":"./", "scope":"./", "display":"standalone",
+  "background_color":"#F4F3F0", "theme_color":"#F4F3F0",
+  "icons":[
+    {"src":"assets/hatcheat-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"assets/hatcheat-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
+  ]
+}

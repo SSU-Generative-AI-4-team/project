@@ -1,0 +1,8 @@
+node_modules/
+tests/
+scripts/
+server.mjs
+assets/fonts/
+.hallmark/
+package.json
+package-lock.json
