@@ -1,0 +1,11 @@
+{
+  "name": "hatcheat-ios",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bundle": "node scripts/bundle-web.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
