@@ -14,6 +14,8 @@ enum HatcheatAnalytics {
     static var isEnabled: Bool { firebase || meta }
 
     static func start(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        // 단위 테스트에서는 켜지 않는다. 시뮬레이터 이벤트가 실제 GA·Meta로 가고, 추적 허용 창이 앱을 비활성으로 만든다.
+        guard ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil else { return }
         if Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") != nil {
             FirebaseApp.configure()
             Analytics.setDefaultEventParameters(["surface": "app"])

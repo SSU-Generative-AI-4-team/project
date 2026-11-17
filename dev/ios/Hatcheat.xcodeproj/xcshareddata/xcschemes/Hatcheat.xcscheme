@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "62267868652CE9523B4ABF38"
+               BlueprintIdentifier = "24ADCB588EF149B62A0F7B3F"
                BuildableName = "Hatcheat.app"
                BlueprintName = "Hatcheat"
                ReferencedContainer = "container:Hatcheat.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "94569E0D5E94E5E33DC52F9B"
+               BlueprintIdentifier = "3D5D2BE8E9BBADEC6684642E"
                BuildableName = "HatcheatTests.xctest"
                BlueprintName = "HatcheatTests"
                ReferencedContainer = "container:Hatcheat.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "94569E0D5E94E5E33DC52F9B"
+               BlueprintIdentifier = "3D5D2BE8E9BBADEC6684642E"
                BuildableName = "HatcheatTests.xctest"
                BlueprintName = "HatcheatTests"
                ReferencedContainer = "container:Hatcheat.xcodeproj">

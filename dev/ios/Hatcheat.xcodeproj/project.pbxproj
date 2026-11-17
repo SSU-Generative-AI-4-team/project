@@ -7,138 +7,141 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		259DD4C4185A28292DCD541B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C255A04624B0CD54BDB3EC /* Foundation.framework */; };
-		277271B4ADE6A409230CCED9 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = F0116E75531C8F5433A07D2D /* Web */; };
-		3DEF798BC8C45F07AAC616BA /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B877C7C3240116D649479913 /* FacebookCore */; };
-		40168A6AA887320C95B26840 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D48176EBBAA83DA36148E85C /* FirebaseAnalytics */; };
-		4D4479A0400215D267A051EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C255A04624B0CD54BDB3EC /* Foundation.framework */; };
-		54F941146DB2E436B9FC732B /* HatcheatAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */; };
-		586CA0DBB477AE853E637B18 /* HatcheatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */; };
-		608184069A2E42777EC94D07 /* HatcheatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */; };
-		63C44D222836BC1333248A8D /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B8BB874D1472E4072E946 /* ProgressStore.swift */; };
-		6E8EF196919BE01165783A83 /* HatcheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */; };
-		86C9AA186A95D9DF060745D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */; };
-		C7186ECE11AE37ED1F4A8A19 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */; };
+		07155CFA68C1A4B2C288EE20 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 746BF409FFF17CEC47E4241A /* Web */; };
+		21E0AC9E3953C53EA4C515CE /* HatcheatAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B0F0EBCA81BFB54116A6C /* HatcheatAnalytics.swift */; };
+		53AC9A163E8B709C8E834890 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C98F4399A77137216AD7095 /* Assets.xcassets */; };
+		623DAC52E589FBD60D17A013 /* HatcheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB12BD2897EF5AC43C951637 /* HatcheatViewController.swift */; };
+		75646A7ED712312B411380AA /* HatcheatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE4EFA07DADB3CE674CE3B0 /* HatcheatApp.swift */; };
+		8CC7F94F562E51BAA9EC12ED /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5FF0AD2BF2B532B454B2352C /* FacebookCore */; };
+		8F14CCF0DBFE6B47AB93A7AF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E6D45053FC65B35FB03E8CF5 /* PrivacyInfo.xcprivacy */; };
+		A00516491CE3914C12318EE6 /* HatcheatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063D2B542832B626301F6DB1 /* HatcheatTests.swift */; };
+		AEAA3611B8307FD2631E90F9 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C193390C003AC6D74B826C /* ProgressStore.swift */; };
+		B1D19A8CF91A7437F33778EF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DE7E9309E105782A00EC3A58 /* FirebaseAnalytics */; };
+		BD6A4B26E1745CFF110CD390 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDC6AA65D7B538C265B6075D /* GoogleService-Info.plist */; };
+		C425ED400E4ECA3B3A524FB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D65EA8830512F276084DC3EC /* Foundation.framework */; };
+		F6B3F5A0D69D9FA5A14661D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D65EA8830512F276084DC3EC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D730059C51895B93B57CED33 /* PBXContainerItemProxy */ = {
+		D582B5EB4C8539F93206E392 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E364F06598B93F7486956352 /* Project object */;
+			containerPortal = FAB5F86F5F7F9D52904CDC51 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 62267868652CE9523B4ABF38;
+			remoteGlobalIDString = 24ADCB588EF149B62A0F7B3F;
 			remoteInfo = Hatcheat;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatAnalytics.swift; sourceTree = "<group>"; };
-		59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hatcheat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CCC869F709D7164E2BC9A8C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatViewController.swift; sourceTree = "<group>"; };
-		79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatTests.swift; sourceTree = "<group>"; };
-		7F3B8BB874D1472E4072E946 /* ProgressStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
-		8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatApp.swift; sourceTree = "<group>"; };
-		98C255A04624B0CD54BDB3EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HatcheatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		F0116E75531C8F5433A07D2D /* Web */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Web; sourceTree = "<group>"; };
+		063D2B542832B626301F6DB1 /* HatcheatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatTests.swift; sourceTree = "<group>"; };
+		406491FFE4419A7091BB5B69 /* HatcheatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HatcheatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A3B0F0EBCA81BFB54116A6C /* HatcheatAnalytics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatAnalytics.swift; sourceTree = "<group>"; };
+		6BE4EFA07DADB3CE674CE3B0 /* HatcheatApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatApp.swift; sourceTree = "<group>"; };
+		746BF409FFF17CEC47E4241A /* Web */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Web; sourceTree = "<group>"; };
+		76D8CA83804282D46B6B959A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C98F4399A77137216AD7095 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB12BD2897EF5AC43C951637 /* HatcheatViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatViewController.swift; sourceTree = "<group>"; };
+		B56991CD5AA35170B646A99C /* Hatcheat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hatcheat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDC6AA65D7B538C265B6075D /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D65EA8830512F276084DC3EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E6C193390C003AC6D74B826C /* ProgressStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
+		E6D45053FC65B35FB03E8CF5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9DDE9046B303AB9671143DAD /* Frameworks */ = {
+		2A24D50100D058FE70E96595 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D4479A0400215D267A051EE /* Foundation.framework in Frameworks */,
-				40168A6AA887320C95B26840 /* FirebaseAnalytics in Frameworks */,
-				3DEF798BC8C45F07AAC616BA /* FacebookCore in Frameworks */,
+				F6B3F5A0D69D9FA5A14661D2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EB061F748956D2B628098A3C /* Frameworks */ = {
+		5893524609863A318313DC4E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				259DD4C4185A28292DCD541B /* Foundation.framework in Frameworks */,
+				C425ED400E4ECA3B3A524FB6 /* Foundation.framework in Frameworks */,
+				B1D19A8CF91A7437F33778EF /* FirebaseAnalytics in Frameworks */,
+				8CC7F94F562E51BAA9EC12ED /* FacebookCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E4E79229EE980BDAF7731AC /* Frameworks */ = {
+		6455A68492C0580AD29E7E2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				806FED7A424E4DADC5FA2A04 /* iOS */,
+				D5874ED10EA4F48A6C18E57E /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		806FED7A424E4DADC5FA2A04 /* iOS */ = {
+		81A0DC8DEBA97F09A265E80D /* Hatcheat */ = {
 			isa = PBXGroup;
 			children = (
-				98C255A04624B0CD54BDB3EC /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		875B50EFEF28514AB5A6A0E1 /* HatcheatTests */ = {
-			isa = PBXGroup;
-			children = (
-				79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */,
-			);
-			name = HatcheatTests;
-			path = HatcheatTests;
-			sourceTree = "<group>";
-		};
-		BDF02C717D9A2BD549CA74AD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */,
-				99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		CA14ED44CBDCEB97D10CDFB6 = {
-			isa = PBXGroup;
-			children = (
-				BDF02C717D9A2BD549CA74AD /* Products */,
-				3E4E79229EE980BDAF7731AC /* Frameworks */,
-				EBC0C6AB3CA0B7F0B3D68C61 /* Hatcheat */,
-				875B50EFEF28514AB5A6A0E1 /* HatcheatTests */,
-			);
-			sourceTree = "<group>";
-		};
-		EBC0C6AB3CA0B7F0B3D68C61 /* Hatcheat */ = {
-			isa = PBXGroup;
-			children = (
-				8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */,
-				6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */,
-				7F3B8BB874D1472E4072E946 /* ProgressStore.swift */,
-				4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */,
-				350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */,
-				B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */,
-				F0116E75531C8F5433A07D2D /* Web */,
-				5CCC869F709D7164E2BC9A8C /* Info.plist */,
+				6BE4EFA07DADB3CE674CE3B0 /* HatcheatApp.swift */,
+				AB12BD2897EF5AC43C951637 /* HatcheatViewController.swift */,
+				E6C193390C003AC6D74B826C /* ProgressStore.swift */,
+				4A3B0F0EBCA81BFB54116A6C /* HatcheatAnalytics.swift */,
+				9C98F4399A77137216AD7095 /* Assets.xcassets */,
+				E6D45053FC65B35FB03E8CF5 /* PrivacyInfo.xcprivacy */,
+				746BF409FFF17CEC47E4241A /* Web */,
+				BDC6AA65D7B538C265B6075D /* GoogleService-Info.plist */,
+				76D8CA83804282D46B6B959A /* Info.plist */,
 			);
 			name = Hatcheat;
 			path = Hatcheat;
 			sourceTree = "<group>";
 		};
+		98E0866097E8C8E43B9A94BE = {
+			isa = PBXGroup;
+			children = (
+				F34F132DDAE22A0B7187B41D /* Products */,
+				6455A68492C0580AD29E7E2D /* Frameworks */,
+				81A0DC8DEBA97F09A265E80D /* Hatcheat */,
+				F5A0376B3CEFCEA01B7B25EB /* HatcheatTests */,
+			);
+			sourceTree = "<group>";
+		};
+		D5874ED10EA4F48A6C18E57E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D65EA8830512F276084DC3EC /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F34F132DDAE22A0B7187B41D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B56991CD5AA35170B646A99C /* Hatcheat.app */,
+				406491FFE4419A7091BB5B69 /* HatcheatTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5A0376B3CEFCEA01B7B25EB /* HatcheatTests */ = {
+			isa = PBXGroup;
+			children = (
+				063D2B542832B626301F6DB1 /* HatcheatTests.swift */,
+			);
+			name = HatcheatTests;
+			path = HatcheatTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		62267868652CE9523B4ABF38 /* Hatcheat */ = {
+		24ADCB588EF149B62A0F7B3F /* Hatcheat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0482FC640D227A82725B5016 /* Build configuration list for PBXNativeTarget "Hatcheat" */;
+			buildConfigurationList = 7CD0A475ED7758353BD3CED2 /* Build configuration list for PBXNativeTarget "Hatcheat" */;
 			buildPhases = (
-				F3040A2F9063B83FDFECA199 /* Bundle current web app */,
-				0AE8E01FF5DEF46CEC08CD64 /* Sources */,
-				9DDE9046B303AB9671143DAD /* Frameworks */,
-				956DBF4435216488FE91B4A0 /* Resources */,
+				B35F56EB72485A9D224DF5E0 /* Bundle current web app */,
+				D9415192DCEC24B9053E0B81 /* Sources */,
+				5893524609863A318313DC4E /* Frameworks */,
+				AF3603A2EB0EDD8588F4AC76 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -146,41 +149,41 @@
 			);
 			name = Hatcheat;
 			packageProductDependencies = (
-				D48176EBBAA83DA36148E85C /* FirebaseAnalytics */,
-				B877C7C3240116D649479913 /* FacebookCore */,
+				DE7E9309E105782A00EC3A58 /* FirebaseAnalytics */,
+				5FF0AD2BF2B532B454B2352C /* FacebookCore */,
 			);
 			productName = Hatcheat;
-			productReference = 59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */;
+			productReference = B56991CD5AA35170B646A99C /* Hatcheat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94569E0D5E94E5E33DC52F9B /* HatcheatTests */ = {
+		3D5D2BE8E9BBADEC6684642E /* HatcheatTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F19CD1FF79D1C3D312EB9799 /* Build configuration list for PBXNativeTarget "HatcheatTests" */;
+			buildConfigurationList = 8A5D8212F4BEBF2E8A81D911 /* Build configuration list for PBXNativeTarget "HatcheatTests" */;
 			buildPhases = (
-				9359AE7E5E17B51EB2B2B9B6 /* Sources */,
-				EB061F748956D2B628098A3C /* Frameworks */,
-				A6C9C3746C82537EE442E970 /* Resources */,
+				10435CCA7FF89E98423E1F60 /* Sources */,
+				2A24D50100D058FE70E96595 /* Frameworks */,
+				1724E5DF95CB08EBD6E9CFDC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2DF1C86DD06D97E0D2FB7D0F /* PBXTargetDependency */,
+				428B0720B0B25CDA04F80EAC /* PBXTargetDependency */,
 			);
 			name = HatcheatTests;
 			productName = HatcheatTests;
-			productReference = 99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */;
+			productReference = 406491FFE4419A7091BB5B69 /* HatcheatTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E364F06598B93F7486956352 /* Project object */ = {
+		FAB5F86F5F7F9D52904CDC51 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = 6C3D6B7CC0D546E0A658A263 /* Build configuration list for PBXProject "Hatcheat" */;
+			buildConfigurationList = F78E17E4DE48DD1119B69215 /* Build configuration list for PBXProject "Hatcheat" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -188,45 +191,46 @@
 				en,
 				Base,
 			);
-			mainGroup = CA14ED44CBDCEB97D10CDFB6;
+			mainGroup = 98E0866097E8C8E43B9A94BE;
 			minimizedProjectReferenceProxies = 0;
 			packageReferences = (
-				B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				DF68CD5D070098E8DC5FBBD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C035DDDDA5E7AE5F3C2D1859 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 100;
-			productRefGroup = BDF02C717D9A2BD549CA74AD /* Products */;
+			productRefGroup = F34F132DDAE22A0B7187B41D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				62267868652CE9523B4ABF38 /* Hatcheat */,
-				94569E0D5E94E5E33DC52F9B /* HatcheatTests */,
+				24ADCB588EF149B62A0F7B3F /* Hatcheat */,
+				3D5D2BE8E9BBADEC6684642E /* HatcheatTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		956DBF4435216488FE91B4A0 /* Resources */ = {
+		1724E5DF95CB08EBD6E9CFDC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86C9AA186A95D9DF060745D7 /* Assets.xcassets in Resources */,
-				C7186ECE11AE37ED1F4A8A19 /* PrivacyInfo.xcprivacy in Resources */,
-				277271B4ADE6A409230CCED9 /* Web in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A6C9C3746C82537EE442E970 /* Resources */ = {
+		AF3603A2EB0EDD8588F4AC76 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53AC9A163E8B709C8E834890 /* Assets.xcassets in Resources */,
+				8F14CCF0DBFE6B47AB93A7AF /* PrivacyInfo.xcprivacy in Resources */,
+				07155CFA68C1A4B2C288EE20 /* Web in Resources */,
+				BD6A4B26E1745CFF110CD390 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F3040A2F9063B83FDFECA199 /* Bundle current web app */ = {
+		B35F56EB72485A9D224DF5E0 /* Bundle current web app */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -248,38 +252,80 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0AE8E01FF5DEF46CEC08CD64 /* Sources */ = {
+		10435CCA7FF89E98423E1F60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				608184069A2E42777EC94D07 /* HatcheatApp.swift in Sources */,
-				6E8EF196919BE01165783A83 /* HatcheatViewController.swift in Sources */,
-				63C44D222836BC1333248A8D /* ProgressStore.swift in Sources */,
-				54F941146DB2E436B9FC732B /* HatcheatAnalytics.swift in Sources */,
+				A00516491CE3914C12318EE6 /* HatcheatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9359AE7E5E17B51EB2B2B9B6 /* Sources */ = {
+		D9415192DCEC24B9053E0B81 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				586CA0DBB477AE853E637B18 /* HatcheatTests.swift in Sources */,
+				75646A7ED712312B411380AA /* HatcheatApp.swift in Sources */,
+				623DAC52E589FBD60D17A013 /* HatcheatViewController.swift in Sources */,
+				AEAA3611B8307FD2631E90F9 /* ProgressStore.swift in Sources */,
+				21E0AC9E3953C53EA4C515CE /* HatcheatAnalytics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2DF1C86DD06D97E0D2FB7D0F /* PBXTargetDependency */ = {
+		428B0720B0B25CDA04F80EAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Hatcheat;
-			target = 62267868652CE9523B4ABF38 /* Hatcheat */;
-			targetProxy = D730059C51895B93B57CED33 /* PBXContainerItemProxy */;
+			target = 24ADCB588EF149B62A0F7B3F /* Hatcheat */;
+			targetProxy = D582B5EB4C8539F93206E392 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0EAEA60F5C72F5060E4AFDD9 /* Debug */ = {
+		0C0801DFAE079EE2F6277169 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2D9AC4C5717FEB3EC547D18D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = Hatcheat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				META_APP_ID = "";
+				META_CLIENT_TOKEN = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5BF29A043367716A30FC539D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -340,7 +386,23 @@
 			};
 			name = Debug;
 		};
-		147F6D7BCFC3AD4CA59DC02F /* Release */ = {
+		B28CC6BE9394BAC113A0ED49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
+			};
+			name = Debug;
+		};
+		BD1D08C3BFACD214E07CD257 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -367,48 +429,7 @@
 			};
 			name = Release;
 		};
-		362104FC6E4616E3CBE78D5F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				DEVELOPMENT_TEAM = P6Z68QUK9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
-			};
-			name = Debug;
-		};
-		3881EC98138EF1EB9D5F773A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = P6Z68QUK9M;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				INFOPLIST_FILE = Hatcheat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				META_APP_ID = "";
-				META_CLIENT_TOKEN = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi;
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4B49A329A6644602A9B6C96F /* Release */ = {
+		F5389720A815C634746583E7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -462,49 +483,32 @@
 			};
 			name = Release;
 		};
-		B76499EA8C9641C9C9CE10F9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				DEVELOPMENT_TEAM = P6Z68QUK9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0482FC640D227A82725B5016 /* Build configuration list for PBXNativeTarget "Hatcheat" */ = {
+		7CD0A475ED7758353BD3CED2 /* Build configuration list for PBXNativeTarget "Hatcheat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				147F6D7BCFC3AD4CA59DC02F /* Release */,
-				3881EC98138EF1EB9D5F773A /* Debug */,
+				BD1D08C3BFACD214E07CD257 /* Release */,
+				2D9AC4C5717FEB3EC547D18D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6C3D6B7CC0D546E0A658A263 /* Build configuration list for PBXProject "Hatcheat" */ = {
+		8A5D8212F4BEBF2E8A81D911 /* Build configuration list for PBXNativeTarget "HatcheatTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0EAEA60F5C72F5060E4AFDD9 /* Debug */,
-				4B49A329A6644602A9B6C96F /* Release */,
+				0C0801DFAE079EE2F6277169 /* Release */,
+				B28CC6BE9394BAC113A0ED49 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F19CD1FF79D1C3D312EB9799 /* Build configuration list for PBXNativeTarget "HatcheatTests" */ = {
+		F78E17E4DE48DD1119B69215 /* Build configuration list for PBXProject "Hatcheat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B76499EA8C9641C9C9CE10F9 /* Release */,
-				362104FC6E4616E3CBE78D5F /* Debug */,
+				5BF29A043367716A30FC539D /* Debug */,
+				F5389720A815C634746583E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -512,15 +516,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 13.0.0;
-			};
-		};
-		E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+		C035DDDDA5E7AE5F3C2D1859 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk.git";
 			requirement = {
@@ -528,20 +524,28 @@
 				minimumVersion = 19.0.0;
 			};
 		};
+		DF68CD5D070098E8DC5FBBD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B877C7C3240116D649479913 /* FacebookCore */ = {
+		5FF0AD2BF2B532B454B2352C /* FacebookCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			package = C035DDDDA5E7AE5F3C2D1859 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookCore;
 		};
-		D48176EBBAA83DA36148E85C /* FirebaseAnalytics */ = {
+		DE7E9309E105782A00EC3A58 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = DF68CD5D070098E8DC5FBBD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = E364F06598B93F7486956352 /* Project object */;
+	rootObject = FAB5F86F5F7F9D52904CDC51 /* Project object */;
 }
