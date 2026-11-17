@@ -1,0 +1,6 @@
+# 검색엔진과 AI 검색(ChatGPT·Perplexity·Claude 등) 크롤러 모두 허용한다.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://emotion-incinerator-sepia.vercel.app/sitemap.xml

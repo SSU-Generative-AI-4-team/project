@@ -1,0 +1,6 @@
+# 해칫 웹앱 (hatch eat)
+
+> 남겨두기 싫은 말을 한지에 적어 해치에게 건네면 해치가 먹어 주는 웹앱. 가입 없이 무료이며, 적은 글은 서버로 보내지 않고 저장하지 않는다.
+
+- [해칫 소개와 자세한 설명](https://emotion-incinerator-sepia.vercel.app/llms.txt)
+- [개인정보처리방침](https://emotion-incinerator-sepia.vercel.app/privacy)

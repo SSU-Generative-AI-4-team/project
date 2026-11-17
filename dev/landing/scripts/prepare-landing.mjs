@@ -34,5 +34,29 @@ html = html.replace(
   '<span>모든 마음을 기록해 둘 필요는 없다.</span></div>',
   '<span>모든 마음을 기록해 둘 필요는 없다.</span><a href="/privacy" style="color:var(--color-primary);white-space:nowrap">개인정보처리방침</a></div>'
 );
+// 구조화 데이터(JSON-LD). 팝업(<template>) 내용은 검색엔진·AI가 본문으로 읽지 않으므로 FAQ로도 싣는다.
+// 답변은 팝업 원문에서 뽑아 랜딩 문구와 어긋나지 않게 한다.
+const appUrl = 'https://emotion-incinerator-app.vercel.app/';
+const questions = { 'm-write': '해칫에는 무엇을 어떻게 적나요?', 'm-give': '적은 글을 해치에게 건네면 어떻게 되나요?',
+  'm-end': '건넨 뒤에는 무엇이 남나요?', 'm-ink': '먹 갈기와 필사첩은 무엇인가요?',
+  'm-data': '적은 글은 어디로 가나요?', 'm-not': '해칫이 하지 않는 것은 무엇인가요?' };
+const decode = text => text.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+const faq = [...html.matchAll(/<template id="(m-[a-z]+)"[^>]*>([\s\S]*?)<\/template>/g)].filter(m => questions[m[1]]).map(([, id, body]) => {
+  const answer = decode(body.replace(/<figure[\s\S]*?<\/figure>/g, '').replace(/<b>요약<\/b>/g, '')
+    .replace(/<tr><th>([\s\S]*?)<\/th><td>([\s\S]*?)<\/td><\/tr>/g, ' $1: $2.').replace(/<thead>[\s\S]*?<\/thead>/g, '')
+    .replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/\.\./g, '.').trim();
+  return { '@type': 'Question', name: questions[id], acceptedAnswer: { '@type': 'Answer', text: answer } };
+});
+const description = html.match(/<meta name="description" content="([^"]+)">/)[1];
+const jsonLd = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'Organization', '@id': `${origin}/#org`, name: '해칫 운영팀', url: `${origin}/`, logo: `${origin}/assets/hatcheat/haechi_yellow.png` },
+  { '@type': 'WebSite', '@id': `${origin}/#site`, name: '해칫', alternateName: ['hatch eat', 'Hatcheat'], url: `${origin}/`, inLanguage: 'ko-KR', publisher: { '@id': `${origin}/#org` } },
+  { '@type': 'WebApplication', '@id': `${appUrl}#app`, name: '해칫', alternateName: 'hatch eat', url: appUrl, description,
+    applicationCategory: 'LifestyleApplication', operatingSystem: 'Web', browserRequirements: 'JavaScript 필요', inLanguage: 'ko-KR',
+    isAccessibleForFree: true, offers: { '@type': 'Offer', price: 0, priceCurrency: 'KRW' },
+    image: `${origin}/assets/hatcheat/haechi_16x9.png`, publisher: { '@id': `${origin}/#org` } },
+  { '@type': 'FAQPage', '@id': `${origin}/#faq`, inLanguage: 'ko-KR', mainEntity: faq },
+] };
+html = html.replace('</head>', `<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>\n</head>`);
 for (const path of ['index.html', 'v2/index.html', 'v3/index.html']) await writeFile(join(root, path), html);
 console.log('Prepared current Hatcheat landing at /, /v2, /v3.');

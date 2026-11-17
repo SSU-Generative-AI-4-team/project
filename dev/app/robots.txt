@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://emotion-incinerator-app.vercel.app/sitemap.xml
