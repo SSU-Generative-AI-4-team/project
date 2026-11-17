@@ -2,3 +2,31 @@
 :root{--fire-red:#873522;--fire-orange:#ec6429;--fire-gold:#ffbf63;--fire-core:#fff2cb;--fire-ash:#635d54;--fire-char:#29211c;--fire-scorch:#99633e;--fire-smoke:#706c68}
 
 :root{--color-ember:#a65336;--color-quiet:#eee9e0}
+
+/* Current Hatcheat landing palette. Scoped to keep legacy pages intact. */
+html[data-page="privacy"] {
+  --color-bg: #F2EBDD;
+  --color-surface: #FDF5E9;
+  --color-text: #2A2826;
+  --color-muted: #625F59;
+  --color-primary: #2A6090;
+  --color-primary-press: #22507A;
+  --color-line: #D4CEC2;
+  --font-heading: Yeongnam, 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-body: var(--font-heading);
+  --hanji-texture: url('/assets/hatcheat/hanji-texture-background.jpg');
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --text-small: 15px;
+  --text-body: 18px;
+  --text-heading: 25px;
+  --text-display: clamp(28px, 5vw, 56px);
+  --radius: 8px;
+  --header-height: 80px;
+  --gutter: 40px;
+}

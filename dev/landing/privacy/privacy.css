@@ -1,0 +1,96 @@
+/* Hallmark · genre: editorial · macrostructure: Long Document · theme: existing Hatcheat
+   Tone: plain Korean policy · Anchor: Haechi blue · Nav: N1a · Footer: Ft2
+   Tokens in /tokens.css · contrast: pass · responsive: pass */
+@font-face{font-family:'Gowun Dodum';src:url('/assets/hatcheat/GowunDodum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS Medium'),local('YNAMNEWS'),local('영남일보체(M)');font-weight:400;font-display:swap}
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS(B) Bold'),local('영남일보체(B)');font-weight:700;font-display:swap}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:clip}
+html{scroll-padding-top:calc(var(--header-height) + var(--space-lg));-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--color-bg)}
+body{margin:0;background:var(--color-bg) var(--hanji-texture) center top/1440px auto repeat-y;color:var(--color-text);font-family:var(--font-body);font-size:var(--text-body);line-height:1.8;word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ol,ul,dl,dd{margin:0}
+h1,h2,h3{font-family:var(--font-heading);font-style:normal;font-weight:700;letter-spacing:-.02em;line-height:1.4}
+a{color:var(--color-primary);text-underline-offset:5px;text-decoration-thickness:1px}
+a:hover{color:var(--color-primary-press);text-decoration-thickness:2px}
+a:active{color:var(--color-primary-press)}
+a:focus-visible{outline:3px solid var(--color-primary);outline-offset:4px;border-radius:2px}
+img{display:block;max-width:100%;height:auto}
+.container{width:min(1280px,100% - var(--gutter)*2);margin-inline:auto}
+.skip{position:absolute;left:var(--space-md);top:-100px;background:var(--color-surface);padding:var(--space-sm) var(--space-md);z-index:3}
+.skip:focus{top:var(--space-md)}
+.header{position:sticky;top:0;z-index:2;background:var(--color-bg)}
+.header-in{min-height:var(--header-height);display:flex;align-items:center;justify-content:space-between;gap:var(--space-md);border-bottom:1px solid var(--color-line)}
+.brand{display:flex;align-items:center;gap:var(--space-sm);min-height:48px;color:var(--color-text);font-family:var(--font-heading);font-size:var(--text-heading);font-weight:700;text-decoration:none;white-space:nowrap}
+.brand img{width:40px;height:40px;object-fit:contain}
+.dot{color:var(--color-primary)}
+.header-nav{display:flex;align-items:center;gap:var(--space-lg);font-size:var(--text-small)}
+.header-nav a{display:inline-flex;align-items:center;min-height:48px;white-space:nowrap;text-decoration:none}
+.header-nav a:hover{text-decoration:underline}
+.document{max-width:1060px;padding-block:var(--space-2xl) var(--space-3xl)}
+.intro{display:flex;align-items:center;justify-content:space-between;gap:var(--space-xl);padding-bottom:var(--space-xl);border-bottom:1px solid var(--color-line)}
+.eyebrow{color:var(--color-primary);font-size:var(--text-small);margin-bottom:var(--space-sm)}
+h1{font-size:var(--text-display);line-height:1.3;letter-spacing:-.035em}
+.intro>div,h1,h2,h3{min-width:0;overflow-wrap:anywhere}
+.intro-copy{margin-top:var(--space-lg);color:var(--color-muted)}
+.effective{margin-top:var(--space-lg);font-size:var(--text-small);color:var(--color-muted)}
+.effective time{margin-left:var(--space-xs)}
+.intro-haechi{width:140px;flex:none;margin-right:var(--space-lg)}
+.document-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:var(--space-2xl);padding-top:var(--space-xl)}
+.contents{font-size:var(--text-small);color:var(--color-muted)}
+.contents nav{position:sticky;top:calc(var(--header-height) + var(--space-xl))}
+.contents p{margin-bottom:var(--space-sm);color:var(--color-text)}
+.contents ol{padding-left:20px}
+.contents li{padding-block:4px}
+.contents a{display:inline-block;padding-block:4px;text-decoration:none}
+.contents a:hover{text-decoration:underline}
+.prose{min-width:0}
+.prose section+section{margin-top:var(--space-2xl)}
+.prose h2{font-size:var(--text-heading);margin-bottom:var(--space-lg)}
+.prose h3{font-size:var(--text-body);margin-top:var(--space-xl);margin-bottom:var(--space-sm)}
+.prose p+p,.prose table+p,.prose ul+p{margin-top:var(--space-md)}
+.prose ul{padding-left:22px}
+.prose li+li{margin-top:var(--space-md)}
+.prose table{width:100%;border-collapse:collapse;margin-top:var(--space-lg);font-size:var(--text-small);line-height:1.7}
+.prose caption{text-align:left;padding-bottom:var(--space-sm);color:var(--color-muted)}
+.prose th,.prose td{padding:var(--space-md);text-align:left;vertical-align:top;border-bottom:1px solid var(--color-line)}
+.prose thead{background:var(--color-surface)}
+.prose tbody th{width:32%;font-weight:400}
+.back-home{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-sm);min-height:52px;margin-top:var(--space-2xl);padding:var(--space-sm) var(--space-lg);border-radius:var(--radius);background:var(--color-primary);color:var(--color-surface);text-decoration:none;font-size:var(--text-body);white-space:nowrap}
+.back-home:hover{background:var(--color-primary-press);color:var(--color-surface)}
+.footer{border-top:1px solid var(--color-line);padding-block:var(--space-xl);font-size:var(--text-small);color:var(--color-muted)}
+.footer .container{display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);flex-wrap:wrap}
+.footer b{font-family:var(--font-heading);color:var(--color-text);font-size:20px}
+.footer a{white-space:nowrap}
+@media(max-width:800px){
+  html[data-page="privacy"]{--gutter:24px;--header-height:72px;--text-body:17px;--text-heading:23px}
+  .document{padding-top:var(--space-xl)}
+  .intro-haechi{width:100px;margin-right:0}
+  .document-grid{grid-template-columns:minmax(0,1fr);gap:var(--space-xl)}
+  .contents nav{position:static}
+  .contents ol{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--space-lg)}
+  .prose section+section{margin-top:48px}
+}
+@media(max-width:480px){
+  html[data-page="privacy"]{--gutter:20px;--text-heading:22px}
+  .header-nav{gap:var(--space-md)}
+  .brand{gap:var(--space-xs)}
+  .brand img{width:32px;height:32px}
+  .intro{gap:0}
+  .intro-haechi{display:none}
+  .intro-copy br{display:none}
+  .contents{font-size:14px}
+  .contents ol{column-gap:var(--space-md)}
+  .prose th,.prose td{padding:var(--space-sm) var(--space-xs)}
+  .prose tbody th{width:35%}
+  .footer .container{align-items:flex-start;flex-direction:column}
+}
+@media print{
+  .header,.contents,.skip,.back-home,.footer{display:none}
+  body{background:var(--color-surface);font-size:11pt}
+  .container{width:100%;max-width:none}
+  .document{padding:0}
+  .document-grid{display:block}
+  .intro{padding-bottom:var(--space-lg)}
+  .prose h2,.prose h3{break-after:avoid}
+  .prose section+section{margin-top:var(--space-lg)}
+}

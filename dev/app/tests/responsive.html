@@ -1,0 +1,6 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>반응형 수동 검증</title>
+<style>body{font:14px system-ui;margin:12px;background:#eee}nav{position:sticky;top:0;z-index:2;display:flex;gap:8px;padding:8px;background:#eee}button{padding:8px}iframe{display:block;border:1px solid #aaa;margin:12px 0;background:#edf3f0}</style>
+<nav aria-label="검증 화면 크기"><button data-size="320,568">320 × 568</button><button data-size="375,667">375 × 667</button><button data-size="414,736">414 × 736</button><button data-size="768,1024">768 × 1024</button><button data-size="1280,800">1280 × 800</button><button data-size="667,375">가로 667 × 375</button></nav>
+<iframe src="../" title="웹앱 검증 화면" width="320" height="568"></iframe>
+<script>const frame=document.querySelector('iframe');for(const button of document.querySelectorAll('button'))button.onclick=()=>{const [w,h]=button.dataset.size.split(',');frame.width=w;frame.height=h;};</script>
+</html>

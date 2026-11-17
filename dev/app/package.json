@@ -1,0 +1,12 @@
+{
+  "name": "hatcheat-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:sounds": "node scripts/generate-sounds.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/core.test.mjs tests/offline.test.mjs",
+    "test:browser": "node tests/browser.mjs"
+  },
+  "devDependencies": { "playwright": "1.64.1" }
+}

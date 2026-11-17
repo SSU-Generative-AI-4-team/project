@@ -1,0 +1,42 @@
+/* Hallmark · focused ritual · quiet jade palette · P4 H4 E4 S5 R5 V4 */
+:root {
+  --color-canvas: oklch(95.878% 0.00750 164.937); /* #edf3f0 */
+  --color-surface: oklch(98.526% 0.00411 157.180); /* #f8fbf9 */
+  --color-stage: oklch(92.229% 0.01671 162.727); /* #dce9e2 */
+  --color-ink: oklch(33.470% 0.03744 176.623); /* #203d36 */
+  --color-muted: oklch(48.929% 0.04109 168.665); /* #49685c */
+  --color-action: oklch(45.782% 0.07010 169.502); /* #286451 */
+  --color-action-deep: oklch(36.630% 0.05395 173.031); /* #1b483c */
+  --color-border: oklch(82.906% 0.02812 160.742); /* #b8cdc1 */
+  --color-note: oklch(97.547% 0.00731 132.414); /* #f5f8f3 */
+  --color-tape: oklch(80.857% 0.04090 159.019); /* #abc9b7 */
+  --color-flame: oklch(78.862% 0.08666 52.743); /* #e7ab86 */
+  --color-flame-inner: oklch(89.844% 0.06199 77.231); /* #f5d9b0 */
+  --color-cheek: oklch(72.417% 0.09231 35.446); /* #d9917e */
+  --color-bowl: oklch(54.761% 0.05238 168.040); /* #527b6b */
+  --color-bowl-rim: oklch(66.203% 0.05222 158.506); /* #789d87 */
+  --color-bead-glint: oklch(99% .008 155 / .78);
+  --color-bead-glaze: oklch(94% .024 155 / .24);
+  --color-bead-shade: oklch(30% .04 165 / .27);
+  --color-bead-shadow: oklch(25% .035 165 / .3);
+  --color-bead-light: oklch(85.585% 0.03956 158.221); /* #bbd8c6 */
+  --color-bead-mid: oklch(61.263% 0.05715 161.255); /* #658f79 */
+  --color-bead-dark: oklch(43.865% 0.05463 169.167); /* #315c4d */
+  --color-special-light: oklch(92.708% 0.04583 73.588); /* #fae3c6 */
+  --color-special-mid: oklch(81.572% 0.08386 65.017); /* #e9b889 */
+  --color-special-dark: oklch(66.618% 0.08665 58.955); /* #bc875d */
+  --color-thread: oklch(69.632% 0.03887 157.606); /* #8aa594 */
+  --color-halo: oklch(71.984% 0.05313 156.379); /* #8aaf97 */
+  --color-mote: oklch(56.383% 0.06616 162.482); /* #50826a */
+  --color-paper: var(--color-canvas);
+  --color-focus: var(--color-action);
+  --color-action-ink: var(--color-surface);
+
+  --font-body: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  --font-display: Gaegu, cursive;
+  --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+  --radius-card: 28px;
+  --ease-out: cubic-bezier(.2,.7,.2,1);
+  --ease-in: cubic-bezier(.4,0,1,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
+}

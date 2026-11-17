@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		259DD4C4185A28292DCD541B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C255A04624B0CD54BDB3EC /* Foundation.framework */; };
+		277271B4ADE6A409230CCED9 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = F0116E75531C8F5433A07D2D /* Web */; };
+		3DEF798BC8C45F07AAC616BA /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B877C7C3240116D649479913 /* FacebookCore */; };
+		40168A6AA887320C95B26840 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D48176EBBAA83DA36148E85C /* FirebaseAnalytics */; };
+		4D4479A0400215D267A051EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C255A04624B0CD54BDB3EC /* Foundation.framework */; };
+		54F941146DB2E436B9FC732B /* HatcheatAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */; };
+		586CA0DBB477AE853E637B18 /* HatcheatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */; };
+		608184069A2E42777EC94D07 /* HatcheatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */; };
+		63C44D222836BC1333248A8D /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B8BB874D1472E4072E946 /* ProgressStore.swift */; };
+		6E8EF196919BE01165783A83 /* HatcheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */; };
+		86C9AA186A95D9DF060745D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */; };
+		C7186ECE11AE37ED1F4A8A19 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D730059C51895B93B57CED33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E364F06598B93F7486956352 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 62267868652CE9523B4ABF38;
+			remoteInfo = Hatcheat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatAnalytics.swift; sourceTree = "<group>"; };
+		59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hatcheat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CCC869F709D7164E2BC9A8C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatViewController.swift; sourceTree = "<group>"; };
+		79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatTests.swift; sourceTree = "<group>"; };
+		7F3B8BB874D1472E4072E946 /* ProgressStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
+		8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HatcheatApp.swift; sourceTree = "<group>"; };
+		98C255A04624B0CD54BDB3EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HatcheatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		F0116E75531C8F5433A07D2D /* Web */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Web; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9DDE9046B303AB9671143DAD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D4479A0400215D267A051EE /* Foundation.framework in Frameworks */,
+				40168A6AA887320C95B26840 /* FirebaseAnalytics in Frameworks */,
+				3DEF798BC8C45F07AAC616BA /* FacebookCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB061F748956D2B628098A3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				259DD4C4185A28292DCD541B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3E4E79229EE980BDAF7731AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				806FED7A424E4DADC5FA2A04 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		806FED7A424E4DADC5FA2A04 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				98C255A04624B0CD54BDB3EC /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		875B50EFEF28514AB5A6A0E1 /* HatcheatTests */ = {
+			isa = PBXGroup;
+			children = (
+				79F08F973A6ECA5A5B935647 /* HatcheatTests.swift */,
+			);
+			name = HatcheatTests;
+			path = HatcheatTests;
+			sourceTree = "<group>";
+		};
+		BDF02C717D9A2BD549CA74AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */,
+				99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA14ED44CBDCEB97D10CDFB6 = {
+			isa = PBXGroup;
+			children = (
+				BDF02C717D9A2BD549CA74AD /* Products */,
+				3E4E79229EE980BDAF7731AC /* Frameworks */,
+				EBC0C6AB3CA0B7F0B3D68C61 /* Hatcheat */,
+				875B50EFEF28514AB5A6A0E1 /* HatcheatTests */,
+			);
+			sourceTree = "<group>";
+		};
+		EBC0C6AB3CA0B7F0B3D68C61 /* Hatcheat */ = {
+			isa = PBXGroup;
+			children = (
+				8F2F76E26EB19333CBFD32A2 /* HatcheatApp.swift */,
+				6D9FB8116150F16D17B6E913 /* HatcheatViewController.swift */,
+				7F3B8BB874D1472E4072E946 /* ProgressStore.swift */,
+				4D48D494B9FA4A44328FF23B /* HatcheatAnalytics.swift */,
+				350F3FF0DB85E1F4698CE1DD /* Assets.xcassets */,
+				B1E3F9AEBA8599CBEA671188 /* PrivacyInfo.xcprivacy */,
+				F0116E75531C8F5433A07D2D /* Web */,
+				5CCC869F709D7164E2BC9A8C /* Info.plist */,
+			);
+			name = Hatcheat;
+			path = Hatcheat;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		62267868652CE9523B4ABF38 /* Hatcheat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0482FC640D227A82725B5016 /* Build configuration list for PBXNativeTarget "Hatcheat" */;
+			buildPhases = (
+				F3040A2F9063B83FDFECA199 /* Bundle current web app */,
+				0AE8E01FF5DEF46CEC08CD64 /* Sources */,
+				9DDE9046B303AB9671143DAD /* Frameworks */,
+				956DBF4435216488FE91B4A0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hatcheat;
+			packageProductDependencies = (
+				D48176EBBAA83DA36148E85C /* FirebaseAnalytics */,
+				B877C7C3240116D649479913 /* FacebookCore */,
+			);
+			productName = Hatcheat;
+			productReference = 59F596B81FA4EC2A2C8C8B1C /* Hatcheat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94569E0D5E94E5E33DC52F9B /* HatcheatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F19CD1FF79D1C3D312EB9799 /* Build configuration list for PBXNativeTarget "HatcheatTests" */;
+			buildPhases = (
+				9359AE7E5E17B51EB2B2B9B6 /* Sources */,
+				EB061F748956D2B628098A3C /* Frameworks */,
+				A6C9C3746C82537EE442E970 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2DF1C86DD06D97E0D2FB7D0F /* PBXTargetDependency */,
+			);
+			name = HatcheatTests;
+			productName = HatcheatTests;
+			productReference = 99199C61F8CB0300B5623BEC /* HatcheatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E364F06598B93F7486956352 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 6C3D6B7CC0D546E0A658A263 /* Build configuration list for PBXProject "Hatcheat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CA14ED44CBDCEB97D10CDFB6;
+			minimizedProjectReferenceProxies = 0;
+			packageReferences = (
+				B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = BDF02C717D9A2BD549CA74AD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				62267868652CE9523B4ABF38 /* Hatcheat */,
+				94569E0D5E94E5E33DC52F9B /* HatcheatTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		956DBF4435216488FE91B4A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86C9AA186A95D9DF060745D7 /* Assets.xcassets in Resources */,
+				C7186ECE11AE37ED1F4A8A19 /* PrivacyInfo.xcprivacy in Resources */,
+				277271B4ADE6A409230CCED9 /* Web in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6C9C3746C82537EE442E970 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F3040A2F9063B83FDFECA199 /* Bundle current web app */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle current web app";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\ncd \"$SRCROOT\"\nnode scripts/bundle-web.mjs\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0AE8E01FF5DEF46CEC08CD64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				608184069A2E42777EC94D07 /* HatcheatApp.swift in Sources */,
+				6E8EF196919BE01165783A83 /* HatcheatViewController.swift in Sources */,
+				63C44D222836BC1333248A8D /* ProgressStore.swift in Sources */,
+				54F941146DB2E436B9FC732B /* HatcheatAnalytics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9359AE7E5E17B51EB2B2B9B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				586CA0DBB477AE853E637B18 /* HatcheatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2DF1C86DD06D97E0D2FB7D0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Hatcheat;
+			target = 62267868652CE9523B4ABF38 /* Hatcheat */;
+			targetProxy = D730059C51895B93B57CED33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0EAEA60F5C72F5060E4AFDD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		147F6D7BCFC3AD4CA59DC02F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = Hatcheat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				META_APP_ID = "";
+				META_CLIENT_TOKEN = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		362104FC6E4616E3CBE78D5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
+			};
+			name = Debug;
+		};
+		3881EC98138EF1EB9D5F773A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = Hatcheat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				META_APP_ID = "";
+				META_CLIENT_TOKEN = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4B49A329A6644602A9B6C96F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B76499EA8C9641C9C9CE10F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = P6Z68QUK9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ai.haetchi.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hatcheat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hatcheat";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0482FC640D227A82725B5016 /* Build configuration list for PBXNativeTarget "Hatcheat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				147F6D7BCFC3AD4CA59DC02F /* Release */,
+				3881EC98138EF1EB9D5F773A /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C3D6B7CC0D546E0A658A263 /* Build configuration list for PBXProject "Hatcheat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EAEA60F5C72F5060E4AFDD9 /* Debug */,
+				4B49A329A6644602A9B6C96F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F19CD1FF79D1C3D312EB9799 /* Build configuration list for PBXNativeTarget "HatcheatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B76499EA8C9641C9C9CE10F9 /* Release */,
+				362104FC6E4616E3CBE78D5F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.0.0;
+			};
+		};
+		E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 19.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B877C7C3240116D649479913 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E77D65CFC3F1211495BAFFB6 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		D48176EBBAA83DA36148E85C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7F30CA69B3A2836576FEB54 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E364F06598B93F7486956352 /* Project object */;
+}

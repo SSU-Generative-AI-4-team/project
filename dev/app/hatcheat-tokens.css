@@ -1,0 +1,28 @@
+/* Hallmark · focused ritual · Hatcheat card-news reference, 2026-10-17.
+ * Supplied Medium is mapped to 400, matching the card-news source.
+ * Full local webfonts are excluded from Git and public upload. */
+@font-face { font-family:Yeongnam; src:url('./assets/fonts/YNAMNEWS-Medium.woff2') format('woff2'),local('YNAMNEWS-Medium'),local('YNAMNEWS'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:Yeongnam; src:url('./assets/fonts/YNAMNEWS-Bold.woff2') format('woff2'),local('YNAMNEWSB-Bold'),local('YNAMNEWS(B)'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Gowun Dodum'; src:url('./assets/GowunDodum-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+:root {
+  --color-bg:#F4F3F0; --color-surface:#FDF5E9; --color-text:#2A2826; --color-muted:rgba(42,40,38,.72);
+  --color-primary:#2A6090; --color-primary-deep:#224F77; --color-accent-ink:#FDF5E9;
+  --color-line:rgba(42,40,38,.16); --color-soft-line:rgba(42,40,38,.07); --color-shadow:rgba(56,50,43,.12);
+  --color-primary-soft:rgba(42,96,144,.07); --color-gold:#F0B237; --color-red:#EB4531;
+  --color-stone:#38322B; --color-stone-edge:#534B40; --color-ink:#2A2826; --color-water:#49473F;
+  --color-stone-face:rgba(253,245,233,.07); --color-floor:rgba(56,50,43,.045);
+  --color-reflection:rgba(253,245,233,.12); --color-overlay:rgba(42,40,38,.4); --color-focus:#2A6090;
+  --color-seal:#EB4531; --color-fold:#E5E2DC; --color-empty:#E9E6DF;
+  --color-paper-glaze:rgba(253,245,233,.32);
+  --color-paper-panel:oklch(97% .012 82); --color-blue-wash:oklch(89% .04 245);
+  --color-gold-wash:oklch(93% .075 83); --color-blue-line:oklch(78% .065 244);
+  --paper-texture:url('./assets/hanji.jpg');
+  --font-body:Yeongnam,'Gowun Dodum',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --font-heading:var(--font-body); --font-classic:'Songti SC','Noto Serif CJK TC','AppleMyungjo',serif;
+  --text-xs:13px; --text-sm:15px; --text-md:17px; --text-lg:22px; --text-xl:27px;
+  --space-xs:8px; --space-sm:16px; --space-md:24px; --space-lg:32px; --space-xl:48px;
+  --radius:4px; --button-height:48px;
+  --radius-action:16px 16px 16px 5px; --radius-panel:24px 8px 24px 24px;
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease-in:cubic-bezier(.7,0,.84,0); --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --dur-fast:160ms; --dur-normal:280ms;
+}

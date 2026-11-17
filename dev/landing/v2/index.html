@@ -1,391 +1,1169 @@
 <!doctype html>
+<!--
+================================================================
+ 해칫 (hatch eat) 랜딩 페이지 — 수정 가이드
+================================================================
+ ■ 색 바꾸기 ............ <style> 맨 위 ":root" (기준: 기획/design.md, Design/brand/color/)
+     --haechi-blue   메인(버튼·링크·수치)    --hanji-cream  배경
+     --haechi-ivory  카드·모달 바탕         --ink-black    본문 글씨
+     --haechi-gold / --haechi-red  밑줄·반짝이·도장 같은 아주 작은 강조에만
+     --tint-blue / --tint-gold     카드 그림 칸의 옅은 바탕 (기존 색에 투명도만 준 것)
+ ■ 글꼴 ................. :root --font-heading / --font-body
+     영남일보체(설치된 경우) → ../brand/font/*.otf → 고운돋움(Google Fonts CDN)
+ ■ 웹 크기 .............. :root --container(1280) --section-pad(120) --fs-body(18)
+ ■ 문구 위치 (HTML 주석 "[문구]"로 검색)
+     ① 첫 화면(장면·제목·대상·이미지·말풍선·버튼)  #top
+     ② 문제(말 못 하는 이유) + 메모장 비교          #why , .compare
+     ③ 해결(3단계 카드)                             #how
+     ③-1 예시 한 줄 먹여 보기                       #try (예시 문장 — 실제 사용자 글처럼 쓰지 않는다.
+                                                    카드마다 .eaten 에 해치 반응 한 줄)
+     ③-2 해치 소개 프로필                           #haechi
+     ⑦ 끝의 링크 보내기                            #share (폰: 공유 창 / 컴퓨터: 링크 복사)     ④ 먹 갈기                                      #stay
+     ⑤ 안심(가격·약속·자주 묻는 질문)               #trust
+     ⑥ 만드는 사람                                  #team
+     ⑦ 끝 버튼                                      #start
+ ■ 해치 머리 위 말풍선 위치 .. .hero-bubble / .stay-bubble 의 left / top (이미지 기준 %)
+ ■ 3D 기울기 세기 ....... <script>의 "이미지 3D 기울기" (y * 8, x * 10 = 최대 각도)
+ ■ 카드 팝업 내용 ....... 아래쪽 <template id="m-..."> (카드의 data-modal 값과 같은 id)
+ ■ 버튼 문구 ............ "해치에게만 털어놓기" — 첫 화면·헤더·아래 고정·끝, 네 곳을 같이 바꾼다
+ ■ 공유 미리보기 ........ <head>의 og:* / twitter:* (배포 주소가 정해지면 og:url·og:image를 절대 주소로)
+ ■ 금지어 ............... 기획/brand_1013.md 12개 (힐링·치유·태우다·소각·스트릭·아무것도 남지 않아요 …)
+================================================================
+-->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>감정소각소 — 사전 예약</title>
-<meta name="description" content="메모장에 쓰면 남잖아요. 여기선 쓰고 태우면 끝이에요. 원문은 남기지 않아요.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>해칫 — 한지에 적으면 해치가 먹어요</title>
+<meta name="description" content="말 못 한 한 줄을 한지에 적어 해치에게 건네세요. 가입 없이, 무료. 적은 글은 서버로 보내지 않고 저장하지 않아요.">
+<meta name="keywords" content="해칫, hatch eat, 해치, 감정, 털어놓기, 한지, 취준생, 사회초년생">
+<meta name="theme-color" content="#F2EBDD">
+<meta name="robots" content="index, follow">
+<!-- 공유 미리보기 (배포 후 og:url · og:image는 https:// 절대 주소로 바꾼다) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="해칫 hatch eat">
+<meta property="og:title" content="해칫 — 한지에 적으면 해치가 먹어요">
+<meta property="og:description" content="말하면 속좁아 보일까 봐, 어디서 말이 돌까 봐. 그 한 줄은 해치에게만. 가입 없이, 무료.">
+<meta property="og:image" content="https://emotion-incinerator-sepia.vercel.app/assets/hatcheat/haechi_16x9.png">
+<meta property="og:image:alt" content="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="해칫 — 한지에 적으면 해치가 먹어요">
+<meta name="twitter:description" content="말 못 한 한 줄을 한지에 적어 해치에게 건네세요. 가입 없이, 무료.">
+<meta name="twitter:image" content="https://emotion-incinerator-sepia.vercel.app/assets/hatcheat/haechi_16x9.png">
+<link rel="icon" href="/assets/hatcheat/haechi_yellow.png">
+<link rel="preload" as="image" href="/assets/hatcheat/haechi_16x9.png">
 <style>
-  :root { --bg:#16130f; --fg:#efe7dc; --dim:#9c9185; --ember:#e0864a; --line:#2e2822; --paper:#f3ead9; --ink:#3b3026; }
-  * { box-sizing:border-box; margin:0; }
-  body { background:var(--bg); color:var(--fg); font:17px/1.7 -apple-system, "Pretendard", "Apple SD Gothic Neo", sans-serif; overflow-x:hidden; }
-  main { max-width:560px; margin:0 auto; padding:72px 20px 96px; }
-  h1 { font-size:clamp(28px,6vw,38px); line-height:1.35; font-weight:600; letter-spacing:-.02em; }
-  .lead { color:var(--dim); margin-top:16px; }
-  section { margin-top:64px; }
-  h2 { font-size:14px; color:var(--ember); font-weight:500; margin-bottom:12px; }
-  input { width:100%; background:transparent; color:var(--fg); border:1px solid var(--line); border-radius:10px; padding:14px 16px; font:inherit; }
-  input:focus { outline:none; border-color:var(--ember); }
-  button { margin-top:12px; width:100%; padding:14px; border:0; border-radius:10px; background:var(--ember); color:#1a120b; font:inherit; font-weight:600; cursor:pointer; transition:box-shadow .3s, opacity .3s; }
-  button:disabled { opacity:.5; cursor:default; }
-  button:not(:disabled):hover { box-shadow:0 0 24px -4px var(--ember); }
-  .note { color:var(--dim); font-size:14px; margin-top:10px; min-height:1.7em; }
-  .note.show { animation:noteIn .8s; } @keyframes noteIn { from { opacity:0; transform:translateY(6px); } }
-  ul { padding-left:1.1em; color:var(--dim); } li + li { margin-top:6px; } li b { color:var(--fg); font-weight:500; }
-  footer { margin-top:80px; color:var(--dim); font-size:13px; } footer a { color:var(--dim); }
-  input.ok { animation:ok 1.2s ease-out; }
-  @keyframes ok { 0% { box-shadow:0 0 0 0 #e0864aaa; } 100% { box-shadow:0 0 0 14px #e0864a00; } }
+@font-face{font-family:'Gowun Dodum';src:url('/assets/hatcheat/GowunDodum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+/* 영남일보체: 설치된 폰트 → 같은 저장소 구조의 파일 → 고운돋움 (라이선스 때문에 폰트 파일은 저장소에 없다) */
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS Medium'),local('YNAMNEWS'),local('영남일보체(M)');font-weight:400;font-display:swap}
+@font-face{font-family:Yeongnam;src:local('YNAMNEWS(B) Bold'),local('YNAMNEWS(B)'),local('영남일보체(B)');font-weight:700;font-display:swap}
 
-  /* 등장 */
-  .rise { opacity:0; transform:translateY(14px); animation:rise 1s cubic-bezier(.2,.7,.2,1) forwards; }
-  h1.rise { animation-delay:.1s } .lead.rise { animation-delay:.35s }
-  section.rise { animation:none; transition:opacity 1s, transform 1s cubic-bezier(.2,.7,.2,1); }
-  section.rise.in { opacity:1; transform:none; }
-  @keyframes rise { to { opacity:1; transform:none; } }
-  h1 .glow { color:var(--ember); animation:flicker 4s ease-in-out infinite; }
-  @keyframes flicker { 0%,100% { text-shadow:0 0 12px #e0864a55; } 45% { text-shadow:0 0 22px #e0864a99; } 60% { text-shadow:0 0 8px #e0864a33; } }
-  #embers { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:-1; }
-  .ember { position:absolute; bottom:-10px; border-radius:50%; background:var(--ember); box-shadow:0 0 8px var(--ember); opacity:0; animation:drift linear infinite; }
-  @keyframes drift { 0% { opacity:0; transform:translate(0,0); } 15% { opacity:.7; } 100% { opacity:0; transform:translate(var(--dx),-100vh); } }
+:root{
+  /* ── 색 (기획/design.md) ── */
+  --haechi-blue:#2A6090;
+  --haechi-blue-press:#22507A;
+  --haechi-gold:#F0B237;
+  --haechi-red:#EB4531;
+  --haechi-ivory:#FDF5E9;
+  --hanji-cream:#F2EBDD;
+  --ink-black:#2A2826;
+  --color-primary:var(--haechi-blue);
+  --color-bg:var(--hanji-cream);
+  --color-surface:var(--haechi-ivory);
+  --color-text:var(--ink-black);
+  --color-muted:rgba(42,40,38,.72);
+  --color-line:rgba(42,40,38,.15);
+  --tint-blue:rgba(42,96,144,.08);
+  --tint-gold:rgba(240,178,55,.18);
+  --hanji-texture:url('/assets/hatcheat/hanji-texture-background.jpg');
 
-  /* 종이 */
-  .lined { background-color:var(--paper); background-image:linear-gradient(90deg, transparent 38px, #e3a59a 38px 39px, transparent 39px), repeating-linear-gradient(transparent 0 31px, #d8ccb6 31px 32px); background-attachment:local; color:var(--ink); font:24px/32px "Nanum Pen Script", cursive; padding:8px 16px 0 50px; white-space:pre-wrap; word-break:break-all; overflow:hidden; }
-  .paper { height:232px; border-radius:4px; box-shadow:0 12px 30px -12px #000c, 0 1px 0 #fff4 inset; }
-  .paper.fresh { animation:fresh .7s cubic-bezier(.2,.7,.2,1); }
-  @keyframes fresh { from { opacity:0; transform:translateY(-18px) rotate(-1.5deg); } }
-  textarea.lined { display:block; width:100%; height:100%; border:0; resize:none; border-radius:4px; }
-  textarea.lined:focus { outline:2px solid var(--ember); outline-offset:3px; }
-  textarea.lined::placeholder { color:#a39580; }
-  .sheet { position:fixed; z-index:50; perspective:1400px; pointer-events:none; }
-  .sheet > * { position:absolute; left:0; width:100%; }
-  .half { overflow:hidden; }
-  .half .lined, .flap .lined { position:absolute; left:0; width:100%; }
-  .flap { transform-style:preserve-3d; }
-  .flap > * { backface-visibility:hidden; -webkit-backface-visibility:hidden; }
-  .bk { position:absolute; inset:0; background:linear-gradient(160deg, #efe4d0, #e2d5bd); backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:3px; }
-  .bk.crease-b { background:linear-gradient(0deg, #cfc0a4, #efe4d0 18%, #e6dac3); }
-  .bk.crease-l { background:linear-gradient(90deg, #cdbd9f, #efe4d0 16%, #e4d8c0); }
+  /* ── 글꼴 ── */
+  --font-heading:Yeongnam,'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-body:Yeongnam,'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
 
-  /* 벽난로 */
-  .stage { position:relative; isolation:isolate; --heat:.35; }
-  .stage::before { content:''; position:absolute; left:-30%; right:-30%; bottom:-80px; height:460px; background:radial-gradient(closest-side, #e0864a30, transparent); opacity:var(--heat); pointer-events:none; z-index:-1; }
-  .fireplace { position:relative; height:300px; margin-top:32px; }
-  .fireplace canvas { position:absolute; inset:0; width:100%; height:100%; }
-  #back { z-index:1; } #fire { z-index:3; mix-blend-mode:screen; }
-  /* 타는 편지: --p가 0→1로 가며 화면 아래쪽부터 불선이 올라가고, 지나간 자리는 재가 됐다가 부서져 사라짐.
-     종이가 110도 돌아 있어서 250deg가 화면 위쪽 방향 */
-  @property --p { syntax:'<number>'; inherits:false; initial-value:0; }
-  .burning { position:absolute; z-index:2; border-radius:2px; --f:calc(var(--p) * 140% - 20%);
-    background:
-      linear-gradient(250deg, #1c1714 0, #3a302a calc(var(--f) - 14%), #2a1c14 calc(var(--f) - 6%), #c4501a calc(var(--f) - 2.5%), #ffd28a var(--f), #9a6a3a calc(var(--f) + 3%), rgba(120,80,40,.4) calc(var(--f) + 9%), transparent calc(var(--f) + 16%)),
-      linear-gradient(160deg, #efe4d0, #d9cbb0);
-    -webkit-mask-image:linear-gradient(250deg, transparent calc(var(--f) - 42%), #000 calc(var(--f) - 20%));
-            mask-image:linear-gradient(250deg, transparent calc(var(--f) - 42%), #000 calc(var(--f) - 20%));
-    filter:url(#rough) drop-shadow(0 0 5px #ff7a2acc); }
-  #mute { position:fixed; top:14px; right:14px; width:auto; margin:0; padding:6px 12px; font-size:13px; font-weight:500; background:#2a231d; color:var(--dim); border:1px solid var(--line); z-index:60; }
+  /* ── 웹 크기 ── */
+  --container:1280px;
+  --gutter:40px;
+  --section-pad:120px;
+  --fs-body:18px;
+  --lh-body:1.65;
+  --fs-small:15px;
+  --fs-xs:13px;
+  --fs-h3:22px;
+  --fs-h2:42px;
+  --fs-h1:68px;
 
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01s !important; animation-iteration-count:1 !important; transition-duration:.01s !important; } #embers { display:none; } }
+  /* ── 모양 · 움직임 ── */
+  --radius:8px;
+  --radius-lg:20px;
+  --btn-h:56px;
+  --header-h:80px;
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+/* ── 기본 ── */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 16px);overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{max-width:100%;overflow-x:clip}
+main,section,footer{max-width:100vw}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--color-bg) var(--hanji-texture) center/cover no-repeat;pointer-events:none}
+h1,h2,h3,p,figure,ul,ol{margin:0;padding:0}
+h1,h2,h3{font-family:var(--font-heading);font-weight:700;line-height:1.3;letter-spacing:-.02em}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+svg{flex:none}
+.container{width:min(var(--container),100% - var(--gutter)*2);margin-inline:auto}
+.section{padding-block:var(--section-pad)}
+.rule{border:0;border-top:1px solid var(--color-line);margin:0}
+.skip{position:absolute;left:16px;top:-100px;z-index:100;background:var(--color-surface);padding:12px 16px;border-radius:var(--radius)}
+.skip:focus{top:16px}
+:focus-visible{outline:3px solid var(--color-primary);outline-offset:3px}
+
+/* 영문 소제목 (점 + 대문자) */
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:'Gowun Dodum',var(--font-body);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-muted);margin-bottom:20px}
+.kicker::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--color-primary)}
+.kicker.gold::before{background:var(--haechi-gold)}
+.h2{font-size:var(--fs-h2)}
+.em{color:var(--color-primary)}
+.lead{font-size:19px;color:var(--color-muted);margin-top:18px}
+/* 섹션 머리: 왼쪽 제목 + 오른쪽 작은 글 */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.sec-head .side{max-width:320px;text-align:right;font-size:var(--fs-small);color:var(--color-muted)}
+
+/* 손으로 그은 밑줄 */
+.swash{position:relative;display:inline-block;white-space:nowrap}
+.swash svg{position:absolute;left:-2%;bottom:-.18em;width:104%;height:.36em;color:var(--haechi-gold);z-index:-1;overflow:visible}
+.swash svg path{stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1.2s var(--ease-out) .5s}
+.is-in .swash svg path,.no-anim .swash svg path{stroke-dashoffset:0}
+
+/* 반짝이 장식 */
+.spark{position:absolute;color:var(--haechi-red);pointer-events:none}
+.spark.gold{color:var(--haechi-gold)}
+.spark.blue{color:var(--color-primary)}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:var(--btn-h);padding:0 30px;border:0;border-radius:var(--radius);background:var(--color-primary);color:var(--color-surface);font-size:18px;font-weight:700;text-decoration:none;white-space:nowrap;transition:transform .45s var(--spring),background-color .2s}
+.btn svg{transition:transform .45s var(--spring)}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+.btn:hover svg{transform:translate(3px,-3px) rotate(8deg)}
+.btn:active{transform:scale(.97);background:var(--haechi-blue-press)}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.btn-block{width:100%}
+.cond{font-size:var(--fs-small);color:var(--color-muted);margin-top:14px}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-small);color:var(--color-primary)}
+.link-arrow svg{transition:transform .45s var(--spring)}
+
+/* ── 헤더 ── */
+.header{position:sticky;top:0;z-index:40;background:var(--color-bg)}
+.header-in{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--color-line)}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-heading);font-weight:700;font-size:24px;text-decoration:none;min-height:48px}
+.brand img{width:40px;height:40px;object-fit:contain;transition:transform .5s var(--spring)}
+.brand:hover img{transform:rotate(-10deg) scale(1.12)}
+.brand .dot{color:var(--color-primary)}
+.nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav a{position:relative;padding:12px 16px;text-decoration:none;font-size:16px;transition:color .2s}
+.nav a::after{content:'';position:absolute;left:16px;right:16px;bottom:6px;height:2px;background:var(--color-primary);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--spring)}
+.nav a:hover{color:var(--color-primary)}
+.nav a:hover::after{transform:scaleX(1)}
+.header-cta{min-height:48px;padding:0 22px;font-size:16px;width:0;padding-inline:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s,transform .45s var(--spring),background-color .2s}
+.header-cta.show{width:auto;padding-inline:22px;opacity:1;visibility:visible}
+.menu-btn{display:none;width:48px;height:48px;border:1px solid var(--color-line);border-radius:var(--radius);background:var(--color-surface);align-items:center;justify-content:center}
+.mnav{display:none}
+
+/* ── ① 첫 화면 ── */
+.hero{position:relative;padding-block:88px 0;text-align:center}
+.hero-copy{position:relative;max-width:860px;margin-inline:auto}
+.scene{display:inline-block;font-size:17px;color:var(--color-muted);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);padding:12px 20px;margin-bottom:36px;transform:rotate(-1.2deg)}
+.scene b{color:var(--color-text);font-weight:400}
+.hero h1{font-size:var(--fs-h1);line-height:1.18;letter-spacing:-.035em}
+.hero h1 .em{position:relative;z-index:0}
+.for{font-size:21px;margin-top:28px;color:var(--color-muted)}
+.hero-action{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.hero .s1{top:8px;left:4%}
+.hero .s2{top:150px;right:2%}
+.hero .s3{top:300px;left:9%}
+
+.hero-stage{position:relative;margin-top:56px}
+.hero .hero-action{margin-top:48px}
+.hero-visual{position:relative;border-radius:var(--radius-lg);overflow:visible}
+.hero-visual img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-lg);border:1px solid var(--color-line)}
+/* 해치 머리 위 말풍선 (이미지 기준 위치) */
+.hero-bubble{position:absolute;left:69.5%;top:28%;transform:translate(-50%,-100%);background:var(--color-surface);color:var(--color-text);border:1.5px solid var(--ink-black);border-radius:16px;padding:12px 20px;font-family:var(--font-heading);font-size:19px;white-space:nowrap;animation:float 4.5s ease-in-out infinite}
+.hero-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+@keyframes float{0%,100%{transform:translate(-50%,-100%) translateZ(60px)}50%{transform:translate(-50%,calc(-100% - 6px)) translateZ(60px)}}
+/* 이미지 둘레 쪽지 */
+
+.belief{text-align:center;font-family:var(--font-heading);font-size:38px;line-height:1.5;padding-block:var(--section-pad) 0}
+.belief .q{font-size:1.5em;line-height:0;color:var(--haechi-gold);margin-inline:6px;vertical-align:-.12em}
+
+/* ── ② 문제 ── */
+.reasons{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.reason{position:relative;padding:32px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:transform .55s var(--spring)}
+.reason:hover{transform:translateY(-6px) rotate(-.8deg)}
+.reason .no{font-size:12px;letter-spacing:.2em;color:var(--color-muted)}
+.reason .ic{width:56px;height:56px;margin:20px 0 24px;border-radius:50%;display:grid;place-items:center;background:var(--tint-blue);color:var(--color-primary)}
+.reason b{display:block;font-family:var(--font-heading);font-size:24px}
+.reason span{display:block;margin-top:8px;color:var(--color-muted)}
+
+/* ── 클릭 카드 (팝업) ── */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{display:flex;flex-direction:column;align-items:stretch;width:100%;padding:0;text-align:left;border:0;background:transparent;transition:transform .55s var(--spring)}
+.card .tag{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted);margin-bottom:12px}
+.card .thumb{position:relative;height:180px;border-radius:var(--radius-lg);display:grid;place-items:center;overflow:hidden;border:1px solid var(--color-line);background:var(--color-surface);transition:border-color .2s}
+.card .thumb.t-blue{background:var(--tint-blue)}
+.card .thumb.t-gold{background:var(--tint-gold)}
+.card .thumb svg{transition:transform .6s var(--spring)}
+.card .row{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+.card h3{font-size:var(--fs-h3)}
+.card .row svg{color:var(--color-primary);transition:transform .45s var(--spring)}
+.card p{color:var(--color-muted);font-size:16px;margin-top:8px}
+.card:hover{transform:translateY(-8px)}
+.card:hover .thumb{border-color:var(--color-primary)}
+.card:hover .thumb svg{transform:scale(1.12) rotate(-6deg)}
+.card:hover .row svg{transform:translate(4px,-4px)}
+.card:active{transform:translateY(-2px) scale(.99)}
+
+/* ── ④ 먹 갈기 ── */
+.stay-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:32px;align-items:stretch}
+.stay-visual{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-line);background:#fff}
+.stay-side{display:grid;gap:24px;align-content:stretch}
+.ink{padding:32px;border-radius:var(--radius-lg);background:var(--ink-black);color:var(--color-surface)}
+.ink .kicker{color:rgba(253,245,233,.7);margin-bottom:12px}
+.ink .kicker::before{background:var(--haechi-gold)}
+.ink .ink-num{margin-top:0;font-family:var(--font-heading);font-size:64px;line-height:1;color:var(--color-surface)}
+.ink-num small{font-size:24px;margin-left:4px}
+.ink-bar{height:8px;border-radius:4px;background:rgba(253,245,233,.18);margin-top:24px;overflow:hidden}
+.ink-bar i{display:block;height:100%;width:0;background:var(--color-surface);transition:width 1.8s var(--ease-out) .2s}
+.is-in .ink-bar i,.no-anim .ink-bar i{width:100%}
+.ink p{margin-top:16px;font-size:15px;color:rgba(253,245,233,.75)}
+.stay-side .card{padding:28px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface)}
+.stay-side .card .row{margin-top:0}
+.stay-side .card:hover{border-color:var(--color-primary)}
+
+/* ── ⑤ 안심 ── */
+.trust-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}
+.price{margin-top:32px;font-family:var(--font-heading);font-size:96px;line-height:1;color:var(--color-primary);letter-spacing:-.04em}
+.price small{font-size:36px;margin-left:4px}
+.trust-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pcard{display:flex;align-items:center;gap:16px;width:100%;padding:22px;text-align:left;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:transform .55s var(--spring),border-color .2s}
+.pcard .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--tint-blue);color:var(--color-primary);transition:transform .55s var(--spring),background-color .2s,color .2s}
+.pcard b{display:block;font-family:var(--font-heading);font-size:19px}
+.pcard small{display:block;color:var(--color-muted);font-size:14px;margin-top:2px}
+.pcard .go{margin-left:auto;color:var(--color-primary);transition:transform .45s var(--spring)}
+.pcard:hover{transform:translateY(-5px);border-color:var(--color-primary)}
+.pcard:hover .ic{transform:rotate(-10deg) scale(1.1);background:var(--color-primary);color:var(--color-surface)}
+.pcard:hover .go{transform:translate(4px,-4px)}
+.faq{margin-top:24px;display:grid;gap:12px}
+.faq details{border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);transition:border-color .2s}
+.faq details[open]{border-color:var(--color-primary)}
+.faq summary{list-style:none;display:flex;align-items:center;gap:16px;min-height:72px;padding:12px 22px;cursor:pointer;font-size:18px}
+.faq summary::-webkit-details-marker{display:none}
+.faq .qmark{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--tint-gold);font-family:var(--font-heading);font-size:16px}
+.faq .pm{margin-left:auto;color:var(--color-primary);transition:transform .45s var(--spring)}
+.faq summary:hover .pm{transform:scale(1.25)}
+.faq details[open] .pm{transform:rotate(45deg)}
+.faq details p{padding:0 22px 22px 74px;color:var(--color-muted)}
+.contact{margin-top:20px;font-size:var(--fs-small);color:var(--color-muted)}
+
+/* ── ⑥ 만드는 사람 (띠 박스) ── */
+.band{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;padding:64px;border-radius:var(--radius-lg);background:var(--tint-blue);border:1px solid var(--color-line);overflow:hidden}
+.band .team-quote{font-family:var(--font-heading);font-size:36px;line-height:1.45;margin-top:8px}
+.band .names{margin-top:20px;color:var(--color-muted);font-size:var(--fs-small)}
+
+/* ── ⑦ 끝 ── */
+.end{position:relative;text-align:center;padding-block:var(--section-pad)}
+.end h2{font-size:60px;line-height:1.2;letter-spacing:-.035em}
+.end .btn{margin-top:44px;min-width:340px}
+.end .s4{top:80px;left:18%}
+.end .s5{bottom:120px;right:16%}
+
+.footer{border-top:1px solid var(--color-line);padding-block:40px;font-size:var(--fs-small);color:var(--color-muted)}
+.footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer b{font-family:var(--font-heading);color:var(--color-text);font-size:20px}
+
+/* ── 모바일 아래 고정 버튼 ── */
+.mbar{display:none}
+
+/* ── 팝업 모달 ── */
+/* 팝업: dialog가 화면 폭을 넘지 않게 dialog 자체에 너비를 준다 */
+dialog{position:fixed;inset:0;margin:auto;border:0;padding:0;background:transparent;color:var(--color-text);width:min(760px,calc(100% - 32px));max-width:calc(100% - 32px);height:fit-content;max-height:calc(100% - 48px);overflow:visible}
+dialog::backdrop{background:rgba(42,40,38,.55)}
+dialog:focus,dialog:focus-visible{outline:none}
+body:has(dialog[open]){overflow:hidden}
+.modal-box{width:100%;max-height:calc(100dvh - 48px);overflow-y:auto;overflow-x:hidden;background:var(--color-bg);border:1px solid var(--color-line);border-radius:var(--radius-lg);overscroll-behavior:contain}
+dialog[open] .modal-box{animation:pop .5s var(--spring)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.modal-head{position:sticky;top:0;display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--color-bg);border-bottom:1px solid var(--color-line);z-index:1}
+.modal-head .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--color-primary);color:var(--color-surface)}
+.modal-head h2{font-size:24px;flex:1}
+.x{width:48px;height:48px;border:1px solid var(--color-line);border-radius:50%;background:var(--color-surface);display:grid;place-items:center;transition:transform .45s var(--spring)}
+.x:hover{transform:rotate(90deg)}
+.modal-body{padding:32px 32px 40px;display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.modal-body>*{min-width:0}
+.modal-head h2{min-width:0}
+.summary{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:16px 20px;border-left:3px solid var(--color-primary);background:var(--color-surface);border-radius:0 var(--radius) var(--radius) 0}
+.summary b{font-size:12px;letter-spacing:.15em;color:var(--color-primary);padding-top:4px;white-space:nowrap}
+.modal-body figure{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-line);background:var(--color-surface)}
+.modal-body figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.modal-body figcaption{padding:10px 16px;font-size:var(--fs-xs);color:var(--color-muted)}
+.tbl{width:100%;table-layout:fixed;overflow-wrap:anywhere;border-collapse:separate;border-spacing:0;font-size:16px;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);overflow:hidden}
+.tbl th,.tbl td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-line);vertical-align:top}
+.tbl th{width:36%;font-weight:400;color:var(--color-muted)}
+.tbl thead th{color:var(--color-text);font-weight:700;background:var(--color-bg)}
+.tbl tr:last-child>*{border-bottom:0}
+.mnote{font-size:var(--fs-small);color:var(--color-muted)}
+
+/* 체험 창 */
+.paper{display:block;width:100%;min-height:200px;resize:vertical;border:1px solid var(--color-line);background:var(--color-surface);padding:20px;border-radius:var(--radius);font:inherit;font-size:18px;line-height:1.7;color:var(--color-text);transition:opacity .7s,transform .7s var(--ease-out)}
+.paper:focus{outline:2px solid var(--color-primary);outline-offset:0}
+.paper.eating{opacity:0;transform:translateY(-20px) scale(.9) rotate(-2deg)}
+.status{min-height:28px;font-size:16px;color:var(--color-primary)}
+
+/* ── 스크롤 등장 (FADE-UP) ── */
+.js .reveal{opacity:0;transform:translateY(44px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);transition-delay:calc(var(--d,0) * 110ms)}
+.js .reveal.is-in{opacity:1;transform:none}
+.js .scene.reveal.is-in{transform:rotate(-1.2deg)}
+
+/* ── 스크롤 진행 막대 ── */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none}
+.progress i{display:block;height:100%;background:var(--color-primary);transform:scaleX(0);transform-origin:left}
+
+/* ── 이미지 3D 기울기 ── */
+.hero-stage,.stay-stage{perspective:1400px}
+.tilt{position:relative;transform-style:preserve-3d;transition:transform .7s var(--spring);will-change:transform}
+.tilt.moving{transition:transform .12s ease-out}
+.tilt .hero-visual,.tilt .stay-visual{transform-style:preserve-3d}
+/* 터치 기기: 3D 기울기 대신 이미지가 천천히 숨 쉬듯 확대 (화면 밖으로 튀어나가지 않게 틀 안에서만) */
+@media (hover:none){
+  .hero-stage,.stay-stage{perspective:none}
+  .tilt,.tilt .hero-visual,.tilt .stay-visual{transform-style:flat}
+  .hero-visual,.stay-visual{overflow:hidden;border-radius:var(--radius-lg)}
+  .hero-visual img,.stay-visual img{animation:breathe 9s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  .hero-bubble{animation:float-flat 4.5s ease-in-out infinite}
+  .stay-bubble{animation:float-flat 4.5s ease-in-out infinite}
+  @keyframes float-flat{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,calc(-100% - 5px))}}
+}
+
+
+/* ── 메모장 vs 해칫 ── */
+.compare{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.cmp-col{padding:36px;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface)}
+.cmp-col.on{border:2px solid var(--color-primary);background:var(--tint-blue)}
+.cmp-label{display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:22px;margin-bottom:20px;color:var(--color-muted)}
+.cmp-col.on .cmp-label{color:var(--color-primary)}
+.cmp-label img{width:28px;height:28px;object-fit:contain}
+.cmp-col ul{list-style:none;display:grid;gap:0}
+.cmp-col li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--color-line)}
+.cmp-col li b{font-weight:400;font-size:var(--fs-small);color:var(--color-muted)}
+.cmp-col:not(.on) li span{color:var(--color-muted);text-decoration:line-through;text-decoration-color:rgba(42,40,38,.35)}
+.cmp-vs{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--ink-black);color:var(--color-surface);font-family:'Gowun Dodum',sans-serif;font-size:15px;letter-spacing:.1em}
+
+/* ── 예시 한 줄 먹여 보기 ── */
+.lines{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.line{position:relative;display:block;width:100%;min-height:168px;padding:28px 32px;text-align:left;border:1px solid var(--color-line);border-radius:var(--radius-lg);background:var(--color-surface);overflow:hidden;transition:transform .55s var(--spring),border-color .2s}
+.line:nth-child(odd){transform:rotate(-.8deg)}
+.line:nth-child(even){transform:rotate(.8deg)}
+.line:hover{transform:translateY(-6px) rotate(0);border-color:var(--color-primary)}
+.line .when{display:block;font-size:var(--fs-xs);letter-spacing:.08em;color:var(--color-primary);margin-bottom:12px}
+.line .txt{display:block;font-family:var(--font-heading);font-size:24px;line-height:1.45;transition:transform .7s var(--ease-out),opacity .5s}
+.line .when{transition:opacity .4s}
+.line::after{content:'눌러서 건네기';position:absolute;right:24px;bottom:18px;font-size:var(--fs-xs);color:var(--color-muted)}
+.line .eaten{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-heading);font-size:22px;color:var(--color-primary);opacity:0;transform:scale(.9);transition:opacity .5s .45s,transform .6s var(--spring) .45s;border:2px dashed rgba(42,96,144,.35);border-radius:var(--radius-lg);margin:10px}
+.line.is-eaten .txt{transform:translateY(-30px) scaleY(.2);opacity:0}
+.line.is-eaten .when{opacity:0}
+.line.is-eaten::after{content:'다시 놓기'}
+.line.is-eaten .eaten{opacity:1;transform:none}
+
+/* ── 해치 소개 ── */
+.meet{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center}
+.meet-visual{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.orbit{position:absolute;border-radius:50%;pointer-events:none}
+.orbit.o1{inset:4%;border:1px solid var(--color-line)}
+.orbit.o2{inset:16%;border:1px dashed rgba(42,96,144,.35);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meet-visual .m1{top:10%;right:8%}
+.meet-visual .m2{bottom:16%;left:6%}
+.meet-char{position:relative;width:72%;margin-top:10%}
+.meet-char img{width:100%;height:auto;transition:transform .8s var(--spring)}
+.meet-visual:hover .meet-char img{transform:translateY(-10px) rotate(-3deg) scale(1.04)}
+.tag-note{position:absolute;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius);padding:8px 14px;font-size:15px;transition:transform .5s var(--spring)}
+.tag-note.t1{left:2%;top:30%;transform:rotate(-6deg)}
+.tag-note.t2{right:0;bottom:26%;transform:rotate(5deg)}
+.meet-visual:hover .tag-note.t1{transform:rotate(-10deg) translateY(-6px)}
+.meet-visual:hover .tag-note.t2{transform:rotate(9deg) translateY(-6px)}
+.meet-bubble{position:absolute;left:52%;top:-4%;transform:translate(-50%,-100%);background:var(--color-surface);border:1.5px solid var(--ink-black);border-radius:16px;padding:10px 18px;font-family:var(--font-heading);font-size:18px;white-space:nowrap}
+.meet-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+.profile{margin:32px 0 0;border-top:1px solid var(--color-line)}
+.profile div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--color-line)}
+.profile dt{font-size:var(--fs-small);color:var(--color-muted)}
+.profile dd{margin:0}
+
+/* ── 링크 보내기 · 알림 ── */
+.share{margin-top:48px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:var(--fs-small);color:var(--color-muted)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border:1px solid var(--color-primary);border-radius:var(--radius);background:var(--color-surface);color:var(--color-primary);font-size:16px;transition:transform .45s var(--spring)}
+.btn-ghost:hover{transform:translateY(-2px) scale(1.04)}
+.btn-ghost:active{transform:scale(.97)}
+.toast{position:fixed;left:50%;bottom:32px;z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink-black);color:var(--color-surface);padding:12px 20px;border-radius:var(--radius);font-size:15px;transition:opacity .25s,transform .45s var(--spring);max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ── 먹 갈기 이미지 · 말풍선 ── */
+.stay-grid{align-items:start}
+.stay-visual{overflow:visible;border:0;background:transparent}
+/* 카드뉴스와 같은 장면: 아이보리 판 + 아래 40% 옅은 바닥, 해치는 틀 없이 앉는다 */
+.stay-scene{position:relative;transform-style:preserve-3d;display:flex;align-items:flex-end;justify-content:center;gap:4%;aspect-ratio:4/3;padding:12% 6% 7%;border-radius:var(--radius-lg);border:1px solid var(--color-line);background:var(--color-surface)}
+.stay-scene::before{content:'';position:absolute;left:0;right:0;bottom:0;height:40%;background:rgba(42,40,38,.05);border-radius:0 0 var(--radius-lg) var(--radius-lg);pointer-events:none}
+.stay-char{position:relative;width:52%;transform-style:preserve-3d}
+.stay-char img{width:100%;height:auto;min-height:0;aspect-ratio:auto;border:0;background:transparent;border-radius:0}
+.inkstone{width:34%;height:auto;margin-bottom:2%;transition:transform .6s var(--spring)}
+.stay-scene:hover .inkstone{transform:rotate(-4deg) translateY(-4px)}
+.stay-bubble{position:absolute;left:55%;top:2%;transform:translate(-50%,-100%) translateZ(60px);background:var(--color-surface);border:1.5px solid var(--ink-black);border-radius:16px;padding:12px 20px;font-family:var(--font-heading);font-size:19px;white-space:nowrap;animation:float2 4.5s ease-in-out infinite}
+.stay-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:var(--color-surface);border-right:1.5px solid var(--ink-black);border-bottom:1.5px solid var(--ink-black);transform:translateX(-50%) rotate(45deg)}
+@keyframes float2{0%,100%{transform:translate(-50%,-100%) translateZ(60px)}50%{transform:translate(-50%,calc(-100% - 6px)) translateZ(60px)}}
+
+/* ── 태블릿 ── */
+@media (max-width:1100px){
+  :root{--fs-h1:54px;--fs-h2:36px;--section-pad:96px}
+  .reasons,.cards{grid-template-columns:1fr 1fr}
+  .nav a{padding:12px 9px;font-size:15px}
+  .nav a::after{left:9px;right:9px}
+  .meet{gap:48px}
+  .trust-grid{gap:48px}
+  .stay-grid{grid-template-columns:1fr}
+}
+
+/* ── 모바일 ── */
+@media (max-width:900px){
+  :root{--gutter:20px;--section-pad:72px;--fs-body:17px;--fs-h1:38px;--fs-h2:28px;--fs-h3:20px;--header-h:64px;--radius-lg:16px}
+  .nav,.header-cta{display:none}
+  .menu-btn{display:inline-flex}
+  .brand{font-size:20px}
+  .brand img{width:32px;height:32px}
+  .mnav{display:block;position:fixed;top:var(--header-h);left:0;right:0;bottom:0;z-index:39;background:var(--color-bg);padding:16px var(--gutter) 32px;opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .25s,visibility .25s,transform .4s var(--ease-out)}
+  .mnav.open{opacity:1;visibility:visible;transform:none}
+  .mnav a{display:flex;align-items:center;justify-content:space-between;min-height:64px;font-size:20px;text-decoration:none;border-bottom:1px solid var(--color-line)}
+  .mnav a svg{color:var(--color-primary)}
+  .hero{padding-top:36px}
+  .scene{font-size:15px;padding:10px 14px;margin-bottom:24px}
+  .for{font-size:17px;margin-top:18px}
+  .hero-action{margin-top:28px}
+  .hero-action .btn{width:100%}
+  .spark{display:none}
+  .hero-stage{margin-top:40px}
+  .hero-bubble{font-size:13px;padding:7px 11px;border-radius:12px}
+  .hero-bubble::after{width:10px;height:10px;bottom:-6px}
+  .belief{font-size:23px}
+  .hero-stage{margin-top:32px}
+  .hero .hero-action{margin-top:28px}
+  .compare{grid-template-columns:1fr;gap:12px}
+  .cmp-col{padding:24px}
+  .cmp-col li{grid-template-columns:80px 1fr;gap:12px}
+  .cmp-vs{width:48px;height:48px;margin:auto;font-size:13px}
+  .lines{grid-template-columns:1fr;gap:16px}
+  .line{min-height:150px;padding:24px}
+  .line .txt{font-size:20px}
+  .meet{grid-template-columns:1fr;gap:32px}
+  .meet-bubble{font-size:14px;padding:7px 12px}
+  .meet-visual{width:100%;max-width:360px;margin-inline:auto}
+  .tag-note{font-size:13px;padding:6px 10px}
+  .stay-scene{padding-top:22%}
+  .profile div{grid-template-columns:88px 1fr;gap:12px}
+  .share{flex-direction:column;gap:12px;margin-top:32px}
+  .toast{bottom:100px}
+  .stay-bubble{font-size:13px;padding:7px 11px;border-radius:12px}
+  .stay-bubble::after{width:10px;height:10px;bottom:-6px}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:32px}
+  .sec-head .side{text-align:left;max-width:none}
+  .lead{font-size:17px}
+  .reasons,.cards,.trust-cards{grid-template-columns:1fr;gap:16px}
+  .reason{padding:24px;display:grid;grid-template-columns:56px 1fr;column-gap:16px;align-items:center}
+  .reason .no{grid-column:1/-1;margin-bottom:12px}
+  .reason .ic{margin:0;grid-row:span 2}
+  .reason b{font-size:20px}
+  .reason span{margin-top:2px}
+  .cards{gap:32px}
+  .card .thumb{height:150px}
+  .ink{padding:24px}
+  .ink .ink-num{font-size:48px}
+  .trust-grid{grid-template-columns:1fr;gap:32px}
+  .price{font-size:72px;margin-top:20px}
+  .faq summary{font-size:16px;padding:12px 16px;min-height:64px}
+  .faq details p{padding:0 16px 18px 16px}
+  .band{grid-template-columns:1fr;padding:32px 24px;gap:24px}
+  .band .team-quote{font-size:25px}
+  .end h2{font-size:34px}
+  .end .btn{min-width:0;width:100%}
+  .footer{padding-bottom:calc(40px + 88px)}
+  .mbar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));background:var(--color-bg);border-top:1px solid var(--color-line);transform:translateY(110%);transition:transform .45s var(--spring)}
+  .mbar.show{transform:none}
+  .mbar .btn{width:100%}
+  dialog{width:calc(100% - 24px);max-width:calc(100% - 24px);max-height:calc(100% - 24px)}
+  .modal-box{max-height:calc(100dvh - 24px)}
+  .paper{font-size:16px;min-height:160px}
+  .x{width:44px;height:44px;flex:none}
+  .modal-head .ic{width:40px;height:40px;flex:none}
+  .modal-head{padding:16px}
+  .modal-head h2{font-size:20px}
+  .modal-body{padding:20px 16px 32px}
+  .summary{grid-template-columns:1fr;gap:4px}
+  .tbl th,.tbl td{padding:12px}
+  .tbl th{width:40%}
+}
+
+/* 움직임 줄이기 설정 존중 */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important;transition-delay:0s!important}
+  .js .reveal{opacity:1}
+}
 </style>
+<script>document.documentElement.classList.add('js')</script>
+<meta property="og:url" content="https://emotion-incinerator-sepia.vercel.app/">
+<link rel="canonical" href="https://emotion-incinerator-sepia.vercel.app/">
+<script defer src="/analytics.js"></script>
 </head>
 <body>
-<div id="embers" aria-hidden="true"></div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
-<button id="mute" type="button" aria-pressed="false">소리 켜짐</button>
-<main>
-  <h1 class="rise">쓰고, 태우면 <span class="glow">끝.</span><br>이 글은 어디에도 저장되지 않아요.</h1>
-  <p class="lead rise">털어놓고 싶은데 기록이 남는 건 싫을 때가 있죠. 메모장에 쓰면 목록 맨 위에 남으니까요. 여기선 쓴 글을 잔잔하게 태우고, 원문은 남기지 않아요.</p>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
 
-  <section class="rise">
-    <h2>한번 태워 보기</h2>
-    <div class="stage" id="stage">
-      <div class="paper" id="paper"><textarea id="demo" class="lined" placeholder="오늘 속상했던 일을 적어 보세요.&#10;이 페이지는 아무것도 보내지 않아요." aria-label="태울 글"></textarea></div>
-      <button id="burn" type="button">접어서 태우기</button>
-      <p class="note" id="demoNote" aria-live="polite"></p>
-      <div class="fireplace" id="hearth" aria-hidden="true"><canvas id="back"></canvas><canvas id="fire"></canvas></div>
+<!-- 아이콘 모음 (인라인 SVG, <use href="#i-..."/>로 씀) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2c.6 5 2 7.4 10 10-8 2.6-9.4 5-10 10-.6-5-2-7.4-10-10 8-2.6 9.4-5 10-10z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-asterisk" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z M13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-give" viewBox="0 0 24 24"><path d="M3 13h4l3 2h4a2 2 0 0 1 0 4H9 M14 17l5-2a2 2 0 0 1 2 3l-6 3H3 M9 3h9v7H9z M9 3l4.5 4L18 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-ink" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><ellipse cx="12" cy="12" rx="5" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.6 5.6l12.8 12.8" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-friend" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0 M16 4.5a3.5 3.5 0 0 1 0 7 M18 14a5.5 5.5 0 0 1 3.5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-feed" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 17h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 6.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-memo" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 12h7M9 16h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-user-off" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 13-6.2 M16 17l5 5M21 17l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="container header-in">
+    <a class="brand" href="#top" aria-label="해칫 처음으로"><img src="/assets/hatcheat/haechi_yellow.png" alt="" width="40" height="40"><span>해칫</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#why">말 못 하는 이유</a>
+      <a href="#how">해칫에서는</a>
+      <a href="#try">먹여 보기</a>
+      <a href="#haechi">해치 소개</a>
+      <a href="#stay">먹 갈기</a>
+      <a href="#trust">안심</a>
+      <a href="#team">만드는 사람</a>
+    </nav>
+    <button class="btn header-cta launch" type="button" tabindex="-1">해치에게만 털어놓기</button>
+    <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mnav"><svg width="24" height="24"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="모바일 메뉴">
+  <a href="#why">말 못 하는 이유<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#how">해칫에서는<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#try">먹여 보기<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#haechi">해치 소개<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#stay">먹 갈기<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#trust">안심<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+  <a href="#team">만드는 사람<svg width="20" height="20"><use href="#i-arrow"/></svg></a>
+</nav>
+
+<main id="main">
+
+  <!-- [문구] ① 첫 화면: 장면 → 제목 → 대상 → 이미지(해치 머리 위 말풍선) → 버튼 -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-copy">
+        <svg class="spark s1" width="34" height="34" aria-hidden="true"><use href="#i-asterisk"/></svg>
+        <svg class="spark gold s2" width="28" height="28" aria-hidden="true"><use href="#i-spark"/></svg>
+        <svg class="spark blue s3" width="18" height="18" aria-hidden="true"><use href="#i-spark"/></svg>
+        <p class="scene reveal" style="--d:1">취준 2년 차, <b>불합격 문자를 받은 밤.</b> 인스타에 친구 합격 소식이 떴다.</p>
+        <h1 class="reveal" style="--d:2">한지에 적으면<br><span class="em swash">해치가 먹어요<svg viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16 C 90 6, 200 4, 396 12" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg></span></h1>
+        <p class="for reveal" style="--d:3">취준생과 사회초년생의 말 못 하는 밤을 위해</p>
+      </div>
+
+      <!-- 이미지: 마우스를 따라 기울어지는 3D 효과 (.tilt, 말풍선·쪽지는 data-depth만큼 떠 보인다) -->
+      <div class="hero-stage reveal" style="--d:4">
+        <div class="tilt" data-tilt>
+          <figure class="hero-visual">
+            <img src="/assets/hatcheat/haechi_16x9.png" alt="궁궐 처마 아래 돌 받침에 앉아 접힌 한지를 기다리는 해치" width="1600" height="900" fetchpriority="high">
+            <figcaption class="hero-bubble" data-depth="60">적은 것은 아무도 읽지 않소</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="hero-action reveal" style="--d:5">
+        <button class="btn launch" id="hero-cta" type="button">해치에게만 털어놓기<svg width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg></button>
+      </div>
+
     </div>
   </section>
 
-  <section class="rise">
-    <h2>이런 곳이에요</h2>
-    <ul>
-      <li><b>원문은 남지 않아요.</b> 태우고 나면 서버에도, 휴대폰에도 쓴 글이 없어요.</li>
-      <li><b>몇 번 왔는지 세지 않아요.</b> 한동안 오지 않아도 잃는 게 없어요.</li>
-      <li><b>잘 쓸 필요 없어요.</b> 한 글자여도 괜찮아요.</li>
-    </ul>
+  <p class="belief container reveal"><span class="q">“</span>모든 마음을<br>기록해 둘 필요는 없으니까.<span class="q">”</span></p>
+
+  <!-- [문구] ② 문제 -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker">Why we keep it in</p>
+          <h2 class="h2">말하면 속좁아 보일까 봐,<br>어디서 말이 돌까 봐.</h2>
+        </div>
+        <p class="side">그래서 결국<br>아무한테도 못 털어놔요.</p>
+      </div>
+      <ul class="reasons">
+        <li class="reason reveal"><span class="no">01 / FRIENDS</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-friend"/></svg></span><b>친구에게</b><span>속좁아 보일까 봐 못 해요.</span></li>
+        <li class="reason reveal" style="--d:1"><span class="no">02 / GROUP CHAT</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-chat"/></svg></span><b>단톡방에</b><span>말이 돌까 봐 못 해요.</span></li>
+        <li class="reason reveal" style="--d:2"><span class="no">03 / SNS</span><span class="ic"><svg width="28" height="28" aria-hidden="true"><use href="#i-feed"/></svg></span><b>SNS에</b><span>아는 사람이 볼까 봐 못 올려요.</span></li>
+      </ul>
+    </div>
   </section>
 
-  <section class="rise">
-    <h2>문을 열면 알려 드릴게요</h2>
-    <form id="reserve">
-      <input id="email" type="email" name="email" required placeholder="이메일 주소" autocomplete="email" aria-label="이메일 주소">
-      <button type="submit">사전 예약하기</button>
-      <p class="note" id="formNote" aria-live="polite">받은 이메일은 출시 안내에만 써요.</p>
-    </form>
+  <!-- [문구] ②-1 메모장과 비교 -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="compare reveal">
+        <div class="cmp-col">
+          <p class="cmp-label"><svg width="20" height="20" aria-hidden="true"><use href="#i-memo"/></svg>메모장에 쓰면</p>
+          <ul>
+            <li><b>쓴 다음</b><span>목록 맨 위에 그대로 남아요</span></li>
+            <li><b>다시 열면</b><span>그 말을 또 마주쳐요</span></li>
+            <li><b>마무리</b><span>저장 버튼</span></li>
+          </ul>
+        </div>
+        <div class="cmp-vs" aria-hidden="true">VS</div>
+        <div class="cmp-col on">
+          <p class="cmp-label"><img src="/assets/hatcheat/haechi_yellow.png" alt="" width="24" height="24">해칫에 쓰면</p>
+          <ul>
+            <li><b>쓴 다음</b><span>해치가 먹어요</span></li>
+            <li><b>다시 열면</b><span>빈 한지가 기다려요</span></li>
+            <li><b>마무리</b><span>배부른 해치와 함께 끝</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <footer>감정소각소 (가칭) · 생성형AI 4팀 · <a href="/">v1 보기</a> · <a href="/v3/">v3 보기</a></footer>
+  <hr class="rule container">
+
+  <!-- [문구] ③ 해결: 카드를 누르면 팝업 (template id = data-modal) -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker">How it works</p>
+          <h2 class="h2">한지에 적으면 해치가 먹어요.</h2>
+        </div>
+        <p class="side">잘 쓸 필요도,<br>정리할 필요도 없어요.</p>
+      </div>
+      <div class="cards">
+        <button class="card reveal" type="button" data-modal="m-write">
+          <span class="tag">01 / Write</span>
+          <span class="thumb t-blue">
+            <svg width="150" height="110" viewBox="0 0 150 110" aria-hidden="true"><rect x="28" y="12" width="94" height="86" rx="6" fill="#FDF5E9" stroke="#2A2826" stroke-width="2"/><path d="M44 36h62M44 50h62M44 64h40" stroke="#2A2826" stroke-width="2" stroke-linecap="round" opacity=".35"/><path d="M96 86l26-40 8 6-26 40-10 4z" fill="#2A6090"/><path d="M120 46l8 6" stroke="#2A2826" stroke-width="2"/></svg>
+          </span>
+          <span class="row"><h3>한지에 쓰기</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>가입 없이 열자마자 한지가 보여요.<br>칸은 한지 하나뿐이에요.</p>
+        </button>
+        <button class="card reveal" type="button" data-modal="m-give" style="--d:1">
+          <span class="tag">02 / Give</span>
+          <span class="thumb t-gold">
+            <!-- 로고와 같은 해치: 노란 소용돌이 갈기 · 빨간 옆 갈기 · 파란 눈썹 · 빨간 코 · 막대에 올린 앞발 -->
+            <svg width="210" height="140" viewBox="0 0 210 140" aria-hidden="true">
+              <g transform="rotate(-10 40 92)"><path d="M14 80h50v28H14z" fill="#FDF5E9" stroke="#2A2826" stroke-width="2" stroke-linejoin="round"/><path d="M14 80l25 14 25-14" fill="none" stroke="#2A2826" stroke-width="2" stroke-linejoin="round"/></g>
+              <path d="M72 84c10-10 20-14 30-14" fill="none" stroke="#2A2826" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"/>
+              <g stroke="#2A2826" stroke-width="2">
+                <circle cx="113" cy="66" r="11" fill="#EB4531"/><circle cx="113" cy="87" r="10" fill="#EB4531"/>
+                <circle cx="187" cy="66" r="11" fill="#EB4531"/><circle cx="187" cy="87" r="10" fill="#EB4531"/>
+                <rect x="112" y="46" width="76" height="62" rx="24" fill="#FFFDF8"/>
+                <circle cx="128" cy="46" r="11" fill="#F0B237"/><circle cx="172" cy="46" r="11" fill="#F0B237"/>
+                <circle cx="150" cy="38" r="17" fill="#F0B237"/>
+              </g>
+              <path d="M150 38m-8 0a8 8 0 1 1 8 8a4 4 0 1 1 4-4" fill="none" stroke="#2A2826" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+              <path d="M127 70q7-7 14 0M159 70q7-7 14 0" fill="none" stroke="#2A6090" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="135" cy="80" r="4" fill="#2A2826"/><circle cx="165" cy="80" r="4" fill="#2A2826"/>
+              <ellipse cx="150" cy="90" rx="7.5" ry="5.5" fill="#EB4531"/>
+              <rect x="104" y="108" width="92" height="7" rx="3.5" fill="#2A2826"/>
+              <g fill="#FFFDF8" stroke="#2A2826" stroke-width="2"><rect x="122" y="99" width="20" height="15" rx="7"/><rect x="158" y="99" width="20" height="15" rx="7"/></g>
+            </svg>
+          </span>
+          <span class="row"><h3>해치에게 주기</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>버튼을 한 번 누르면 한지가 접히고<br>해치가 받아먹어요.</p>
+        </button>
+        <button class="card reveal" type="button" data-modal="m-end" style="--d:2">
+          <span class="tag">03 / Done</span>
+          <span class="thumb">
+            <!-- 먹과 벼루 -->
+            <svg width="190" height="130" viewBox="0 0 190 130" aria-hidden="true">
+              <rect x="24" y="58" width="142" height="56" rx="18" fill="#38322B" stroke="#2A2826" stroke-width="2"/>
+              <rect x="34" y="66" width="122" height="40" rx="12" fill="#4A433B"/>
+              <ellipse cx="80" cy="86" rx="34" ry="13" fill="#2A2826"/>
+              <path d="M120 72q14 2 24 14q-10 12-24 14z" fill="#2A2826"/>
+              <ellipse cx="72" cy="83" rx="9" ry="2.5" fill="#FDF5E9" opacity=".25"/>
+              <g transform="rotate(28 120 46)"><rect x="110" y="6" width="22" height="62" rx="4" fill="#2A2826"/><rect x="110" y="18" width="22" height="18" fill="#F0B237"/><path d="M114 24h14M114 30h10" stroke="#2A2826" stroke-width="2" stroke-linecap="round"/></g>
+              <circle cx="58" cy="44" r="3.5" fill="#2A2826"/><circle cx="46" cy="34" r="2.2" fill="#2A2826"/>
+            </svg>
+          </span>
+          <span class="row"><h3>끝</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+          <p>원문은 남지 않아요. 닫거나,<br>마음이 남으면 먹을 갈러 가요.</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ③-1 먹여 보기: 예시 한 줄을 누르면 해치가 먹는다 (예시 문장, 실제 사용자 글 아님) -->
+  <section class="section" id="try" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker gold">Try a line</p>
+          <h2 class="h2">이런 한 줄, 해치에게 먹여 보세요.</h2>
+        </div>
+        <p class="side">눌러 보면 해치가 먹어요.<br>예시 문장이에요. 실제 사용자의 글이 아니에요.</p>
+      </div>
+      <div class="lines">
+        <button class="line reveal" type="button"><span class="when">불합격 문자를 받은 밤</span><span class="txt">축하한다고 보냈는데, 사실은 좀 질투 났어.</span><span class="eaten">잘 먹었소. 읽지는 않았소</span></button>
+        <button class="line reveal" type="button" style="--d:1"><span class="when">면접에서 돌아오는 길</span><span class="txt">또 떨어졌다는 말을 아무한테도 못 했어.</span><span class="eaten">꿀꺽. 아무에게도 옮기지 않겠소</span></button>
+        <button class="line reveal" type="button" style="--d:2"><span class="when">집에서 온 전화를 끊고</span><span class="txt">다 괜찮다고 했는데, 하나도 안 괜찮아.</span><span class="eaten">한 글자도 남김없이 먹었소</span></button>
+        <button class="line reveal" type="button" style="--d:3"><span class="when">인스타를 넘기다 멈춘 밤</span><span class="txt">나만 빼고 다 잘 지내는 것 같아.</span><span class="eaten">배부르오. 오늘 밤은 편히 쉬시오</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ③-2 해치 소개 (캐릭터 프로필) -->
+  <section class="section" id="haechi" style="padding-top:0">
+    <div class="container meet">
+      <!-- 해치를 사진 틀 없이 궤도 원 위에 앉힌다 (배경을 뗀 그림: key visual/cutout/) -->
+      <figure class="meet-visual reveal">
+        <span class="orbit o1" aria-hidden="true"></span><span class="orbit o2" aria-hidden="true"></span>
+        <svg class="spark m1" width="30" height="30" aria-hidden="true"><use href="#i-asterisk"/></svg>
+        <svg class="spark gold m2" width="26" height="26" aria-hidden="true"><use href="#i-spark"/></svg>
+        <div class="meet-char">
+          <img src="/assets/hatcheat/haechi_eat.png" alt="한지를 물고 눈을 감은 채 웃는 해치" width="760" height="587" loading="lazy" decoding="async">
+          <figcaption class="meet-bubble">반갑소. 나는 해치요</figcaption>
+        </div>
+        <span class="tag-note t1">#글은 못 읽음</span>
+        <span class="tag-note t2">#먹는 건 잘함</span>
+      </figure>
+      <div class="reveal" style="--d:1">
+        <p class="kicker">Meet Haechi</p>
+        <h2 class="h2">글은 못 읽고,<br>먹기만 잘하는 해치예요.</h2>
+        <p class="lead">옛 궁궐 앞을 지키던 수호 동물 해치가 이번엔 당신의 한 줄을 지켜요.</p>
+        <dl class="profile">
+          <div><dt>사는 곳</dt><dd>궁궐 처마 아래 돌 받침 위</dd></div>
+          <div><dt>하는 일</dt><dd>한지에 적은 말을 받아먹기</dd></div>
+          <div><dt>못 하는 것</dt><dd>글 읽기. 그래서 아무도 읽지 않아요</dd></div>
+          <div><dt>좋아하는 것</dt><dd>갓 간 먹 냄새, 조용한 밤</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ④ 먹 갈기: 글 먼저, 그 아래 이미지 + 진행 카드 -->
+  <section class="section" id="stay" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="kicker gold">Stay a little longer</p>
+          <h2 class="h2">마음이 남으면 먹을 갈아요.</h2>
+          <p class="lead">100번 갈면 해치가 고전 한 구절을 필사해 줘요.</p>
+        </div>
+        <p class="side">조금 더 있고 싶으면 먹을 갈아도 되고,<br>그냥 나가도 돼요.</p>
+      </div>
+      <div class="stay-grid">
+        <div class="stay-stage reveal">
+          <div class="tilt" data-tilt>
+            <!-- 벼루 곁에 앉은 해치 (카드뉴스 9장과 같은 장면, 아래 40%는 옅은 바닥) -->
+            <figure class="stay-visual">
+              <div class="stay-scene">
+                <div class="stay-char">
+                  <img src="/assets/hatcheat/haechi_sit.png" alt="벼루 곁 돌 받침에 앉은 해치" width="760" height="668" loading="lazy" decoding="async">
+                  <figcaption class="stay-bubble" data-depth="60">마음이 남으면, 조금 더 머물다 가오</figcaption>
+                </div>
+                <svg class="inkstone" viewBox="0 0 190 130" aria-hidden="true">
+                  <rect x="24" y="58" width="142" height="56" rx="18" fill="#38322B" stroke="#2A2826" stroke-width="2"/>
+                  <rect x="34" y="66" width="122" height="40" rx="12" fill="#4A433B"/>
+                  <ellipse cx="80" cy="86" rx="34" ry="13" fill="#2A2826"/>
+                  <path d="M120 72q14 2 24 14q-10 12-24 14z" fill="#2A2826"/>
+                  <ellipse cx="72" cy="83" rx="9" ry="2.5" fill="#FDF5E9" opacity=".25"/>
+                  <g transform="rotate(28 120 46)"><rect x="110" y="6" width="22" height="62" rx="4" fill="#2A2826"/><rect x="110" y="18" width="22" height="18" fill="#F0B237"/><path d="M114 24h14M114 30h10" stroke="#2A2826" stroke-width="2" stroke-linecap="round"/></g>
+                </svg>
+              </div>
+            </figure>
+          </div>
+        </div>
+        <div class="stay-side">
+          <div class="ink reveal" style="--d:1">
+            <p class="kicker">Until copying</p>
+            <p class="ink-num">100<small>번</small></p>
+            <div class="ink-bar" aria-hidden="true"><i></i></div>
+            <p>먹이 진해지는 만큼 필사에 가까워져요.<br>중간에 나가도 숫자는 줄지 않아요.</p>
+          </div>
+          <button class="card reveal" type="button" data-modal="m-ink" style="--d:2">
+            <span class="row"><h3>먹 갈기와 필사첩</h3><svg width="22" height="22" aria-hidden="true"><use href="#i-up"/></svg></span>
+            <p>책 고르기, 필사 카드, 필사첩이 어떻게 남는지 볼 수 있어요.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule container">
+
+  <!-- [문구] ⑤ 안심: 가격 · 약속 카드 · 자주 묻는 질문 · 문의 -->
+  <section class="section" id="trust">
+    <div class="container trust-grid">
+      <div class="reveal">
+        <p class="kicker">Before you start</p>
+        <h2 class="h2">가격은 무료예요.</h2>
+        <p class="price">0<small>원</small></p>
+      </div>
+      <div>
+        <div class="trust-cards">
+          <button class="pcard reveal" type="button" data-modal="m-data">
+            <span class="ic"><svg width="24" height="24" aria-hidden="true"><use href="#i-lock"/></svg></span>
+            <span><b>적은 글은 어디로 가나요?</b><small>원문은 보내지도, 저장하지도 않아요</small></span>
+            <svg class="go" width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg>
+          </button>
+          <button class="pcard reveal" type="button" data-modal="m-not" style="--d:1">
+            <span class="ic"><svg width="24" height="24" aria-hidden="true"><use href="#i-ban"/></svg></span>
+            <span><b>해칫이 하지 않는 것</b><small>가입, 연속 기록, 재촉 알림</small></span>
+            <svg class="go" width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg>
+          </button>
+        </div>
+        <div class="faq">
+          <details class="reveal"><summary><span class="qmark">Q</span>정말 아무도 못 봐요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>이 페이지의 체험에서 적은 글은 서버로 보내거나 저장하지 않아요. 건네기를 마치거나 체험 창을 닫으면 입력한 원문을 지워요.</p></details>
+          <details class="reveal" style="--d:1"><summary><span class="qmark">Q</span>매일 써야 해요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>필요할 때만 오면 돼요. 연속 기록도, 재촉 알림도 두지 않는 방향으로 만들고 있어요.</p></details>
+          <details class="reveal" style="--d:2"><summary><span class="qmark">Q</span>다시 볼 수 있어요?<svg class="pm" width="20" height="20" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>건넨 글은 다시 볼 수 없어요. 다시 봐야 하는 내용은 건네지 말아 주세요.</p></details>        </div>
+        <p class="contact reveal">무료라 결제도 환불도 없어요</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ⑥ 만드는 사람 -->
+  <section class="section" id="team" style="padding-top:0">
+    <div class="container">
+      <div class="band reveal">
+        <div>
+          <p class="kicker">Made by five</p>
+          <h2 class="h2" style="font-size:24px">숭실대 학생 다섯이 만들어요.</h2>
+          <p class="team-quote">“누구에게도 말 못 하는 말이 있어서요.”</p>
+          <p class="names">김서영 · 정민규 · 정연화 · 조재영 · 홍석민</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [문구] ⑦ 끝 버튼 -->
+  <section class="end" id="start">
+    <svg class="spark s4" width="30" height="30" aria-hidden="true"><use href="#i-asterisk"/></svg>
+    <svg class="spark gold s5" width="34" height="34" aria-hidden="true"><use href="#i-spark"/></svg>
+    <div class="container reveal">
+      <p class="kicker">Say it only to Haechi</p><br>
+      <h2><span class="em">말 못 한 한 줄,</span><br>해치에게 건네 보세요.</h2>
+      <button class="btn launch" id="end-cta" type="button">해치에게만 털어놓기<svg width="20" height="20" aria-hidden="true"><use href="#i-up"/></svg></button>
+      <p class="cond">가입 없이 · 무료</p>
+      <!-- 추천: 링크 복사 (보조 버튼) -->
+      <div class="share">
+        <p>말 못 하는 밤을 보내는 친구가 있다면</p>
+        <button class="btn-ghost" id="share" type="button"><svg width="18" height="18" aria-hidden="true"><use href="#i-link"/></svg>링크 보내기</button>
+      </div>
+    </div>
+  </section>
 </main>
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<footer class="footer">
+  <div class="container"><span><b>해칫</b>&nbsp; hatch eat</span><span>모든 마음을 기록해 둘 필요는 없다.</span><a href="/privacy" style="color:var(--color-primary);white-space:nowrap">개인정보처리방침</a></div>
+</footer>
+
+<!-- 모바일: 스크롤 따라오는 버튼 -->
+<div class="mbar" id="mbar"><button class="btn launch" type="button" tabindex="-1">해치에게만 털어놓기</button></div>
+
+<!-- 카드 팝업 (내용은 아래 template에서 채운다) -->
+<dialog id="modal" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-head"><span class="ic" id="modal-ic"></span><h2 id="modal-title"></h2><button class="x" type="button" data-close aria-label="닫기"><svg width="20" height="20"><use href="#i-close"/></svg></button></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</dialog>
+
+<!-- 체험 창 (버튼 "해치에게만 털어놓기") — 적은 글은 전송·저장하지 않는다 -->
+<dialog id="demo" aria-labelledby="demo-title">
+  <div class="modal-box">
+    <div class="modal-head"><span class="ic"><svg width="24" height="24"><use href="#i-pen"/></svg></span><h2 id="demo-title">한지에 적어 보세요</h2><button class="x" type="button" data-close aria-label="체험 닫기"><svg width="20" height="20"><use href="#i-close"/></svg></button></div>
+    <div class="modal-body">
+      <p class="summary"><b>체험</b><span>랜딩 페이지 체험이에요. 적은 글은 전송하거나 저장하지 않아요. 창을 닫아도 입력한 글은 지워져요.</span></p>
+      <label for="writing" style="position:absolute;left:-9999px">남겨두기 싫은 말</label>
+      <textarea class="paper" id="writing" placeholder="남겨두기 싫은 말을 여기에 적어 보세요." autocomplete="off" spellcheck="false"></textarea>
+      <button id="give" class="btn btn-block" type="button" disabled>해치에게 건네기</button>
+      <p class="status" role="status" aria-live="polite" id="status">한 글자라도 적으면 건넬 수 있어요.</p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ================= 팝업 내용: 요약 + 서술 + 표 + 이미지 ================= -->
+<template id="m-write" data-title="한지에 쓰기" data-icon="i-pen">
+  <p class="summary"><b>요약</b><span>입력 칸은 한지 하나. 반드시 채울 칸이 없어요.</span></p>
+  <p>앱을 열면 가입이나 소개 화면 없이 바로 한지가 보여요. 적기 전에 해치가 먼저 "적은 것은 아무도 읽지 않소"라고 알려 줘요. 제목, 날짜, 감정을 고르는 칸은 없어요. 한 줄도, 긴 글도 괜찮아요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>글자 수</th><td>제한 없음 (1자 이상)</td></tr>
+    <tr><th>반드시 채울 칸</th><td>없음</td></tr>
+    <tr><th>제목 · 날짜 · 감정 태그</th><td>없음</td></tr>
+    <tr><th>한지 안 안내</th><td>남겨두기 싫은 말을 여기에 적어 보세요. 적은 글은 어디에도 저장되지 않아요.</td></tr>
+  </tbody></table>
+  <figure><img src="/assets/hatcheat/귀여운-사자-강아지와-접힌-편지.png" alt="접힌 한지 앞에서 기다리는 해치" loading="lazy"><figcaption>해치는 한지를 받을 때까지 기다려요.</figcaption></figure>
+</template>
+
+<template id="m-give" data-title="해치에게 주기" data-icon="i-give">
+  <p class="summary"><b>요약</b><span>버튼 한 번, 약 5초. 확인 창은 없어요.</span></p>
+  <p>한 글자라도 적으면 [해치에게 건네기] 버튼이 켜져요. 누르면 한지가 접히고 해치가 받아먹어요. 건네기가 안 되면 적은 글은 그대로 두니까, 한 번 더 건네면 돼요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>버튼이 켜지는 때</th><td>한 글자 이상 적었을 때</td></tr>
+    <tr><th>먹는 시간</th><td>약 5초, 약한 진동</td></tr>
+    <tr><th>"정말 건넬까요?" 창</th><td>없음</td></tr>
+    <tr><th>건네기가 안 될 때</th><td>해치가 아직 받지 못했어요. 적은 글은 그대로 있으니 한 번 더 건네 주세요.</td></tr>
+  </tbody></table>
+  <figure><img src="/assets/hatcheat/haechi_16x9.png" alt="궁궐 마당에서 접힌 한지를 기다리는 해치" loading="lazy"><figcaption>한지를 접어 건네면 해치가 받아요.</figcaption></figure>
+</template>
+
+<template id="m-end" data-title="끝" data-icon="i-check">
+  <p class="summary"><b>요약</b><span>원문은 남지 않고, 해치만 배불러요.</span></p>
+  <p>해치가 다 먹으면 "잘 먹었소. 읽지는 않았소" 한 줄과 함께 끝나요. 여기서 닫아도 되고, 마음이 남으면 먹을 갈러 갈 수 있어요. 끝 화면에 가입이나 평가 요청을 붙이지 않아요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>해치의 말</th><td>잘 먹었소. 읽지는 않았소</td></tr>
+    <tr><th>고를 수 있는 것</th><td>닫기 · 먹 갈러 가기</td></tr>
+    <tr><th>붙이지 않는 것</th><td>가입 요청 · 평가 요청</td></tr>
+    <tr><th>원문</th><td>남지 않아요</td></tr>
+  </tbody></table>
+  <figure><img src="/assets/hatcheat/크림빛-배경의-귀여운-수호사자-캐릭터.png" alt="한지를 물고 눈을 감은 채 웃는 해치" loading="lazy"><figcaption>잘 먹었소. 읽지는 않았소</figcaption></figure>
+</template>
+
+<template id="m-ink" data-title="먹 갈기와 필사첩" data-icon="i-ink">
+  <p class="summary"><b>요약</b><span>100번 갈면 고전 한 구절. 필사첩은 이 기기에만 있어요.</span></p>
+  <p>벼루 위에 손가락으로 원을 그리면 먹이 조금씩 진해져요. 100번을 채우면 해치가 고전 한 구절을 원문과 쉬운 풀이로 필사해 필사첩에 모아 줘요. 해치에게 건넨 횟수와는 연결하지 않아요. 많이 쓸수록 보상받는 구조를 만들지 않기 위해서예요.</p>
+  <table class="tbl"><tbody>
+    <tr><th>필사까지</th><td>먹 100번</td></tr>
+    <tr><th>책</th><td>기본은 무작위, 설정에서 한 권 고정</td></tr>
+    <tr><th>중간에 나가면</th><td>숫자가 줄지 않아요</td></tr>
+    <tr><th>필사첩</th><td>이 기기에만 있어요</td></tr>
+  </tbody></table>
+  <p class="mnote">먹 갈기와 필사첩은 서비스에 담을 기능이에요. 이 랜딩 체험에는 아직 포함되지 않았어요.</p>
+  <figure><img src="/assets/hatcheat/haechi_9x16.png" alt="궁궐 처마 아래 해치" loading="lazy"><figcaption>서안 앞의 고요처럼, 천천히 머물러요.</figcaption></figure>
+</template>
+
+<template id="m-data" data-title="적은 글은 어디로 가나요?" data-icon="i-lock">
+  <p class="summary"><b>요약</b><span>원문은 서버로 보내지 않고, 어디에도 저장하지 않아요.</span></p>
+  <p>해칫은 적은 글을 읽거나 모으지 않아요. 기기에 남는 것은 먹을 간 횟수와 필사첩처럼 원문이 아닌 것뿐이에요. 앱을 지우면 필사첩도 함께 사라져요.</p>
+  <table class="tbl">
+    <thead><tr><th>무엇</th><th>어디에</th></tr></thead>
+    <tbody>
+      <tr><th>적은 글 (원문)</th><td>저장하지 않아요</td></tr>
+      <tr><th>먹 간 횟수</th><td>이 기기에만</td></tr>
+      <tr><th>필사첩 구절</th><td>이 기기에만</td></tr>
+      <tr><th>고른 책</th><td>이 기기에만</td></tr>
+      <tr><th>서버</th><td>쓰지 않아요</td></tr>
+    </tbody>
+  </table>
+  <figure><img src="/assets/hatcheat/haechi_1x1.png" alt="궁궐 처마 아래 돌 받침에 앉은 해치" loading="lazy"><figcaption>적은 것은 아무도 읽지 않소</figcaption></figure>
+</template>
+
+<template id="m-not" data-title="해칫이 하지 않는 것" data-icon="i-ban">
+  <p class="summary"><b>요약</b><span>세지 않고, 재촉하지 않고, 묻지 않아요.</span></p>
+  <p>한동안 오지 않아도 잃는 것이 없어요. 필요할 때만 와서 적고, 건네고, 닫으면 돼요.</p>
+  <table class="tbl">
+    <thead><tr><th>하지 않는 것</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><th>가입 · 로그인</th><td>원문을 저장하지 않으니 계정이 필요 없어요</td></tr>
+      <tr><th>연속 기록</th><td>오지 않은 날을 세지 않아요</td></tr>
+      <tr><th>재촉 알림</th><td>필요할 때만 오면 돼요</td></tr>
+      <tr><th>건넨 횟수 세기</th><td>많이 쓸수록 보상받는 구조를 만들지 않아요</td></tr>
+      <tr><th>공개 게시판 · AI 대화</th><td>아무도 읽지 않는다는 약속을 지키기 위해서예요</td></tr>
+    </tbody>
+  </table>
+  <figure><img src="/assets/hatcheat/귀여운-사자-강아지와-접힌-편지.png" alt="접힌 한지 앞에 앉은 해치" loading="lazy"><figcaption>한동안 오지 않아도 괜찮소</figcaption></figure>
+</template>
+
 <script>
-  const $ = id => document.getElementById(id);
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  const say = (el, text) => { el.textContent = text; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); };
-  const div = (cls, parent, css = '') => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; parent.append(d); return d; };
-  const anim = (el, kf, opt) => el.animate(kf, { fill: 'forwards', easing: 'cubic-bezier(.45,.05,.3,1)', ...opt }).finished;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 배경 불씨
-  for (let i = 0; i < 18; i++) {
-    const size = rand(2, 4);
-    div('ember', $('embers'), `left:${rand(0,100)}%;width:${size}px;height:${size}px;--dx:${rand(-60,60)}px;animation-duration:${rand(9,18)}s;animation-delay:${rand(-18,0)}s`);
-  }
-  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: .15 });
-  document.querySelectorAll('section.rise').forEach(s => io.observe(s));
-
-  // 효과음: 파일 없이 Web Audio 노이즈로 합성
-  const sound = {
-    muted: false, ac: null,
-    init() {
-      if (this.ac) return;
-      this.ac = new (window.AudioContext || window.webkitAudioContext)();
-      this.out = this.ac.createGain(); this.out.gain.value = this.muted ? 0 : .8; this.out.connect(this.ac.destination);
-      const len = this.ac.sampleRate * 2, buf = this.ac.createBuffer(1, len, this.ac.sampleRate), d = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-      this.noise = buf;
-    },
-    burst({ at = 0, dur, type = 'bandpass', freq, to, q = 1, vol, attack = .005 }) {
-      if (!this.ac) return;
-      const t = this.ac.currentTime + at, s = this.ac.createBufferSource(), f = this.ac.createBiquadFilter(), g = this.ac.createGain();
-      s.buffer = this.noise; f.type = type; f.Q.value = q;
-      f.frequency.setValueAtTime(freq, t); if (to) f.frequency.exponentialRampToValueAtTime(to, t + dur);
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + attack); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-      s.connect(f).connect(g).connect(this.out); s.start(t, rand(0, 1.5), dur + .05);
-    },
-    fold() { // 종이 바스락
-      for (let i = 0; i < 5; i++) this.burst({ at: i * .07 + rand(0, .03), dur: rand(.04, .1), freq: rand(2500, 5000), q: .7, vol: rand(.08, .18) });
-      this.burst({ at: .45, dur: .12, freq: 900, q: 2, vol: .15 });
-    },
-    whoosh() { this.burst({ dur: .7, freq: 300, to: 1800, q: 1.2, vol: .12, attack: .25 }); },
-    ignite() {
-      this.burst({ dur: 1.2, type: 'lowpass', freq: 150, to: 1400, vol: .45, attack: .08 }); // 확 붙는 소리
-      this.burst({ dur: 3.5, type: 'lowpass', freq: 600, q: .5, vol: .12, attack: .4 });     // 타는 소리
-      for (let i = 0; i < 30; i++) this.burst({ at: rand(.1, 3.4), dur: rand(.01, .035), type: 'highpass', freq: rand(1500, 4000), vol: rand(.1, .35) }); // 탁탁
-    },
-    toggle() { this.muted = !this.muted; if (this.out) this.out.gain.value = this.muted ? 0 : .8; },
-  };
-  $('mute').onclick = e => { sound.toggle(); e.target.textContent = sound.muted ? '소리 꺼짐' : '소리 켜짐'; e.target.setAttribute('aria-pressed', sound.muted); };
-
-  // 벽난로: 뒤 캔버스(벽돌·아치·화실·장작·숯) → 타는 종이 → 앞 캔버스(불꽃·빛, screen 합성)
-  const stage = $('stage'), hearth = $('hearth'), bc = $('back'), cv = $('fire'), bx = bc.getContext('2d'), cx = cv.getContext('2d');
-  let W, H, G, opening, parts = [], smoke = [], coals = [], cracks = [], boost = 0;
-  const sprite = (r, g, b) => {
-    const c = document.createElement('canvas'); c.width = c.height = 64;
-    const x = c.getContext('2d'), gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-    x.fillStyle = gr; x.fillRect(0, 0, 64, 64); return c;
-  };
-  const S = [sprite(255, 205, 120), sprite(255, 140, 50), sprite(215, 70, 25), sprite(110, 30, 15)], SMOKE = sprite(90, 80, 72);
-  const poly = (ctx, pts, fill) => { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); };
-  const lin = (ctx, x0, y0, x1, y1, stops) => { const g = ctx.createLinearGradient(x0, y0, x1, y1); stops.forEach((c, i) => g.addColorStop(i / (stops.length - 1), c)); return g; };
-
-  function log(x1, y1, x2, y2, r) {
-    const ang = Math.atan2(y2 - y1, x2 - x1), len = Math.hypot(x2 - x1, y2 - y1), c = Math.cos(ang), s = Math.sin(ang);
-    bx.save(); bx.translate(x1, y1); bx.rotate(ang);
-    bx.fillStyle = lin(bx, 0, -r, 0, r, ['#5e412c', '#4a3121', '#2a1a10', '#120a06']);
-    bx.beginPath(); bx.roundRect(0, -r, len, 2 * r, r * .6); bx.fill();
-    bx.strokeStyle = 'rgba(15,8,4,.7)'; bx.lineWidth = 1;
-    for (let i = 0; i < 10; i++) { const yy = rand(-r * .8, r * .8), x0 = rand(0, len * .7); bx.beginPath(); bx.moveTo(x0, yy); bx.lineTo(x0 + rand(12, len * .35), yy + rand(-1.5, 1.5)); bx.stroke(); }
-    bx.fillStyle = '#9a7650'; bx.beginPath(); bx.ellipse(len, 0, r * .42, r * .92, 0, 0, 7); bx.fill();
-    bx.strokeStyle = '#6e5035'; [.7, .45, .2].forEach(k => { bx.beginPath(); bx.ellipse(len, 0, r * .42 * k, r * .92 * k, 0, 0, 7); bx.stroke(); });
-    bx.restore();
-    // 장작 윗면의 갈라진 틈 (앞 캔버스에서 빛남)
-    for (let k = 0; k < 2; k++) {
-      let lx = rand(len * .15, len * .6), ly = rand(-r * .3, r * .3); const pts = [];
-      for (let j = 0; j < 4; j++) { pts.push([x1 + lx * c - ly * s, y1 + lx * s + ly * c]); lx += rand(5, 10); ly += rand(-1.5, 1.5); }
-      cracks.push({ pts, ph: rand(0, 6) });
-    }
+  /* ── 스크롤 등장 (FADE-UP) ── */
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, {threshold: .12, rootMargin: '0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    document.documentElement.classList.add('no-anim');
+    items.forEach(function(el){ el.classList.add('is-in'); });
   }
 
-  function drawBack() {
-    const L = W * .2, R = W * .8, B = H - 22, M = W / 2, AY = 104, AH = 42, RX = (R - L) / 2, bl = W * .34, br = W * .66, bt = AY + 12, bb = H - 58;
-    G = { M, B, L, R, fireY: H - 64 };
-    const edge = new Path2D(); edge.moveTo(L, B); edge.lineTo(L, AY); edge.ellipse(M, AY, RX, AH, 0, Math.PI, 0); edge.lineTo(R, B);
-    opening = new Path2D(edge); opening.closePath();
-    bx.clearRect(0, 0, W, H); cracks = []; coals = [];
-
-    // 벽돌 벽 (엇갈려 쌓기, 벽돌마다 색 조금씩 다르게)
-    bx.fillStyle = '#23160f'; bx.fillRect(8, 14, W - 16, B - 14);
-    const bh = 15, bw = 38;
-    for (let y = 14, row = 0; y < B; y += bh, row++)
-      for (let x = 8 - (row % 2) * bw / 2; x < W - 8; x += bw) {
-        const v = rand(-10, 10), r0 = 116 + v + rand(-8, 8), g0 = 58 + v * .6, b0 = 40 + v * .5;
-        bx.fillStyle = lin(bx, 0, y, 0, y + bh, [`rgb(${r0 + 16},${g0 + 9},${b0 + 6})`, `rgb(${r0},${g0},${b0})`, `rgb(${r0 - 22},${g0 - 14},${b0 - 10})`]);
-        bx.beginPath(); bx.roundRect(Math.max(x + 1, 9), y + 1, Math.min(bw - 2, W - 9 - Math.max(x + 1, 9)), bh - 2, 2); bx.fill();
-      }
-    bx.fillStyle = lin(bx, 8, 0, W - 8, 0, ['rgba(0,0,0,.55)', 'rgba(0,0,0,0)', 'rgba(0,0,0,0)', 'rgba(0,0,0,.55)']); bx.fillRect(8, 14, W - 16, B - 14);
-    const soot = bx.createRadialGradient(M, AY - AH, 10, M, AY - AH, RX * 1.1); soot.addColorStop(0, 'rgba(10,6,4,.6)'); soot.addColorStop(1, 'rgba(10,6,4,0)');
-    bx.fillStyle = soot; bx.fillRect(0, 0, W, B);
-
-    // 아치 테두리 벽돌
-    bx.lineJoin = 'round';
-    bx.strokeStyle = '#1a100b'; bx.lineWidth = 24; bx.stroke(edge);
-    bx.strokeStyle = '#8a4e37'; bx.lineWidth = 19; bx.stroke(edge);
-    bx.strokeStyle = 'rgba(255,200,160,.12)'; bx.lineWidth = 2; bx.translate(0, -8); bx.stroke(edge); bx.translate(0, 8);
-    bx.strokeStyle = '#21140e'; bx.lineWidth = 2;
-    for (let a = Math.PI; a <= 2 * Math.PI + .01; a += Math.PI / 9) { const c = Math.cos(a), s = Math.sin(a); bx.beginPath(); bx.moveTo(M + c * (RX - 10), AY + s * (AH - 10)); bx.lineTo(M + c * (RX + 10), AY + s * (AH + 10)); bx.stroke(); }
-    for (let y = AY + 16; y < B; y += 16) for (const x of [L, R]) { bx.beginPath(); bx.moveTo(x - 10, y); bx.lineTo(x + 10, y); bx.stroke(); }
-
-    // 화실 안쪽 (원근: 뒷벽·옆벽·바닥)
-    bx.save(); bx.clip(opening);
-    bx.fillStyle = '#080504'; bx.fillRect(0, 0, W, H);
-    for (let y = bt, row = 0; y < bb; y += 9, row++)
-      for (let x = bl - (row % 2) * 11; x < br; x += 22) { const v = rand(-6, 6); bx.fillStyle = `rgb(${46 + v},${24 + v * .5},${17 + v * .4})`; bx.fillRect(Math.max(x + 1, bl), y + 1, Math.min(20, br - Math.max(x + 1, bl)), 7); }
-    poly(bx, [[L, B], [L, AY - AH], [bl, bt - 30], [bl, bb]], lin(bx, L, 0, bl, 0, ['#241510', '#0d0806']));
-    poly(bx, [[R, B], [R, AY - AH], [br, bt - 30], [br, bb]], lin(bx, R, 0, br, 0, ['#241510', '#0d0806']));
-    poly(bx, [[L, B], [R, B], [br, bb], [bl, bb]], lin(bx, 0, bb, 0, B, ['#140d0a', '#2c221c']));
-    for (let i = 0; i < 90; i++) { bx.fillStyle = `rgba(${rand(90, 140) | 0},${rand(85, 125) | 0},${rand(80, 110) | 0},${rand(.1, .35)})`; bx.fillRect(M + rand(-1, 1) * W * .26, rand(bb + 4, B), rand(1, 3), 1); }
-    bx.fillStyle = lin(bx, 0, AY - AH, 0, bb - 10, ['rgba(0,0,0,.95)', 'rgba(0,0,0,.5)', 'rgba(0,0,0,0)']); bx.fillRect(0, 0, W, bb);
-    for (let i = 0; i < 36; i++) {
-      const c = { x: M + (rand(-1, 1) + rand(-1, 1)) / 2 * W * .24, y: rand(H - 42, B - 3), r: rand(2.5, 6), ph: rand(0, 6), sp: rand(.002, .006) };
-      coals.push(c); bx.fillStyle = `rgb(${rand(30, 50) | 0},${rand(14, 22) | 0},10)`; bx.beginPath(); bx.ellipse(c.x, c.y, c.r, c.r * .7, 0, 0, 7); bx.fill();
-    }
-    log(W * .29, H - 36, W * .69, H - 50, 12);
-    log(W * .72, H - 34, W * .32, H - 52, 12);
-    log(W * .39, H - 66, W * .63, H - 63, 9);
-    bx.restore();
-
-    // 쇠 받침대
-    bx.fillStyle = '#120d0b';
-    bx.fillRect(W * .29, H - 38, W * .42, 4);
-    for (let x = W * .3; x < W * .7; x += 13) { bx.beginPath(); bx.roundRect(x, H - 52, 3.5, 28, [2, 2, 0, 0]); bx.fill(); }
-    // 바닥 돌판 + 선반
-    bx.fillStyle = lin(bx, 0, B, 0, H, ['#6b6158', '#4a423b', '#2c2621']); bx.beginPath(); bx.roundRect(0, B, W, H - B, [3, 3, 6, 6]); bx.fill();
-    bx.fillStyle = 'rgba(255,255,255,.12)'; bx.fillRect(0, B, W, 1.5);
-    bx.fillStyle = lin(bx, 0, 14, 0, 34, ['rgba(0,0,0,.6)', 'rgba(0,0,0,0)']); bx.fillRect(8, 14, W - 16, 20);
-    bx.fillStyle = lin(bx, 0, 0, 0, 16, ['#8a6448', '#5c3f2b', '#33231a']); bx.beginPath(); bx.roundRect(0, 0, W, 16, 3); bx.fill();
-    bx.fillStyle = 'rgba(255,220,180,.2)'; bx.fillRect(2, 1, W - 4, 1);
+  /* ── 스크롤 따라오는 버튼: 첫 화면·끝 버튼이 보이는 동안 숨김 (한 화면에 primary 하나) ── */
+  var headerCta = document.querySelector('.header-cta');
+  var mbar = document.getElementById('mbar');
+  var anchors = [document.getElementById('hero-cta'), document.getElementById('end-cta')];
+  function setFollow(show){
+    headerCta.classList.toggle('show', show); headerCta.tabIndex = show ? 0 : -1;
+    mbar.classList.toggle('show', show); mbar.querySelector('button').tabIndex = show ? 0 : -1;
   }
-
-  const fit = () => {
-    const d = devicePixelRatio || 1; W = hearth.clientWidth; H = hearth.clientHeight;
-    for (const [c, x] of [[bc, bx], [cv, cx]]) { c.width = W * d; c.height = H * d; x.setTransform(d, 0, 0, d, 0, 0); }
-    drawBack();
-  };
-  fit(); addEventListener('resize', fit);
-
-  (function tick(now) {
-    now = now || 0;
-    const { M, fireY } = G, f = 1 + .08 * Math.sin(now * .011) + .06 * Math.sin(now * .023 + 1) + rand(-.03, .03);
-    for (let i = 0, n = 4 + boost * 10; i < n; i++)
-      parts.push({ x: M + (rand(-1, 1) + rand(-1, 1)) / 2 * W * (.14 + boost * .06), y: fireY + rand(-4, 6), vx: rand(-.25, .25), vy: -rand(.9, 1.9) * (1 + boost * .6), life: 0, max: rand(45, 75), s: rand(20, 36) * (1 + boost * .5) });
-    if (Math.random() < .05 + boost * .6) parts.push({ spark: 1, x: M + rand(-50, 50), y: fireY - 10, vx: rand(-.8, .8), vy: -rand(1.5, 4), life: 0, max: rand(50, 100) });
-    if (Math.random() < .25 + boost * .5) smoke.push({ x: M + rand(-25, 25), y: fireY - 70 - boost * 20, life: 0, max: rand(90, 140) });
-
-    cx.clearRect(0, 0, W, H);
-    // 벽돌·바닥에 비치는 불빛
-    cx.globalCompositeOperation = 'lighter'; cx.globalAlpha = 1;
-    const glow = cx.createRadialGradient(M, fireY, 10, M, fireY, W * .8);
-    glow.addColorStop(0, `rgba(255,130,50,${(.28 + boost * .25) * f})`); glow.addColorStop(.5, `rgba(200,80,30,${(.08 + boost * .1) * f})`); glow.addColorStop(1, 'rgba(0,0,0,0)');
-    cx.fillStyle = glow; cx.fillRect(0, 0, W, H);
-
-    cx.save(); cx.clip(opening);
-    smoke = smoke.filter(p => { const t = ++p.life / p.max; if (t >= 1) return false; p.y -= .6; p.x += Math.sin(p.life * .03) * .3; const sz = 30 + t * 60; cx.globalAlpha = .1 * Math.sin(t * Math.PI); cx.drawImage(SMOKE, p.x - sz / 2, p.y - sz / 2, sz, sz); return true; });
-    for (const c of coals) { cx.globalAlpha = (.35 + .3 * Math.sin(now * c.sp + c.ph)) * (1 + boost * .6); const z = c.r * 4; cx.drawImage(S[c.r > 4.5 ? 2 : 1], c.x - z / 2, c.y - z / 2, z, z); }
-    cx.lineCap = 'round';
-    for (const k of cracks) {
-      const a = (.5 + .4 * Math.sin(now * .004 + k.ph)) * f;
-      for (const [lw, col, al] of [[3, '255,100,30', .2], [1.2, '255,170,90', .7]]) {
-        cx.globalAlpha = a * al; cx.strokeStyle = `rgb(${col})`; cx.lineWidth = lw;
-        cx.beginPath(); k.pts.forEach(([x, y], i) => i ? cx.lineTo(x, y) : cx.moveTo(x, y)); cx.stroke();
-      }
-    }
-    cx.globalAlpha = .3 * f; cx.drawImage(S[1], M - W * .16, fireY - 34, W * .32, 64);
-    parts = parts.filter(p => {
-      const t = ++p.life / p.max; if (t >= 1) return false;
-      p.x += p.vx + Math.sin((p.life + p.y) * .12) * .35; p.y += p.vy;
-      if (p.spark) { cx.globalAlpha = 1 - t; cx.fillStyle = '#ffdca8'; cx.fillRect(p.x, p.y, 1.6, 1.6); return true; }
-      const sz = p.s * (1 - t * .55);
-      cx.globalAlpha = (1 - t) * .32;
-      cx.drawImage(S[Math.min(3, t * 4 | 0)], p.x - sz * .4, p.y - sz * .9, sz * .8, sz * 1.6);
-      return true;
+  if ('IntersectionObserver' in window) {
+    var seen = new Set();
+    var fo = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
+      setFollow(seen.size === 0);
     });
-    cx.restore();
+    anchors.forEach(function(a){ fo.observe(a); });
+  } else { setFollow(true); }
 
-    boost *= .99;
-    stage.style.setProperty('--heat', ((.35 + boost * .65) * f).toFixed(3));
-    requestAnimationFrame(tick);
-  })();
+  /* ── 스크롤 진행 막대 ── */
+  var bar = document.getElementById('progress'), ticking = false;
+  function paintProgress(){
+    var max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(scrollY / max, 1) : 0) + ')';
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(paintProgress); } }, {passive: true});
+  paintProgress();
 
-  // 쓰기 → 두 번 접기 → 벽난로로 던지기 → 타기
-  const paper = $('paper'), demo = $('demo'), demoNote = $('demoNote'), burnBtn = $('burn');
-  const face = (parent, h, scroll, css) => { const f = div('lined', parent, `height:${h}px;${css}`); f.textContent = demo.value; f.scrollTop = scroll; return f; };
+  /* ── 이미지 3D 기울기: 마우스 위치를 따라 기울고, 말풍선·쪽지는 앞으로 떠 보인다 ── */
+  if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach(function(el){
+      var raf = null;
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function(){
+          el.classList.add('moving');
+          el.style.transform = 'rotateX(' + (-y * 8).toFixed(2) + 'deg) rotateY(' + (x * 10).toFixed(2) + 'deg)';
+        });
+      });
+      el.addEventListener('pointerleave', function(){
+        if (raf) cancelAnimationFrame(raf);
+        el.classList.remove('moving');
+        el.style.transform = '';
+      });
+    });
+  }
 
-  burnBtn.onclick = async () => {
-    if (!demo.value.trim()) { say(demoNote, '한 글자만 적어도 태울 수 있어요.'); return; }
-    burnBtn.disabled = demo.readOnly = true; demoNote.textContent = '';
-    if (reduced) { demo.value = ''; burnBtn.disabled = demo.readOnly = false; say(demoNote, '다 탔어요. 원문은 남지 않았어요.'); return; }
-    sound.init(); sound.ac.resume();
+  /* ── 예시 한 줄 먹여 보기 (예시 문장, 저장·전송 없음) ── */
+  document.querySelectorAll('.line').forEach(function(l){
+    l.setAttribute('aria-pressed', 'false');
+    l.addEventListener('click', function(){
+      var on = l.classList.toggle('is-eaten');
+      l.setAttribute('aria-pressed', on);
+    });
+  });
 
-    const hb = hearth.getBoundingClientRect(), pb0 = paper.getBoundingClientRect();
-    if (pb0.top < 0 || hb.bottom > innerHeight) { stage.scrollIntoView({ behavior: 'smooth', block: 'center' }); await wait(500); }
-    const r = paper.getBoundingClientRect(), w = r.width, h = r.height, sc = demo.scrollTop;
+  /* ── 링크 보내기: 폰은 공유 창, 컴퓨터는 링크 복사 ── */
+  var toast = document.getElementById('toast'), toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+  document.getElementById('share').addEventListener('click', function(){
+    var data = {title: '해칫', text: '한지에 적으면 해치가 먹어요. 가입 없이, 무료.', url: location.href};
+    if (navigator.share) { navigator.share(data).catch(function(){}); return; }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(location.href).then(function(){ showToast('링크를 복사했어요'); }, function(){ showToast('주소창의 링크를 복사해 주세요'); });
+    } else { showToast('주소창의 링크를 복사해 주세요'); }
+  });
 
-    // 1. 위쪽 절반을 아래로 접기
-    const sheet = div('sheet', document.body, `left:${r.left}px;top:${r.top}px;width:${w}px;height:${h}px`);
-    const bottom = div('half', sheet, `top:${h / 2}px;height:${h / 2}px`);
-    face(bottom, h, sc, `top:${-h / 2}px`);
-    const flap = div('flap', sheet, `top:0;height:${h / 2}px;transform-origin:50% 100%`);
-    face(flap, h / 2, sc, 'top:0');
-    div('bk crease-b', flap, 'transform:rotateX(180deg)');
-    paper.style.visibility = 'hidden';
-    sound.fold();
-    await anim(flap, [{ transform: 'rotateX(0)' }, { transform: 'rotateX(-180deg)' }], { duration: 700 });
+  /* ── 햄버거 메뉴 ── */
+  var menuBtn = document.querySelector('.menu-btn'), mnav = document.getElementById('mnav');
+  function setMenu(open){
+    mnav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    menuBtn.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', function(){ setMenu(!mnav.classList.contains('open')); });
+  mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  addEventListener('keydown', function(e){ if (e.key === 'Escape' && mnav.classList.contains('open')) setMenu(false); });
+  matchMedia('(min-width: 901px)').addEventListener('change', function(m){ if (m.matches) setMenu(false); });
 
-    // 2. 오른쪽 절반을 왼쪽으로 접기
-    sheet.remove();
-    const note = div('sheet', document.body, `left:${r.left}px;top:${r.top + h / 2}px;width:${w}px;height:${h / 2}px`);
-    div('bk crease-b', note, `top:0;width:${w / 2}px;height:${h / 2}px`);
-    const flap2 = div('flap', note, `left:${w / 2}px;top:0;width:${w / 2}px;height:${h / 2}px;transform-origin:0 50%`);
-    div('bk crease-b', flap2);
-    div('bk crease-l', flap2, 'transform:rotateY(180deg)');
-    await wait(120); sound.fold();
-    await anim(flap2, [{ transform: 'rotateY(0)' }, { transform: 'rotateY(-180deg)' }], { duration: 650 });
+  /* ── 카드 팝업 ── */
+  var modal = document.getElementById('modal'), mBody = document.getElementById('modal-body'),
+      mTitle = document.getElementById('modal-title'), mIc = document.getElementById('modal-ic');
+  var lastFocus = null;
+  document.querySelectorAll('[data-modal]').forEach(function(card){
+    card.addEventListener('click', function(){
+      var t = document.getElementById(card.dataset.modal);
+      if (!t) return;
+      lastFocus = card;
+      mTitle.textContent = t.dataset.title;
+      mIc.innerHTML = '<svg width="24" height="24" aria-hidden="true"><use href="#' + t.dataset.icon + '"/></svg>';
+      mBody.replaceChildren(t.content.cloneNode(true));
+      modal.showModal();
+      modal.querySelector('.modal-box').scrollTop = 0;
+    });
+  });
 
-    // 3. 벽난로로 던지기 (포물선)
-    const hr = hearth.getBoundingClientRect();
-    const fx = r.left + w / 4, fy = r.top + h * .75, tx = hr.left + G.M, ty = hr.top + G.fireY - 8;
-    const dx = tx - fx, dy = ty - fy, SCALE = .42;
-    note.style.transformOrigin = `${w / 4}px ${h / 4}px`;
-    await wait(150); sound.whoosh();
-    await anim(note, [
-      { transform: 'translate(0,0) rotate(0) scale(1)' },
-      { transform: `translate(${dx * .45}px,${dy * .3 - 90}px) rotate(-110deg) scale(.75)`, offset: .45 },
-      { transform: `translate(${dx}px,${dy}px) rotate(-250deg) scale(${SCALE})` },
-    ], { duration: 950, easing: 'cubic-bezier(.35,.1,.55,1)' });
+  /* 닫기: X 버튼 · 바깥 클릭 · Esc */
+  document.querySelectorAll('dialog').forEach(function(d){
+    d.addEventListener('click', function(e){
+      if (e.target === d || e.target.closest('[data-close]')) d.close();
+    });
+    d.addEventListener('close', function(){
+      if (d.id === 'demo') resetDemo();
+      if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+    });
+  });
 
-    // 4. 불꽃 뒤로 옮겨서 태우기
-    note.remove();
-    const nw = w / 2 * SCALE, nh = h / 2 * SCALE;
-    const b = div('burning', hearth, `left:${tx - hr.left - nw / 2}px;top:${ty - hr.top - nh / 2}px;width:${nw}px;height:${nh}px;transform:rotate(110deg)`);
-    boost = 1; sound.ignite();
-    await anim(b, [
-      { '--p': 0, transform: 'rotate(110deg)' },
-      { '--p': .15, transform: 'rotate(111deg) translateY(1px)', offset: .15 },
-      { '--p': 1.25, transform: 'rotate(116deg) translateY(6px) scale(.94)' },
-    ], { duration: 3200, easing: 'cubic-bezier(.4,0,.7,1)' });
-    b.remove();
-
-    // 5. 새 종이
-    demo.value = ''; demo.readOnly = burnBtn.disabled = false;
-    paper.style.visibility = ''; paper.classList.remove('fresh'); void paper.offsetWidth; paper.classList.add('fresh');
-    say(demoNote, '다 탔어요. 원문은 남지 않았어요.');
-  };
-
-  const form = $('reserve'), note = $('formNote');
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button'); btn.disabled = true;
-    try {
-      const r = await fetch('/api/reserve', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: form.email.value }) });
-      if (!r.ok) throw 0;
-      form.email.value = ''; form.email.classList.remove('ok'); void form.email.offsetWidth; form.email.classList.add('ok');
-      say(note, '예약됐어요. 문을 열면 이 주소로 한 번 알려 드릴게요.');
-    } catch { say(note, '잘 전해지지 않았어요. 적은 주소는 그대로 있으니 한 번 더 눌러 주세요.'); }
-    btn.disabled = false;
-  };
+  /* ── 체험: 적은 글은 전송·저장하지 않고, 끝나거나 닫으면 지운다 ── */
+  var demo = document.getElementById('demo'), writing = document.getElementById('writing'),
+      give = document.getElementById('give'), status = document.getElementById('status');
+  var timer = null, busy = false;
+  function resetDemo(){
+    clearTimeout(timer); timer = null; busy = false;
+    writing.value = ''; writing.disabled = false; writing.classList.remove('eating');
+    give.disabled = true; give.textContent = '해치에게 건네기';
+    status.textContent = '한 글자라도 적으면 건넬 수 있어요.';
+  }
+  document.querySelectorAll('.launch').forEach(function(b){
+    b.addEventListener('click', function(){
+      lastFocus = b; resetDemo(); demo.showModal(); writing.focus();
+    });
+  });
+  writing.addEventListener('input', function(){
+    var has = !!writing.value.trim();
+    give.disabled = !has;
+    status.textContent = has ? '준비되면 해치에게 건네 주세요.' : '한 글자라도 적으면 건넬 수 있어요.';
+  });
+  give.addEventListener('click', function(){
+    if (busy || !writing.value.trim()) return;
+    busy = true; give.disabled = true; writing.disabled = true;
+    give.textContent = '해치에게 건네는 중';
+    status.textContent = '한지를 접어 건네고 있어요.';
+    writing.classList.add('eating');
+    timer = setTimeout(function(){
+      writing.value = ''; writing.disabled = false; writing.classList.remove('eating');
+      busy = false; give.disabled = true; give.textContent = '해치에게 건네기';
+      status.textContent = '잘 먹었소. 읽지는 않았소';
+    }, reduce ? 0 : 5000);
+  });
+  addEventListener('pagehide', resetDemo);
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+node_modules/
+.vercel/
+# User-supplied Yeongnam fonts: local use; follow the repository font decision.
+assets/fonts/
