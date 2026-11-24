@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해칫 30초 숏폼</title>
+<!--
+  해칫 30초 세로 숏폼 모션 (1080×1920, 4장면 · 11컷, 소리 없음)
+  기준: 기획/영상장면표_김서영.md · 기획/design.md · 기획/brand_1013.md
+  재생: 브라우저로 열면 자동 재생 · 반복. 스페이스 = 처음부터
+  내보내기: ?export=1 로 열면 window.seek(초)로 한 프레임씩 그린다 (video/scene-all.mp4)
+  나레이션 자막 시간은 아래 CAPTIONS. Vrew 목소리는 이 시간에 맞춰 얹는다
+-->
+<style>
+@font-face{font-family:"YNAMNEWS";font-weight:400;src:local("YNAMNEWS M"),local("YNAMNEWS(M)"),url("../brand/font/YNAMNEWS(M).otf") format("opentype")}
+@font-face{font-family:"YNAMNEWS";font-weight:700;src:local("YNAMNEWS B"),local("YNAMNEWS(B)"),url("../brand/font/YNAMNEWS(B).otf") format("opentype")}
+
+:root{
+  --haechi-gold:#F0B237;
+  --haechi-red:#EB4531;
+  --haechi-blue:#2A6090;
+  --haechi-ivory:#FDF5E9;
+  --hanji-cream:#F2EBDD;
+  --ink-black:#2A2826;
+  --warm-black:#38322B;
+  --color-bg:var(--hanji-cream);
+  --color-surface:var(--haechi-ivory);
+  --color-text:var(--ink-black);
+  --color-muted:rgba(42,40,38,.72);
+  --color-line:rgba(42,40,38,.15);
+  --color-primary:var(--haechi-blue);
+  --color-accent-red:var(--haechi-red);
+  --font-heading:"YNAMNEWS","Gowun Dodum",sans-serif;
+  --font-body:"YNAMNEWS","Gowun Dodum",sans-serif;
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--ink-black);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center;font-family:var(--font-body);color:var(--color-text)}
+
+/* 1080×1920 무대. 미리 보기에서는 창에 맞춰 줄인다 */
+#stage{position:relative;width:1080px;height:1920px;flex:none;overflow:hidden;background:var(--color-bg);transform-origin:center center}
+.export,.export body{background:var(--color-bg)}
+.export #stage{transform:none!important}
+
+/* 바닥: 아래 40%를 아주 옅게 눌러 디오라마 바닥처럼 (카드뉴스와 같은 방식) */
+#floor{position:absolute;left:-60px;right:-60px;top:60%;bottom:-60px;background:rgba(42,40,38,.045)}
+#floor::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--color-line);opacity:.5}
+
+.scene,.shot{position:absolute;inset:0;opacity:0}
+.layer{position:absolute;inset:0}
+.abs{position:absolute}
+
+/* 해치 cutout: 아래쪽 그림자의 잘린 끝만 부드럽게 지운다 */
+.haechi{position:absolute;display:block;
+  -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 78%),linear-gradient(90deg,transparent 4%,#000 20%,#000 84%,transparent 98%);
+          mask-image:linear-gradient(180deg,#000 62%,transparent 78%),linear-gradient(90deg,transparent 4%,#000 20%,#000 84%,transparent 98%);
+  -webkit-mask-composite:source-over;mask-composite:add}
+
+/* 글자 안전 영역: 위아래 250px, 오른쪽 100px을 비운다 */
+.safe{position:absolute;top:250px;bottom:250px;left:96px;right:100px;pointer-events:none}
+.headline{position:absolute;left:0;right:0;top:120px;font-family:var(--font-heading);font-weight:700;font-size:88px;line-height:1.25;letter-spacing:-.01em;white-space:nowrap}
+.headline .w{display:inline-block;overflow:hidden;vertical-align:top;padding:6px 0 14px;margin-bottom:-14px}
+.headline .w i{display:inline-block;font-style:normal}
+.headline .blue{color:var(--color-primary)}
+
+/* ② 폰 */
+#phone{position:absolute;left:50%;top:560px;width:470px;height:900px;margin-left:-235px;border-radius:68px;background:var(--warm-black);padding:22px;box-shadow:0 60px 60px -40px rgba(42,40,38,.45)}
+.screen{position:relative;width:100%;height:100%;border-radius:48px;overflow:hidden;background:var(--warm-black)}
+#screen-on{position:absolute;inset:0;background:var(--color-surface);opacity:0}
+.app{position:absolute;inset:0;opacity:0}
+.bar{height:20px;border-radius:10px;background:rgba(42,40,38,.28)}
+/* 대화 화면: 받은 말 하나 + 보내지 않은 입력창 */
+#bubble-in{position:absolute;left:30px;top:120px;width:300px;padding:30px 28px;border-radius:30px 30px 30px 8px;background:var(--color-bg);transform-origin:0 100%}
+#bubble-in .bar{margin:6px 0 16px}
+#bubble-in .bar+.bar{width:62%;margin-bottom:6px}
+#input{position:absolute;left:24px;right:24px;bottom:30px;height:96px;border-radius:48px;background:var(--color-bg);border:2px solid var(--color-line);padding:0 110px 0 34px;display:flex;align-items:center;gap:12px}
+#input .bar{height:18px;width:0;flex:none;background:rgba(42,40,38,.4)}
+#caret{width:4px;height:44px;border-radius:2px;background:var(--color-primary);flex:none}
+#send{position:absolute;right:14px;top:50%;width:68px;height:68px;margin-top:-34px;border-radius:50%;background:var(--color-primary);opacity:.25}
+/* 메모 화면: 맨 위에 고정되는 메모 */
+#memo-list{position:absolute;left:28px;right:28px;top:250px}
+.row{height:124px;border-bottom:2px solid var(--color-line);padding:32px 0}
+.row .bar{background:rgba(42,40,38,.16);margin-bottom:18px}
+#memo-top{position:absolute;left:28px;right:28px;top:70px;height:160px;border-radius:24px;background:var(--color-bg);border:2px solid var(--color-line);z-index:3;padding:34px 30px}
+#memo-top .bar{width:0;margin-bottom:20px}
+#pin{position:absolute;right:28px;top:28px;width:34px;height:34px;border-radius:50%;background:var(--color-primary);box-shadow:0 6px 8px rgba(42,40,38,.25)}
+#memo-fade{position:absolute;left:0;right:0;top:236px;height:60px;background:linear-gradient(var(--color-surface),rgba(253,245,233,0));z-index:2}
+
+/* ③ 한지와 붓 자국 */
+#hanji{position:absolute;left:50%;top:880px;width:600px;height:540px;margin-left:-300px;perspective:1600px}
+#sheet{position:absolute;inset:0;background:var(--color-surface);border-radius:6px;transform-origin:50% 100%;box-shadow:0 30px 40px -24px rgba(42,40,38,.35),inset 0 0 0 2px rgba(42,40,38,.06);padding:90px 80px}
+.ink{height:22px;border-radius:11px;background:var(--warm-black);opacity:.8;margin-bottom:46px;width:0}
+#bubble{position:absolute;left:0;right:0;top:420px;display:flex;justify-content:center}
+#bubble div{position:relative;background:var(--color-surface);border-radius:28px;padding:30px 44px 34px;font-size:52px;line-height:1.35;text-align:center;box-shadow:0 18px 30px -20px rgba(42,40,38,.4);transform-origin:50% 100%}
+#bubble div::after{content:"";position:absolute;left:50%;bottom:-22px;margin-left:-22px;border:22px solid transparent;border-bottom:0;border-top-color:var(--color-surface)}
+
+/* ④ 낙관과 버튼 */
+#seal{position:absolute;left:50%;top:150px;width:220px;height:220px;margin-left:-110px;border-radius:18px;background:var(--color-accent-red);color:var(--color-surface);font-family:var(--font-heading);font-weight:700;font-size:84px;line-height:1.06;display:flex;align-items:center;justify-content:center;text-align:center;box-shadow:inset 0 0 0 8px rgba(253,245,233,.35)}
+#cta{position:absolute;left:50%;top:470px;width:640px;height:128px;margin-left:-320px;border-radius:var(--radius);background:var(--color-primary);color:var(--color-surface);font-family:var(--font-heading);font-weight:700;font-size:56px;display:flex;align-items:center;justify-content:center}
+
+/* 나레이션 자막: 아래 안전 영역 안, 12자 이내 한 줄, 아이보리 글자 + 반투명 먹 배경 */
+.cap{position:absolute;left:96px;right:100px;bottom:290px;display:flex;justify-content:center;z-index:10}
+#cap{font-family:var(--font-body);font-weight:700;font-size:58px;line-height:1.3;color:var(--color-surface);background:rgba(42,40,38,.78);padding:10px 30px 14px;border-radius:var(--radius);white-space:nowrap;opacity:0}
+
+/* 진행 점: 위쪽 안전 영역 안, 지금 장면을 블루로 */
+#dots{position:absolute;left:96px;top:262px;display:flex;gap:14px;z-index:10}
+#dots i{width:44px;height:8px;border-radius:4px;background:var(--color-line);overflow:hidden;position:relative}
+#dots i b{position:absolute;inset:0;background:var(--color-primary);transform-origin:0 50%;transform:scaleX(0)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="world">
+    <div id="floor"></div>
+
+    <!-- ① 훅 0~3초 · 카드뉴스 1장 -->
+    <section class="scene" id="s1">
+      <div class="layer" id="s1-cam">
+        <img class="haechi" id="s1-haechi" src="../brand/key%20visual/cutout/haechi_sit_hanji.png" alt="" style="width:470px;left:470px;top:1010px">
+      </div>
+      <div class="safe"><div class="headline" id="s1-h" data-text="보내지 않아도|되는 말"></div></div>
+    </section>
+
+    <!-- ② 문제 3~12초 · 카드뉴스 2장(대화) → 3장(메모) -->
+    <section class="scene" id="s2">
+      <div class="layer" id="s2-cam">
+        <div id="phone"><div class="screen">
+          <div id="screen-on"></div>
+          <div class="app" id="app-chat">
+            <div id="bubble-in"><div class="bar"></div><div class="bar"></div></div>
+            <div id="input"><div class="bar"></div><div class="bar"></div><div class="bar"></div><span id="caret"></span><span id="send"></span></div>
+          </div>
+          <div class="app" id="app-memo">
+            <div id="memo-top"><span id="pin"></span><div class="bar"></div><div class="bar"></div></div>
+            <div id="memo-fade"></div>
+            <div id="memo-list"></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="safe"><div class="headline" id="s2-h" data-text="메모하면|남으니까"></div></div>
+    </section>
+
+    <!-- ③ 해결 12~24초 · 카드뉴스 4·5장(적기) → 6장(건네기) → 7장(먹기) → 8장(남지 않음) -->
+    <section class="scene" id="s3">
+      <div class="shot" id="s3a"><div class="layer" id="s3a-cam">
+        <div id="hanji"><div id="sheet"><div class="ink"></div><div class="ink"></div><div class="ink"></div><div class="ink"></div><div class="ink"></div></div></div>
+      </div></div>
+      <div class="shot" id="s3b"><div class="layer" id="s3b-cam">
+        <img class="haechi" id="s3-wait" src="../brand/key%20visual/cutout/haechi_wait.png" alt="" style="width:700px;left:190px;top:830px">
+      </div></div>
+      <div class="shot" id="s3c"><div class="layer" id="s3c-cam">
+        <img class="haechi" id="s3-eat" src="../brand/key%20visual/cutout/haechi_eat.png" alt="" style="width:760px;left:160px;top:880px;transform-origin:50% 90%">
+      </div></div>
+      <div class="shot" id="s3d"><div class="layer" id="s3d-cam">
+        <img class="haechi" src="../brand/key%20visual/cutout/haechi_sit.png" alt="" style="width:660px;left:210px;top:860px">
+        <div class="safe"><div id="bubble"><div id="bubble-box">잘 먹었소.<br>읽지는 않았소.</div></div></div>
+      </div></div>
+      <div class="safe"><div class="headline" id="s3-h" data-text="원문은|*남지|*않아요"></div></div>
+    </section>
+
+    <!-- ④ 맺음 24~30초 · 카드뉴스 9·10장 -->
+    <section class="scene" id="s4">
+      <div class="layer" id="s4-cam" style="transform-origin:50% 72%">
+        <img class="haechi" src="../brand/key%20visual/cutout/haechi_sit.png" alt="" style="width:620px;left:230px;top:930px">
+      </div>
+      <div class="safe">
+        <div id="seal">해<br>칫</div>
+        <div id="cta">해치에게 건네기</div>
+      </div>
+    </section>
+  </div>
+
+  <div id="dots"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+  <div class="cap"><span id="cap"></span></div>
+</div>
+
+<script>
+/* ── 시간표 ─────────────────────────────────── */
+const DURATION = 30;
+const SCENES = [            // 장면표 기준 초 (나레이션과 맞춘다)
+  {id:"s1", start:0,  end:3},
+  {id:"s2", start:3,  end:12},
+  {id:"s3", start:12, end:24},
+  {id:"s4", start:24, end:30},
+];
+const CUT = 0.28;           // 장면 사이 넘어가는 시간(초). 짧게 끊는다
+const CAPTIONS = [          // 나레이션 자막 [시작, 끝, 문구]. 12자 이내 한 줄
+  [0.25, 1.5,  "보내지 않아도"],
+  [1.5,  2.85, "되는 말이 있는 날."],
+  [3.4,  5.6,  "말하기도,"],
+  [5.6,  8.6,  "남겨 두기도"],
+  [8.6,  11.7, "조금 그렇고."],
+  [12.4, 18.4, "한 장에 적어 건네면,"],
+  [19.0, 23.7, "남지 않아요."],
+  [24.3, 26.6, "모든 마음을"],
+  [26.6, 29.7, "남길 필요는 없으니까."],
+];
+
+/* ── 도우미 ─────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const clamp = (v,a=0,b=1) => Math.min(b,Math.max(a,v));
+const prog = (t,a,b) => clamp((t - a) / (b - a));
+const easeOut = x => 1 - Math.pow(1 - clamp(x), 3);
+const easeIn = x => Math.pow(clamp(x), 3);
+const easeInOut = x => { x = clamp(x); return x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2; };
+const easeBack = x => { x = clamp(x); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3*Math.pow(x-1,3) + c1*Math.pow(x-1,2); };
+const lerp = (a,b,p) => a + (b - a) * p;
+const set = (el, css) => Object.assign((typeof el === "string" ? $(el) : el).style, css);
+// 컷 투명도: [a,b] 사이에서 보이고, 앞뒤 CUT초로 넘어간다
+const vis = (t,a,b,first=false,last=false) =>
+  Math.min(first ? 1 : easeInOut(prog(t, a - CUT/2, a + CUT/2)), last ? 1 : 1 - easeInOut(prog(t, b - CUT/2, b + CUT/2)));
+
+/* 제목 한 줄: 어절마다 아래에서 튀어 오른다. "*"가 붙은 어절은 해치 블루 */
+document.querySelectorAll(".headline").forEach(h => {
+  h.innerHTML = h.dataset.text.split("|").map(w => {
+    const blue = w.startsWith("*"); w = w.replace("*", "");
+    return `<span class="w"><i class="${blue ? "blue" : ""}">${w}</i></span>`;
+  }).join(" ");
+});
+function headline(id, t, at){
+  [...$(id).querySelectorAll("i")].forEach((el, k) => {
+    const p = prog(t, at + k * 0.09, at + k * 0.09 + 0.42);
+    el.style.transform = `translateY(${(1 - easeBack(p)) * 105}%)`;
+    el.style.opacity = p > 0 ? 1 : 0;
+  });
+}
+
+/* 메모 목록 줄 (글자 없이) */
+$("memo-list").innerHTML = Array.from({length:14}, (_, i) => {
+  const w = [72, 54, 80, 63, 48, 76, 58][i % 7];
+  return `<div class="row"><div class="bar" style="width:${w}%"></div><div class="bar" style="width:${w - 24}%"></div></div>`;
+}).join("");
+
+/* ── 한 프레임 그리기 ───────────────────────── */
+function render(t){
+  t = clamp(t, 0, DURATION - 1/60);
+
+  SCENES.forEach((s, i) => set(s.id, {opacity: vis(t, s.start, s.end, i === 0, i === SCENES.length - 1)}));
+
+  /* 진행 점 */
+  [...$("dots").querySelectorAll("b")].forEach((b, i) => {
+    const s = SCENES[i];
+    b.style.transform = `scaleX(${prog(t, s.start, s.end)})`;
+  });
+
+  /* ① 훅 0~3: 해치가 톡 튀어나오고, 카메라가 빠르게 다가간다 */
+  {
+    const pop = easeBack(prog(t, 0.05, 0.6));
+    set("s1-haechi", {transform:`translateY(${(1 - pop) * 60}px) scale(${lerp(.55, 1, pop)})`, opacity: clamp(pop * 2)});
+    set("s1-cam", {transformOrigin:"66% 64%", transform:`scale(${1 + .16 * easeInOut(prog(t, .3, 3.2))})`});
+    headline("s1-h", t, 0.12);
+  }
+
+  /* ② 문제 3~12: 폰이 올라오고 → 보낼 말을 쳤다가 지움 → 메모가 맨 위에 꽂혀 남는다 */
+  {
+    const up = easeBack(prog(t, 3.0, 3.55));
+    set("phone", {transform:`translateY(${(1 - up) * 520}px) rotate(${(1 - up) * -6}deg)`});
+    set("screen-on", {opacity: easeOut(prog(t, 3.35, 3.6))});
+
+    // 대화 3.5~7.3
+    const chatIn = prog(t, 3.5, 3.7), chatOut = easeInOut(prog(t, 7.1, 7.45));
+    set("app-chat", {opacity: chatIn * (1 - chatOut), transform:`translateX(${-chatOut * 120}px)`});
+    const bub = easeBack(prog(t, 3.7, 4.1));
+    set("bubble-in", {transform:`scale(${bub})`, opacity: clamp(bub)});
+    // 세 줄을 빠르게 쳤다가(4.4~5.9) 지운다(6.2~6.9)
+    const typed = clamp((t - 4.4) / 1.5) * 3 - clamp((t - 6.2) / .7) * 3;
+    [...$("input").querySelectorAll(".bar")].forEach((b, k) => b.style.width = `${clamp(typed - k) * [110, 70, 92][k]}px`);
+    set("caret", {opacity: Math.floor(t * 2.6) % 2 ? .15 : 1});
+    set("send", {opacity: t > 4.6 && t < 6.4 ? .9 : .25});
+
+    // 메모 7.3~12
+    const memoIn = easeInOut(prog(t, 7.2, 7.5));
+    set("app-memo", {opacity: memoIn, transform:`translateX(${(1 - memoIn) * 120}px)`});
+    const write = prog(t, 7.6, 8.5);
+    [...$("memo-top").querySelectorAll(".bar")].forEach((b, k) => b.style.width = `${clamp(write * 2 - k) * [86, 58][k]}%`);
+    const pin = prog(t, 8.55, 9.05);
+    set("pin", {transform:`translateY(${(1 - easeBack(pin)) * -160}px) scale(${lerp(1.6, 1, easeOut(pin))})`, opacity: pin > 0 ? 1 : 0});
+    // 목록은 빠르게 흘러가도, 고정된 메모는 그대로
+    set("memo-list", {transform:`translateY(${-1150 * easeInOut(prog(t, 9.3, 11.4))}px)`});
+
+    // 카메라: 처음엔 폰 전체 → 메모 때 화면 위쪽으로 다가감
+    const zoom = easeInOut(prog(t, 7.3, 8.3));
+    set("s2-cam", {transformOrigin:"50% 42%", transform:`scale(${lerp(1, 1.22, zoom) + .02 * prog(t, 8.3, 12)})`});
+    headline("s2-h", t, 3.15);
+  }
+
+  /* ③ 해결 12~24: 한지가 떨어짐 → 붓 자국 → 해치가 기다림 → 받아먹음 → 남지 않음 */
+  {
+    const A = [12, 16.2], B = [16.2, 18.8], C = [18.8, 21.5], D = [21.5, 24];
+    set("s3a", {opacity: vis(t, ...A, true)});
+    set("s3b", {opacity: vis(t, ...B)});
+    set("s3c", {opacity: vis(t, ...C)});
+    set("s3d", {opacity: vis(t, ...D, false, true)});
+
+    // A: 한지가 위에서 내려와 바닥에 눕고, 붓 자국이 한 줄씩. 끝에 접힌다
+    const drop = easeBack(prog(t, 12.05, 12.65));
+    const fold = easeIn(prog(t, 15.4, 16.2));
+    set("sheet", {transform:`translateY(${(1 - drop) * -700}px) rotateX(${lerp(0, 42, drop)}deg) scaleY(${1 - fold * .7}) scaleX(${1 - fold * .35})`});
+    [...$("sheet").children].forEach((l, k) => {
+      const p = easeOut(prog(t, 12.9 + k * .42, 12.9 + k * .42 + .5));
+      l.style.width = `${p * [92, 70, 84, 56, 76][k]}%`;
+    });
+    set("s3a-cam", {transformOrigin:"50% 66%", transform:`scale(${1 + .1 * easeInOut(prog(t, 12, 16.2))})`});
+
+    // B: 기다리는 해치. 숨 쉬듯 들썩이고, 카메라는 다가간다
+    const breath = Math.sin((t - 16.2) * Math.PI * 2.2) * .012;
+    set("s3-wait", {transform:`scale(${1 + breath}, ${1 - breath})`, transformOrigin:"50% 90%"});
+    set("s3b-cam", {transformOrigin:"50% 62%", transform:`scale(${1.04 + .1 * easeInOut(prog(t, 16.2, 18.9))})`});
+
+    // C: 받아먹음. 컷 시작에 한 번 확 다가갔다가 풀리고, 오물오물
+    const punch = easeOut(prog(t, 18.8, 19.3));
+    const chew = t > 19 && t < 21.4 ? Math.sin((t - 19) * Math.PI * 6) * .025 : 0;
+    set("s3-eat", {transform:`scale(${1 + chew}, ${1 - chew})`});
+    set("s3c-cam", {transformOrigin:"50% 62%", transform:`scale(${lerp(1.25, 1.08, punch) + .04 * prog(t, 19.3, 21.6)})`});
+
+    // D: 혼자 남은 해치 + 말풍선 (카드뉴스 8장)
+    const b = easeBack(prog(t, 22.0, 22.45));
+    set("bubble-box", {transform:`scale(${b})`, opacity: clamp(b * 1.5)});
+    set("s3d-cam", {transformOrigin:"50% 70%", transform:`scale(${1.1 - .1 * easeOut(prog(t, 21.4, 24))})`});
+
+    headline("s3-h", t, 12.15);
+  }
+
+  /* ④ 맺음 24~30: 낙관을 쾅 찍고, 버튼이 올라온다 */
+  {
+    const stamp = prog(t, 24.45, 24.8);
+    set("seal", {transform:`rotate(-4deg) scale(${lerp(2.4, 1, easeIn(stamp))})`, opacity: stamp > 0 ? clamp(stamp * 3) : 0});
+    // 찍히는 순간 화면이 살짝 흔들림
+    const shake = t > 24.8 && t < 25.1 ? Math.sin((t - 24.8) * 90) * 10 * (1 - prog(t, 24.8, 25.1)) : 0;
+    set("s4-cam", {transform:`translateY(${shake}px) scale(${1.14 - .14 * easeOut(prog(t, 23.9, 26))})`});
+    const cta = easeBack(prog(t, 25.5, 26.0));
+    set("cta", {transform:`translateY(${(1 - cta) * 80}px) scale(${lerp(.9, 1, cta)})`, opacity: clamp(cta * 1.5)});
+  }
+
+  /* 나레이션 자막 */
+  {
+    const c = CAPTIONS.find(([a, b]) => t >= a && t < b), cap = $("cap");
+    if (c) {
+      if (cap.textContent !== c[2]) cap.textContent = c[2];
+      const p = easeBack(prog(t, c[0], c[0] + .18));
+      cap.style.opacity = Math.min(clamp(p * 2), 1 - prog(t, c[1] - .12, c[1]));
+      cap.style.transform = `scale(${lerp(.92, 1, p)})`;
+    } else cap.style.opacity = 0;
+  }
+}
+
+/* ── 재생 / 내보내기 ─────────────────────────── */
+const EXPORT = new URLSearchParams(location.search).has("export");
+window.seek = t => render(t);
+window.DURATION = DURATION;
+
+function fit(){
+  if (EXPORT) return;
+  const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+  $("stage").style.transform = `scale(${k})`;
+}
+
+if (EXPORT) {
+  document.documentElement.classList.add("export");
+  render(0);
+} else {
+  fit();
+  addEventListener("resize", fit);
+  let t0 = performance.now();
+  addEventListener("keydown", e => { if (e.code === "Space") { e.preventDefault(); t0 = performance.now(); } });
+  (function loop(now){
+    render(((now - t0) / 1000) % DURATION);
+    requestAnimationFrame(loop);
+  })(performance.now());
+}
+</script>
+</body>
+</html>
