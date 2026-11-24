@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>해칫 30초 숏폼</title>
 <!--
-  해칫 30초 세로 숏폼 모션 (1080×1920, 4장면 · 11컷, 소리 없음)
+  해칫 세로 숏폼 모션 (1080×1920, 22초, 4장면 · 11컷, 소리 없음). 화면 박자는 Rosa Oh 낭독에 맞춘 WARP 표로 정한다
   기준: 기획/영상장면표_김서영.md · 기획/design.md · 기획/brand_1013.md
   재생: 브라우저로 열면 자동 재생 · 반복. 스페이스 = 처음부터
   내보내기: ?export=1 로 열면 window.seek(초)로 한 프레임씩 그린다 (video/scene-all.mp4)
@@ -119,7 +119,7 @@ body{display:flex;align-items:center;justify-content:center;font-family:var(--fo
       <div class="layer" id="s1-cam">
         <img class="haechi" id="s1-haechi" src="../brand/key%20visual/cutout/haechi_sit_hanji.png" alt="" style="width:470px;left:470px;top:1010px">
       </div>
-      <div class="safe"><div class="headline" id="s1-h" data-text="보내지 않아도|되는 말"></div></div>
+      <div class="safe"><div class="headline" id="s1-h" data-text="보내긴|애매한 말"></div></div>
     </section>
 
     <!-- ② 문제 3~12초 · 카드뉴스 2장(대화) → 3장(메모) -->
@@ -177,7 +177,12 @@ body{display:flex;align-items:center;justify-content:center;font-family:var(--fo
 
 <script>
 /* ── 시간표 ─────────────────────────────────── */
-const DURATION = 30;
+const DURATION = 22;        // 낭독 박자에 맞춘 길이
+/* 화면 시간 축 → 나레이션 박자. [영상 초, 원래 모션 초]. 모션은 원래 30초 기준으로 짜여 있고,
+   이 표로 늘이고 줄여 낭독의 문단 · 쉼에 맞춘다 */
+const WARP = [[0,0],[3.6,3.0],[6.5,7.1],[9.4,12],[12.6,16.2],[13.4,18.8],[15.0,21.5],[16.9,24],[18.42,25.95],[22,30]];
+const warp = tn => { for (let i = 1; i < WARP.length; i++) { const [a0,b0] = WARP[i-1], [a1,b1] = WARP[i];
+  if (tn <= a1) return b0 + (b1 - b0) * (tn - a0) / (a1 - a0); } return 30; };
 const SCENES = [            // 장면표 기준 초 (나레이션과 맞춘다)
   {id:"s1", start:0,  end:3},
   {id:"s2", start:3,  end:12},
@@ -185,16 +190,19 @@ const SCENES = [            // 장면표 기준 초 (나레이션과 맞춘다)
   {id:"s4", start:24, end:30},
 ];
 const CUT = 0.28;           // 장면 사이 넘어가는 시간(초). 짧게 끊는다
-const CAPTIONS = [          // 나레이션 자막 [시작, 끝, 문구]. 12자 이내 한 줄
-  [0.25, 1.5,  "보내지 않아도"],
-  [1.5,  2.85, "되는 말이 있는 날."],
-  [3.4,  5.6,  "말하기도,"],
-  [5.6,  8.6,  "남겨 두기도"],
-  [8.6,  11.7, "조금 그렇고."],
-  [12.4, 18.4, "한 장에 적어 건네면,"],
-  [19.0, 23.7, "남지 않아요."],
-  [24.3, 26.6, "모든 마음을"],
-  [26.6, 29.7, "남길 필요는 없으니까."],
+const CAPTIONS = [          // 나레이션 자막 [시작, 끝, 문구]. 12자 이내 한 줄. 영상 초 기준, Rosa Oh 낭독에 맞춤
+  [0.35, 2.1,  "보내긴 애매한 말,"],
+  [2.1,  3.4,  "있잖아요."],
+  [4.2,  5.85, "친구한테 보내자니"],
+  [5.85, 6.65, "좀 그렇고,"],
+  [6.65, 7.8,  "메모에 적어 두면"],
+  [7.8,  9.3,  "계속 남고."],
+  [9.7,  11.3, "그럴 땐 한지에 적어서"],
+  [11.3, 12.6, "해치한테 주세요."],
+  [13.5, 14.95, "해치가 그냥 먹어요."],
+  [14.95, 16.5, "읽지도 않고요."],
+  [17.0, 18.35, "남기기 싫은 말은,"],
+  [18.35, 20.2, "해칫."],
 ];
 
 /* ── 도우미 ─────────────────────────────────── */
@@ -233,8 +241,9 @@ $("memo-list").innerHTML = Array.from({length:14}, (_, i) => {
 }).join("");
 
 /* ── 한 프레임 그리기 ───────────────────────── */
-function render(t){
-  t = clamp(t, 0, DURATION - 1/60);
+function render(tn){
+  tn = clamp(tn, 0, DURATION - 1/60);
+  const t = clamp(warp(tn), 0, 30 - 1/60);   // 원래 모션 시간
 
   SCENES.forEach((s, i) => set(s.id, {opacity: vis(t, s.start, s.end, i === 0, i === SCENES.length - 1)}));
 
@@ -324,22 +333,23 @@ function render(t){
 
   /* ④ 맺음 24~30: 낙관을 쾅 찍고, 버튼이 올라온다 */
   {
-    const stamp = prog(t, 24.45, 24.8);
+    // 나레이션 "해칫."에 맞춰 찍힌다 (25.95초)
+    const stamp = prog(t, 25.6, 25.95);
     set("seal", {transform:`rotate(-4deg) scale(${lerp(2.4, 1, easeIn(stamp))})`, opacity: stamp > 0 ? clamp(stamp * 3) : 0});
     // 찍히는 순간 화면이 살짝 흔들림
-    const shake = t > 24.8 && t < 25.1 ? Math.sin((t - 24.8) * 90) * 10 * (1 - prog(t, 24.8, 25.1)) : 0;
-    set("s4-cam", {transform:`translateY(${shake}px) scale(${1.14 - .14 * easeOut(prog(t, 23.9, 26))})`});
-    const cta = easeBack(prog(t, 25.5, 26.0));
+    const shake = t > 25.95 && t < 26.25 ? Math.sin((t - 25.95) * 90) * 10 * (1 - prog(t, 25.95, 26.25)) : 0;
+    set("s4-cam", {transform:`translateY(${shake}px) scale(${1.14 - .14 * easeOut(prog(t, 23.9, 26.5))})`});
+    const cta = easeBack(prog(t, 26.6, 27.1));
     set("cta", {transform:`translateY(${(1 - cta) * 80}px) scale(${lerp(.9, 1, cta)})`, opacity: clamp(cta * 1.5)});
   }
 
   /* 나레이션 자막 */
   {
-    const c = CAPTIONS.find(([a, b]) => t >= a && t < b), cap = $("cap");
+    const c = CAPTIONS.find(([a, b]) => tn >= a && tn < b), cap = $("cap");
     if (c) {
       if (cap.textContent !== c[2]) cap.textContent = c[2];
-      const p = easeBack(prog(t, c[0], c[0] + .18));
-      cap.style.opacity = Math.min(clamp(p * 2), 1 - prog(t, c[1] - .12, c[1]));
+      const p = easeBack(prog(tn, c[0], c[0] + .18));
+      cap.style.opacity = Math.min(clamp(p * 2), 1 - prog(tn, c[1] - .12, c[1]));
       cap.style.transform = `scale(${lerp(.92, 1, p)})`;
     } else cap.style.opacity = 0;
   }
