@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>숏폼 · 자막을 먹는 해치</title>
+<!-- 영상 원본. 1080x1920 창에서 window.render(초)를 0~14.5초, 30fps로 호출해 프레임을 캡처한 뒤 ffmpeg로 묶는다 -->
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#F0B237;--red:#EB4531;--blue:#2A6090;--ivory:#FDF5E9;--cream:#F2EBDD;--ink:#2A2826;--warm:#38322B;--line:rgba(42,40,38,.15)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Gowun Dodum',sans-serif;color:var(--ink);word-break:keep-all}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:url('../asset/hanji%20texture%20background.jpg') center/cover,var(--cream)}
+#shake{position:absolute;inset:0}
+img{display:block}
+.floor{position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(rgba(56,50,43,0),rgba(56,50,43,.08))}
+.card{position:absolute;left:110px;width:860px;background:var(--ivory);border-radius:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:82px;line-height:1.45;text-align:center;opacity:0}
+.cw{position:absolute;inset:0;filter:drop-shadow(0 12px 16px rgba(42,40,38,.3))}
+.card i{font-style:normal;opacity:0}
+.hae{position:absolute;width:600px;opacity:0;z-index:3;transform-origin:60% 80%}
+.sfx{position:absolute;font-size:150px;color:var(--red);opacity:0;z-index:6;
+ text-shadow:-6px -6px 0 var(--ivory),6px -6px 0 var(--ivory),-6px 6px 0 var(--ivory),6px 6px 0 var(--ivory),0 -8px 0 var(--ivory),0 8px 0 var(--ivory),-8px 0 0 var(--ivory),8px 0 0 var(--ivory),0 14px 30px rgba(42,40,38,.3)}
+.cr{position:absolute;left:0;top:0;background:var(--ivory);border:3px solid rgba(42,40,38,.35);border-radius:4px;opacity:0;z-index:5}
+.cr::after{content:"";position:absolute;left:20%;right:25%;top:45%;height:5px;border-radius:5px;background:var(--ink);opacity:.6}
+.ray{position:absolute;left:0;top:0;width:12px;height:70px;border-radius:12px;background:var(--gold);transform-origin:6px 0;opacity:0;z-index:4}
+.scene{position:absolute;inset:0;opacity:0}
+.cap{position:absolute;left:100px;right:160px;top:230px;text-align:center;font-size:84px;line-height:1.45;z-index:5}
+.cap span{background:var(--ivory);padding:10px 34px;border-radius:24px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.bubble{position:absolute;background:var(--ivory);border:4px solid rgba(42,40,38,.45);box-shadow:0 14px 36px rgba(42,40,38,.22);border-radius:44px;padding:30px 44px;font-size:66px;white-space:nowrap;z-index:4;transform-origin:20% 100%}
+.bubble::after{content:"";position:absolute;left:80px;bottom:-22px;width:40px;height:40px;background:var(--ivory);border-right:4px solid rgba(42,40,38,.45);border-bottom:4px solid rgba(42,40,38,.45);transform:rotate(45deg)}
+#sit{position:absolute;width:820px;left:50%;bottom:260px;transform:translateX(-50%)}
+#s5{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:44px;padding:0 120px 120px}
+#s5 .logo{position:relative}
+#s5 .logo img{width:480px;border-radius:40px}
+#s5 .name{font-size:110px}
+#s5 .copy{font-size:64px;line-height:1.45}
+#btn{background:var(--blue);color:var(--ivory);border-radius:999px;padding:38px 70px;font-size:62px}
+#s5 small{font-size:48px;color:rgba(42,40,38,.85)}
+.sfx{display:none!important}</style></head><body>
+<div id="stage"><div id="shake">
+  <div id="acts"></div>
+  <div class="scene" id="s4"><div class="floor"></div><div class="cap"><span>적은 말은 어디에도</span><br><span>저장되지 않아요.</span></div><img id="sit" src="../brand/key%20visual/cutout/haechi_sit.png"><div class="bubble" id="b4" style="left:120px;top:840px">잘 먹었어요. 읽지는 않았어요.</div></div>
+  <div class="scene" id="s5"><div class="logo"><img src="../brand/logo/haechi_yellow.png"></div><div class="name">해칫</div><div class="copy">남기기 싫은 말을 적으면<br>해치가 먹어 없애는 곳</div><div id="btn">지금 해치에게 건네 보기</div><small>링크에서 바로 써 볼 수 있어요</small></div>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const W=860,L=110,HW=600,MX=371,MY=304;        // card width/left, haechi width, mouth offset
+// acts: card eaten in 3 bites
+const ACTS=[
+ {lines:['털어놓고는 싶은데','기록이 남는 건 싫을 때'],y:380,h:360,dir:1, t0:0.0, type:[0.05,0.75], enter:1.5, bites:[2.2,2.6,3.0], out:3.4},
+ {lines:['메모장에 쓰면','계속 남아 있잖아요'],      y:700,h:360,dir:-1,t0:3.4, type:[3.45,4.15],enter:4.9, bites:[5.6,6.0,6.4], out:6.8},
+ {lines:['해칫에 적으면','해치가 먹어 없애요'],      y:480,h:360,dir:1, t0:6.8, type:[6.85,7.55],enter:8.3, bites:[9.0,9.4,9.8], out:10.2},
+];
+const EDGE=[W+140,600,320,-140];                // kept width after 0,1,2,3 bites
+const acts=$('acts');
+ACTS.forEach((a,ai)=>{
+  const c=document.createElement('div');c.className='card';c.style.top=a.y+'px';c.style.height=a.h+'px';
+  c.innerHTML=a.lines.map(l=>'<div>'+[...l].map(ch=>'<i>'+(ch===' '?'&nbsp;':ch)+'</i>').join('')+'</div>').join('');
+  const cw=document.createElement('div');cw.className='cw';cw.appendChild(c);acts.appendChild(cw);a.card=c;a.chars=[...c.querySelectorAll('i')];
+  const h=document.createElement('img');h.className='hae';h.src='../brand/key%20visual/cutout/haechi_eat.png';acts.appendChild(h);a.hae=h;
+  a.fx=a.bites.map((tb,k)=>{
+    const s=document.createElement('div');s.className='sfx';s.textContent='바삭';acts.appendChild(s);
+    const crs=[];for(let i=0;i<9;i++){const d=document.createElement('div');d.className='cr';const w=30+rnd()*34;d.style.width=w+'px';d.style.height=w*(.6+rnd()*.5)+'px';acts.appendChild(d);
+      crs.push({d,a:-Math.PI*(.15+rnd()*.7),v:1100+rnd()*900,r:(rnd()-.5)*900})}
+    const rays=[];for(let i=0;i<8;i++){const r=document.createElement('div');r.className='ray';acts.appendChild(r);rays.push({r,ang:i*45+20})}
+    return {s,crs,rays,rot:(k%2?7:-8)};
+  });
+});
+const BITES=ACTS.flatMap(a=>a.bites);
+function mask(a,X){ // keep region on the un-eaten side, scalloped edge
+  const sp=136,n=Math.max(2,Math.round(a.h/sp)),off=(a.h-(n-1)*sp)/2;const parts=[];
+  const x=a.dir>0?X:W-X;
+  parts.push(a.dir>0?`linear-gradient(to right,#000 ${x}px,transparent ${x}px)`:`linear-gradient(to right,transparent ${x}px,#000 ${x}px)`);
+  for(let k=0;k<n;k++)parts.push(`radial-gradient(circle 72px at ${x}px ${off+k*sp}px,transparent 71px,#000 72px)`);
+  return parts.join(',');
+}
+window.render=function(t){
+  // global shake
+  let bite=0;BITES.forEach(tb=>{if(t>=tb)bite=Math.max(bite,Math.exp(-13*(t-tb)))});
+  const sh=bite*26;$('shake').style.transform=`translate(${Math.sin(t*95)*sh}px,${Math.cos(t*83)*sh*.6}px)`;
+  ACTS.forEach(a=>{
+    const on=t>=a.t0&&t<a.out+.05;
+    const nb=a.bites.filter(tb=>t>=tb).length;
+    // card
+    const pop=back(p(t,a.t0,a.t0+.3));
+    a.card.style.opacity=on&&nb<3?1:0;
+    a.card.style.transform=`scale(${a.t0===0?1:.7+.3*pop})`;
+    const m=mask(a,EDGE[nb]);a.card.style.webkitMaskImage=m;a.card.style.maskImage=m;
+    a.card.style.webkitMaskComposite='source-in';a.card.style.maskComposite='intersect';
+    a.chars.forEach((el,i)=>{el.style.opacity=t>=a.type[0]+(a.type[1]-a.type[0])*i/a.chars.length?1:0});
+    // haechi: rest peeking at the side, lunge on each bite
+    const restL=a.dir>0?760:-280;
+    const offL=a.dir>0?1100:-620;
+    let x=offL+(restL-offL)*eo(p(t,a.enter,a.enter+.35));
+    let y=a.y+a.h/2-MY+40;
+    a.bites.forEach((tb,k)=>{
+      const edge=EDGE[k+1]+90;                                   // mouth target inside card
+      const mouthX=a.dir>0?L+Math.max(edge,150):L+W-Math.max(edge,150);
+      const tx=mouthX-(a.dir>0?MX:HW-MX);
+      const g=t<tb?eo(p(t,tb-.13,tb)):1-eo(p(t,tb+.06,tb+.3));   // lunge in, pull back
+      if(t>tb-.13&&t<tb+.3)x=x+(tx-x)*g;
+    });
+    x=x+(offL-x)*eo(p(t,a.out-.3,a.out));
+    const chew=nb>0&&nb<=3?Math.sin(t*2*Math.PI*3.4)*.02:0;
+    a.hae.style.opacity=t>=a.enter&&t<a.out?1:0;
+    a.hae.style.left=x+'px';a.hae.style.top=y+'px';
+    a.hae.style.transform=`scaleX(${a.dir}) scale(${1+.09*bite+chew},${1-.07*bite-chew})`;
+    // fx per bite
+    a.bites.forEach((tb,k)=>{
+      const f=a.fx[k],dt=t-tb;
+      const ex=a.dir>0?L+Math.max(EDGE[k+1],80):L+W-Math.max(EDGE[k+1],80), ey=a.y+a.h/2;
+      const v=dt>=0&&dt<.45;
+      f.s.style.opacity=v?Math.min(1,(.45-dt)/.1):0;
+      f.s.style.left=(cl(ex-150+(k-1)*60*a.dir,40,720))+'px';f.s.style.top=(a.y-190-(k%2)*30)+'px';
+      f.s.style.transform=`rotate(${f.rot}deg) scale(${.6+.4*back(p(dt,0,.15))})`;
+      f.crs.forEach(c=>{if(dt<0||dt>.6){c.d.style.opacity=0;return}
+        const cx=ex+Math.cos(c.a)*c.v*dt*(a.dir>0?-.6:.6)+ (rnd,0), cy=ey+Math.sin(c.a)*c.v*dt+1800*dt*dt;
+        c.d.style.opacity=1-p(dt,.35,.6);c.d.style.transform=`translate(${cx}px,${cy}px) rotate(${c.r*dt}deg)`});
+      const bl=dt>=0&&dt<.25?dt/.25:-1;
+      f.rays.forEach(o=>{o.r.style.opacity=bl>=0?1-bl:0;o.r.style.transform=`translate(${ex}px,${ey}px) rotate(${o.ang}deg) translateY(${150+bl*200}px) scaleY(${1-bl*.5})`});
+    });
+  });
+  // S4 8-10
+  $('s4').style.opacity=(t>=10.2&&t<12.4)?eo(p(t,10.2,10.45)):0;
+  const b4=back(p(t,10.6,10.9));$('b4').style.transform=`scale(${b4})`;$('b4').style.opacity=p(t,10.6,10.7);
+  $('sit').style.transform=`translateX(-50%) translateY(${Math.sin(t*2.2)*6}px)`;
+  // S5 10-12
+  $('s5').style.opacity=t>=12.4?eo(p(t,12.4,12.75)):0;
+  $('btn').style.transform=`scale(${1+.035*Math.max(0,Math.sin((t-13)*Math.PI*1.4))})`;
+};
+window.render(0);
+</script></body></html>
